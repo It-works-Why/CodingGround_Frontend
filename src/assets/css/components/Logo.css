@@ -1,0 +1,11 @@
+.logo_img {
+    object-fit: contain;
+    width: 288px;
+    height: 123px;
+    cursor: pointer;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
