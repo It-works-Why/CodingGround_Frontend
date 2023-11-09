@@ -41,4 +41,4 @@ export default{
 }
 </script>
 
-<style src="../assets/css/header.css" scoped />
+<style src="../assets/css/components/header.css" scoped />
