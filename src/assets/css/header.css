@@ -1,0 +1,12 @@
+.background{
+    background: #3D3D3D;
+}
+.nav_button{
+    color:white;
+}
+@media (max-width: 988px) {
+    .nav_button:hover{
+        background: #f5f5f5;
+        color: #3D3D3D;
+    }
+}
