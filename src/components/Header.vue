@@ -9,7 +9,7 @@
         <div class="pb-1 collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="mx-3 nav-item">
-              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">배틀</a>
+              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/battle-list">배틀</a>
             </li>
             <li class="mx-3 nav-item">
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">랭킹</a>

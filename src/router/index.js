@@ -3,6 +3,7 @@ import LoginView from '@/view/LoginView.vue';
 import RegisterView from '@/view/RegisterView.vue';
 import HomeView from "@/view/HomeView.vue";
 import TemplateView from "@/view/TemplateView.vue";
+import BattleListView from "@/view/BattleListView.vue";
 
 const routes = [
   {
@@ -21,6 +22,10 @@ const routes = [
       {
         path: '/register',
         component: RegisterView
+      },
+      {
+        path: '/battle-list',
+        component: BattleListView
       }
     ]
   },
