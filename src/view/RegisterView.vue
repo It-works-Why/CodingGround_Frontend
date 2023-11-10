@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="px-5">
-          <input type="button" value="가입하기" class="py-1 rounded-3 red_button w-100 text-white">
+          <input type="button" value="가입하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
