@@ -1,0 +1,139 @@
+.background_box{
+    background: #3D3D3D;
+    height: 550px;
+    width: 90%;
+    min-width: 1100px;
+}
+.box_circle{
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+    height: 550px;
+}
+
+.services .service-box {
+    box-shadow: 0 0 30px rgba(1, 41, 112, 0.08);
+    height: 400px;
+    padding: 60px 30px;
+    text-align: center;
+    transition: 0.3s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.services .service-box .icon {
+    font-size: 32px;
+    width: 100px;
+    height: 150px;
+    padding: 40px 20px;
+    border-radius: 4px;
+    position: relative;
+    margin: 30px 0 25px 0;
+    display: inline-block;
+    line-height: 0;
+    transition: 0.3s;
+}
+
+.services .service-box .icon .img {
+    width: 60px;
+}
+
+
+.services .service-box h3 {
+    color: #000000;
+    font-weight: 700;
+}
+
+.services .service-box.red {
+    border-bottom: 3px solid #e9222c;
+    background: #FFFFFF;
+}
+
+.services .service-box.red .icon {
+    color: #e9222c;
+    background: #EBEBEB;
+}
+
+.services .service-box.red:hover {
+    background: #e9222c;
+}
+
+/* 모달 */
+/* dimmed */
+.modal-wrap {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+/* modal or popup */
+.modal-container {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 0.25);
+}
+
+.modal-title {
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 550;
+}
+
+.modal-box {
+    background-color: #D9D9D9;
+    padding: 16px;
+    margin: 4px;
+    border-radius: 5px;
+    box-shadow: inset 1px 4px 1px 0 rgb(0, 0, 0, 0.25);
+    font-size: 18px;
+    text-align: center;
+}
+
+.modal-box .modal-select-box {
+    width: 85%;
+    background-color: #D9D9D9;
+    border: none;
+    outline: none;
+    text-align: center;
+}
+
+.langImg {
+    width: 25px;
+    height: 25px;
+}
+
+.modal-btn {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.modal-btn button{
+    width: 230px;
+    height: 40px;
+    background-color: #A60000;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 200;
+    color: #FFFFFF;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 0.4);
+}
