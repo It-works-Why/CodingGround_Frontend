@@ -106,4 +106,4 @@ export default {
 }
 </script>
 
-<style src="../assets/css/register.css" scoped />
+<style src="@/assets/css/view/register.css" scoped />

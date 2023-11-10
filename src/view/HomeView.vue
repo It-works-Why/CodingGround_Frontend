@@ -1,5 +1,8 @@
 <template>
   <img src="@/assets/img/mini.png" alt>
+
+  <button @click="alertBtn('successTest')">성공</button>
+  <button @click="alertBtn('failTest')">실패</button>
 </template>
 
 <script>
@@ -12,8 +15,12 @@ export default {
       ingredient: "",
     };
   },
-  inject: ['$http'],
   methods: {
+    alertBtn(uri){
+      this.$httpUtil('/test/'+uri,'GET',null,(data) => {
+        this.$successAlert(data.data.message);
+      });
+    }
   },
   mounted() {
   },

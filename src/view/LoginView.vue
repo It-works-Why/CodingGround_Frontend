@@ -44,7 +44,7 @@
   }
 </script>
 
-<style src="../assets/css/login.css" scoped />
+<style src="@/assets/css/view/login.css" scoped />
 
 
 
