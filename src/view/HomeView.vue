@@ -1,5 +1,5 @@
 <template>
-w
+  <img src="@/assets/img/mini.png" alt>
 </template>
 
 <script>
@@ -21,8 +21,10 @@ export default {
 </script>
 
 <style scoped>
-
-
+img{
+  width: 30%;
+  height: 30%;
+}
 
 </style>
 
