@@ -24,9 +24,11 @@ export default{
   box-sizing: border-box;
 }
 #app {
-  background: #f5f5f5;
   width: 100%;
   margin: auto;
+}
+body{
+  background: #f5f5f5;
 }
 
 </style>
