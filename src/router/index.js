@@ -3,6 +3,7 @@ import LoginView from '@/view/LoginView.vue';
 import RegisterView from '@/view/RegisterView.vue';
 import HomeView from "@/view/HomeView.vue";
 import TemplateView from "@/view/TemplateView.vue";
+import FindAccountView from "@/view/FindAccountView.vue";
 import EditMyInfoView from "@/view/EditMyInfoView.vue";
 
 const routes = [
@@ -20,12 +21,16 @@ const routes = [
         component: LoginView
       },
       {
-        path: '/register',
+        path:'/register',
         component: RegisterView
       },
       {
         path: '/mypage/info/edit',
         component: EditMyInfoView
+      },
+      {
+        path:'/findAccount',
+        component: FindAccountView
       }
     ]
   },

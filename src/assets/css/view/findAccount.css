@@ -1,0 +1,19 @@
+.background_box{
+    background: #3D3D3D;
+    height: 300px;
+    width: 70%;
+    min-width: 1200px;
+}
+.content{
+    margin: auto;
+    width: 50%;
+    text-align: left;
+}
+.input_box{
+    background: none;
+    border: none;
+    text-align: left;
+}
+.input_box:focus{
+    border: none;
+}

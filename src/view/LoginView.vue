@@ -13,7 +13,7 @@
           <input type="button"  @click="this.$router.push('/login')" class="fs-4 login_button mt-3" value="로그인">
           <br>
           <input type="button" @click="this.$router.push('/register')" class="fs-6 fw-medium register_button mt-4" value="회원가입">
-          <input type="button" @click="this.$router.push('')" class="fs-6 login_button mt-3" value="아이디/비밀번호 찾기">
+          <input type="button" @click="this.$router.push('/findAccount')" class="fs-6 login_button mt-3" value="아이디/비밀번호 찾기">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
