@@ -5,7 +5,9 @@ import HomeView from "@/view/HomeView.vue";
 import TemplateView from "@/view/TemplateView.vue";
 import FindAccountView from "@/view/FindAccountView.vue";
 import EditMyInfoView from "@/view/EditMyInfoView.vue";
+import WriteContentView from "@/view/WriteContentView.vue";
 import BattleListView from "@/view/BattleListView.vue";
+import EditContentView from "@/view/EditContentView.vue";
 
 const routes = [
   {
@@ -34,8 +36,16 @@ const routes = [
         component: FindAccountView
       },
       {
+        path: '/writeContent',
+        component: WriteContentView
+      },
+      {
         path: '/battle-list',
         component: BattleListView
+      },
+      {
+        path: '/editContent',
+        component: EditContentView
       }
     ]
   },

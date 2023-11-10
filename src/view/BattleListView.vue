@@ -84,4 +84,4 @@ export default {
 }
 </script>
 
-<style src="@/assets/css/battleList.css" scoped/>
+<style src="@/assets/css/view/battleList.css" scoped/>
