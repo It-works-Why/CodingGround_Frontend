@@ -19,7 +19,7 @@
             <div class="my-3 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">아이디</span>
               <span class="ps-5">
-                <input placeholder="아이디를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-model="userInfo.userId" placeholder="아이디를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
               <WhiteButton class="ms-5" button-value="중복확인"></WhiteButton>
             </div>
@@ -30,7 +30,7 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">비밀번호</span>
               <span class="ps-5">
-                <input placeholder="비밀번호를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="password" />
+                <input v-model="userInfo.userPassword" placeholder="비밀번호를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="password" />
               </span>
             </div>
             <div class="w-100">
@@ -40,7 +40,7 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">닉네임</span>
               <span class="ps-5">
-                <input placeholder="닉네임을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-model="userInfo.userNickname" placeholder="닉네임을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
             </div>
             <div class="w-100">
@@ -50,7 +50,7 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">이메일</span>
               <span class="ps-5">
-                <input placeholder="이메일을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-model="userInfo.userEmail" placeholder="이메일을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
               <WhiteButton class="ms-5" button-value="인증하기"></WhiteButton>
             </div>
@@ -61,18 +61,18 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">소속</span>
               <span class="ps-5">
-                <select class="options rounded-3 select_box text-center text-white fs-5 p-1 input_box">
-                  <option class="options">학생</option>
-                  <option class="options">괴물</option>
-                  <option class="options">사람</option>
+                <select v-model="userInfo.userAffiliation" class="options rounded-3 select_box text-center text-white fs-5 p-1 input_box">
+                  <option selected value="학생" class="options">학생</option>
+                  <option value="괴물" class="options">괴물</option>
+                  <option value="사람" class="options">사람</option>
                 </select>
-                <input class="text-center w-50 fs-5 text-white options ms-2 p-1 rounded-3" type="text" placeholder="소속을 입력해주세요.">
+                <input v-model="userInfo.userAffiliationDetail" class="text-center w-50 fs-5 text-white options ms-2 p-1 rounded-3" type="text" placeholder="소속을 입력해주세요.">
               </span>
             </div>
           </div>
         </div>
         <div class="px-5">
-          <input type="button" value="가입하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
+          <input type="button" value="가입하기" @click="register" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
@@ -88,12 +88,20 @@ import WhiteButton from "@/components/WhiteButton.vue";
 export default {
   components: {
     WhiteButton
-
   },
   data(){
     return{
       imgFile: "",
       whiteButtonString : '중복확인',
+      userInfo:{
+        userId : '',
+        userPassword : '',
+        userNickname : '',
+        userEmail : '',
+        userAffiliation : '학생',
+        userAffiliationDetail : '',
+        userProfileImg : '',
+      },
     }
   },
   created(){},
@@ -102,6 +110,13 @@ export default {
     handleImageError(e) {
       e.target.src = require("../assets/img/DefaultProfile.png");
     },
+    register() {
+      this.$httpUtil('/users/register','POST',this.userInfo,(data) => {
+        if(data.data.success){
+          this.$router.push('/login');
+        }
+      });
+    }
   }
 }
 </script>

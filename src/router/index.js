@@ -5,6 +5,10 @@ import HomeView from "@/view/HomeView.vue";
 import TemplateView from "@/view/TemplateView.vue";
 import FindAccountView from "@/view/FindAccountView.vue";
 import EditMyInfoView from "@/view/EditMyInfoView.vue";
+import AdminTemplateView from "@/view/AdminTemplateView.vue";
+import AdminHomeView from "@/view/AdminHomeView.vue";
+import AdminQuestionManagementView from "@/view/AdminQuestionManagementView.vue";
+import AdminQuestionRegisterView from "@/view/AdminQuestionRegisterView.vue";
 import BattleListView from "@/view/BattleListView.vue";
 import EditCommunityPostView from "@/view/EditCommunityPostView.vue";
 import WriteCommunityPostView from "@/view/WriteCommunityPostView.vue";
@@ -55,6 +59,25 @@ const routes = [
 
     ]
   },
+  {
+    path: '/admin',
+    redirect: '/admin/home',
+    component: AdminTemplateView,
+    children: [
+      {
+        path: '/admin/home',
+        component: AdminHomeView
+      },
+      {
+        path: '/admin/question/management',
+        component: AdminQuestionManagementView
+      },
+      {
+        path: '/admin/question/register',
+        component: AdminQuestionRegisterView
+      }
+    ]
+  }
 
 ];
 

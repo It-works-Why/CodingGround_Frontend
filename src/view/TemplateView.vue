@@ -9,7 +9,7 @@ import Header from "@/components/Header.vue";
 import Alert from "@/components/Alert.vue";
 
 export default {
-  name: "HomeView",
+  name: "TemplateView",
   components: {
     Header, Alert
   },
