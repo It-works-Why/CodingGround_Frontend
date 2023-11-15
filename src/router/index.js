@@ -8,6 +8,7 @@ import EditMyInfoView from "@/view/EditMyInfoView.vue";
 import BattleListView from "@/view/BattleListView.vue";
 import EditCommunityPostView from "@/view/EditCommunityPostView.vue";
 import WriteCommunityPostView from "@/view/WriteCommunityPostView.vue";
+import WriteNoticePostView from "@/view/WriteNoticePostView.vue";
 
 const routes = [
   {
@@ -42,6 +43,10 @@ const routes = [
       {
         path: '/community/edit',
         component: EditCommunityPostView
+      },
+      {
+        path: '/notice/write',
+        component: WriteNoticePostView
       },
       {
         path: '/battle-list',

@@ -40,3 +40,4 @@ export default {
 </script>
 
 <style src="@/assets/css/view/post.css" scoped />
+<style src="@/assets/css/view/writebutton.css" scoped />

@@ -27,8 +27,3 @@
 .content_box::placeholder,.title_box::placeholder{
     color: #C0C0C0;
 }
-.button{
-    display: inline-block;
-    text-align: right;
-    width: 100%;
-}
