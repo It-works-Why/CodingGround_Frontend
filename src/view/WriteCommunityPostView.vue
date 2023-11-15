@@ -11,8 +11,10 @@
 
       <div class="button">
         <WhiteButton class="list" button-value="목록"></WhiteButton>
-        <WhiteButton class="cancel ms-2" button-value="취소"></WhiteButton>
-        <WhiteButton class="write ms-2" button-value="작성" ></WhiteButton>
+        <span class="action_button">
+          <WhiteButton class="cancel ms-2" button-value="취소"></WhiteButton>
+          <WhiteButton class="write ms-2" button-value="작성" ></WhiteButton>
+        </span>
       </div>
     </div>
   </div>

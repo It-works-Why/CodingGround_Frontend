@@ -1,5 +1,7 @@
 .button{
-    text-align: right;
     display: inline-block;
     width: 100%;
+}
+.action_button{
+    float: right;
 }
