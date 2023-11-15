@@ -3,6 +3,7 @@ const store = createStore({
     state() {
         return {
             myStateProperty: 'Initial Value',
+
         }
     },
     mutations :{
