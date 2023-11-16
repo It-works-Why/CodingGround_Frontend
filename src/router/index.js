@@ -10,9 +10,12 @@ import AdminHomeView from "@/view/AdminHomeView.vue";
 import AdminQuestionManagementView from "@/view/AdminQuestionManagementView.vue";
 import AdminQuestionRegisterView from "@/view/AdminQuestionRegisterView.vue";
 import BattleListView from "@/view/BattleListView.vue";
-import EditCommunityPostView from "@/view/EditCommunityPostView.vue";
-import WriteCommunityPostView from "@/view/WriteCommunityPostView.vue";
-import WriteNoticePostView from "@/view/WriteNoticePostView.vue";
+import EditCommunityPostView from "@/view/community/EditCommunityPostView.vue";
+import WriteCommunityPostView from "@/view/community/WriteCommunityPostView.vue";
+import WriteNoticePostView from "@/view/notice/WriteNoticePostView.vue";
+import DetailCommunityPostView from "@/view/community/DetailCommunityPostView.vue";
+import EditNoticePostView from "@/view/notice/EditNoticePostView.vue";
+import DetailNoticePostView from "@/view/notice/DetailNoticePostView.vue";
 
 const routes = [
   {
@@ -45,12 +48,24 @@ const routes = [
         component: WriteCommunityPostView
       },
       {
-        path: '/community/edit',
+        path: '/community/edit/:id',
         component: EditCommunityPostView
+      },
+      {
+        path: '/community/detail/:id',
+        component: DetailCommunityPostView
       },
       {
         path: '/notice/write',
         component: WriteNoticePostView
+      },
+      {
+        path: '/notice/edit/:id',
+        component: EditNoticePostView
+      },
+      {
+        path: '/notice/detail/:id',
+        component: DetailNoticePostView
       },
       {
         path: '/battle-list',
