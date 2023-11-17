@@ -43,6 +43,7 @@
     <div class="bottom">
       <div class="bottom_left">
         <h1>사용언어</h1>
+        <donut-chart :chartData="donutChartData" :chartOptions="donutChartOptions"></donut-chart>
       </div>
       <div class="bottom_right">
         <div class="box-top">
@@ -304,17 +305,28 @@
 </template>
 
 <script>
+import DonutChart from '../components/DonutChart.vue';
+
 export default {
-  components: {},
+  components: {
+    DonutChart,
+  },
   data() {
     return {
-      ingredients: [],
-      ingredient: "",
+      // 도넛 차트 데이터 및 옵션 추가
+      donutChartData: {
+        labels: ['Java', 'C++', 'Python'],
+        datasets: [{
+          data: [40, 30, 30],
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        }],
+      },
+      donutChartOptions: {
+
+        responsive: true,
+        maintainAspectRatio: false,
+      },
     };
-  },
-  inject: ['$http'],
-  methods: {},
-  mounted() {
   },
 };
 </script>
