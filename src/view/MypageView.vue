@@ -60,7 +60,7 @@
           <div class="box-main-record">
             <div class="box-gamedate">
               <h5>매칭게임</h5>
-              <h7>1일전</h7>
+              <h6>1일전</h6>
             </div>
             <div class="box-gamelanguage">
               <img class="img_view_rank" src="../assets/img/_java icon.png">
@@ -240,7 +240,7 @@
           <div class="box-main-record">
             <div class="box-gamedate">
               <h5>매칭게임</h5>
-              <h7>1일전</h7>
+              <h6>1일전</h6>
             </div>
             <div class="box-gamelanguage">
               <img class="img_view_rank" src="../assets/img/_java icon.png">
