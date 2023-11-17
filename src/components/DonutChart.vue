@@ -1,15 +1,15 @@
 <!-- DonutChart.vue -->
 <template>
-  <div>
-    <doughnut-chart :data="chartData" :options="chartOptions"></doughnut-chart>
-  </div>
+    <Doughnut :data="chartData" :options="chartOptions"></Doughnut>
 </template>
 
 <script>
 import { Doughnut } from 'vue-chartjs';
-
+import { Chart as customChart, ArcElement, Tooltip, Legend } from 'chart.js'
+customChart.register(ArcElement, Tooltip, Legend)
 export default {
-  extends: Doughnut,
+  name: "DoughnutChartView",
+  components: {Doughnut},
   props: {
     chartData: {
       type: Object,
@@ -21,7 +21,6 @@ export default {
     },
   },
   mounted() {
-    this.renderChart(this.chartData, this.chartOptions);
   },
 };
 </script>
