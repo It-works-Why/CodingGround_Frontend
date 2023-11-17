@@ -3,6 +3,7 @@ import LoginView from '@/view/LoginView.vue';
 import RegisterView from '@/view/RegisterView.vue';
 import HomeView from "@/view/HomeView.vue";
 import TemplateView from "@/view/TemplateView.vue";
+import MypageView from "@/view/MypageView.vue";
 import FindAccountView from "@/view/FindAccountView.vue";
 import EditMyInfoView from "@/view/EditMyInfoView.vue";
 import AdminTemplateView from "@/view/AdminTemplateView.vue";
@@ -34,6 +35,10 @@ const routes = [
       {
         path:'/register',
         component: RegisterView
+      },
+      {
+        path: '/mypage',
+        component: MypageView
       },
       {
         path: '/mypage/info/edit',
