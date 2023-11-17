@@ -8,9 +8,9 @@
           <Logo2Vue></Logo2Vue>
         </div>
         <div class="px-4 input_box">
-          <input type="text" class="mt-3 form-control" placeholder="아이디">
-          <input type="password" class="mt-4 form-control" placeholder="비밀번호">
-          <input type="button"  @click="this.$router.push('/login')" class="fs-4 login_button mt-3" value="로그인">
+          <input v-model="userInfo.userId" type="text" class="mt-3 form-control" placeholder="아이디">
+          <input v-model="userInfo.userPassword" type="password" class="mt-4 form-control" placeholder="비밀번호">
+          <input type="button"  @click="login()" class="fs-4 login_button mt-3" value="로그인">
           <br>
           <input type="button" @click="this.$router.push('/register')" class="fs-6 fw-medium register_button mt-4" value="회원가입">
           <input type="button" @click="this.$router.push('/findAccount')" class="fs-6 login_button mt-3" value="아이디/비밀번호 찾기">
@@ -31,16 +31,26 @@
       },
     data(){
       return{
-        userId : "",
-        password : "",
+        userInfo : {
+          userId : "",
+          userPassword : "",
+        },
       }
     },
     created(){
     },
-    inject: ['$http'],
-      methods: {
-
-      }
+    methods: {
+      login() {
+        this.$httpUtil('/account/login','POST',this.userInfo,(data) => {
+          if (data.data) {
+            localStorage.setItem('accessToken', data.data.accessToken);
+            localStorage.setItem('refreshToken', data.data.refreshToken);
+          }else{
+            this.$warningAlert("로그인 정보가 틀립니다.")
+          }
+        })
+      },
+    }
   }
 </script>
 

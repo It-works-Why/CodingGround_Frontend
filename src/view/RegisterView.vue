@@ -105,13 +105,12 @@ export default {
     }
   },
   created(){},
-  inject: ['$http'],
   methods: {
     handleImageError(e) {
       e.target.src = require("../assets/img/DefaultProfile.png");
     },
     register() {
-      this.$httpUtil('/users/register','POST',this.userInfo,(data) => {
+      this.$httpUtil('/account/register','POST',this.userInfo,(data) => {
         if(data.data.success){
           this.$router.push('/login');
         }

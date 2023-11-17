@@ -1,6 +1,7 @@
 import axios from "axios";
 import { errorMessageToast } from "@/assets/js/alert";
 
+// 기존에 설정한 axiosInstance에 토큰 추가하기
 const axiosInstance = axios.create({
     timeout: 10000, // 타임아웃 설정 (10초)
     baseURL: "/api",
@@ -8,6 +9,13 @@ const axiosInstance = axios.create({
         "Content-Type": "application/json",
     },
 });
+
+// 토큰을 가지고 있는 경우, 헤더에 토큰 추가
+const token = localStorage.getItem("accessToken"); // 로컬 스토리지에서 토큰 가져오기
+
+if (token) {
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
 
 const methods = {
     http(url, type, data, successFunction) {
@@ -26,15 +34,7 @@ const methods = {
                 successFunction(response.data);
             })
             .catch((error) => {
-                if (
-                    error.response &&
-                    error.response.data &&
-                    error.response.data.message
-                ) {
-                    errorMessageToast(error.response.data.message);
-                } else {
-                    errorMessageToast("An error occurred.");
-                }
+                errorMessageToast(error.response.data.message);
             });
     },
 };
