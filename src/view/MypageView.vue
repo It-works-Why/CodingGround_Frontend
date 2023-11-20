@@ -23,7 +23,7 @@
           <p class="top_box_content">4.07th/8</p>
         </div>
         <div class="top_box">
-
+          <donut-chart :chartData="donutChartData2" :chartOptions="donutChartOptions2"></donut-chart>
         </div>
       </div>
     </div>
@@ -42,8 +42,12 @@
     </div>
     <div class="bottom">
       <div class="bottom_left">
-        <h1>사용언어</h1>
+        <div class="bottom_left-top">
+         <p>사용언어</p>
+        </div>
+        <div class="bottom_left-main">
         <donut-chart :chartData="donutChartData" :chartOptions="donutChartOptions"></donut-chart>
+        </div>
       </div>
       <div class="bottom_right">
         <div class="box-top">
@@ -321,7 +325,23 @@ export default {
           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
         }],
       },
+      donutChartData2: {
+
+        datasets: [{
+          data: [6, 5, 4, 1, 14],
+          backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678","#515163"],
+        }],
+      },
       donutChartOptions: {
+        plugins: {
+          legend: {
+            position:'bottom'
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+      donutChartOptions2: {
 
         responsive: true,
         maintainAspectRatio: false,
@@ -489,6 +509,17 @@ h5 {
   width: 25%;
   height: 550px;
   border-radius: 15px;
+}
+.bottom_left-top{
+  color: white;
+  text-align: center;
+  font-size: 20pt;
+  width: 100%;
+  height: 10%;
+}
+.bottom_left-main{
+  width: 100%;
+
 }
 
 .bottom .bottom_right {
