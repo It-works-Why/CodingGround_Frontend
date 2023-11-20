@@ -23,7 +23,7 @@
           <p class="top_box_content">4.07th/8</p>
         </div>
         <div class="top_box">
-
+          <donut-chart :chartData="donutChartData2" :chartOptions="donutChartOptions2"></donut-chart>
         </div>
       </div>
     </div>
@@ -42,8 +42,12 @@
     </div>
     <div class="bottom">
       <div class="bottom_left">
-        <h1>사용언어</h1>
+        <div class="bottom_left-top">
+         <p>사용언어</p>
+        </div>
+        <div class="bottom_left-main">
         <donut-chart :chartData="donutChartData" :chartOptions="donutChartOptions"></donut-chart>
+        </div>
       </div>
       <div class="bottom_right">
         <div class="box-top">
@@ -58,246 +62,14 @@
           </select>
         </div>
         <div class="box-main">
-          <div class="box-main-record">
-            <div class="box-gamedate">
-              <h5>매칭게임</h5>
-              <h6>1일전</h6>
-            </div>
-            <div class="box-gamelanguage">
-              <img class="img_view_rank" src="../assets/img/_java icon.png">
-              <h5 class="card-title">Java</h5>
-            </div>
-            <div class="box-userlists">
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-            </div>
-          </div>
-          <div class="box-main-record">
-            <div class="box-gamedate">
-              <h5>매칭게임</h5>
-              <h7>1일전</h7>
-            </div>
-            <div class="box-gamelanguage">
-              <img class="img_view_rank" src="../assets/img/_java icon.png">
-              <h5 class="card-title">Java</h5>
-            </div>
-            <div class="box-userlists">
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-            </div>
-          </div>
-          <div class="box-main-record">
-            <div class="box-gamedate">
-              <h5>매칭게임</h5>
-              <h7>1일전</h7>
-            </div>
-            <div class="box-gamelanguage">
-              <img class="img_view_rank" src="../assets/img/_java icon.png">
-              <h5 class="card-title">Java</h5>
-            </div>
-            <div class="box-userlists">
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-            </div>
-          </div>
-          <div class="box-main-record">
-            <div class="box-gamedate">
-              <h5>매칭게임</h5>
-              <h6>1일전</h6>
-            </div>
-            <div class="box-gamelanguage">
-              <img class="img_view_rank" src="../assets/img/_java icon.png">
-              <h5 class="card-title">Java</h5>
-            </div>
-            <div class="box-userlists">
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-              <div class="userlist">
-                <div class="img_form_rank">
-                  <img class="img_view_rank" src="../assets/img/DefaultProfile.png">
-                </div>
-                <h5 class="card-title">치치는 치치야</h5>
-              </div>
-            </div>
-          </div>
+          <GameRecordBox></GameRecordBox>
+          <GameRecordBox></GameRecordBox>
+          <GameRecordBox></GameRecordBox>
+          <GameRecordBox></GameRecordBox>
+          <GameRecordBox></GameRecordBox>
+          <GameRecordBox></GameRecordBox>
+          <GameRecordBox></GameRecordBox>
+
         </div>
       </div>
     </div>
@@ -306,10 +78,12 @@
 
 <script>
 import DonutChart from '../components/DonutChart.vue';
+import GameRecordBox from "@/components/GameRecordBox.vue";
 
 export default {
   components: {
-    DonutChart,
+    // eslint-disable-next-line vue/no-unused-components
+    DonutChart,GameRecordBox,
   },
   data() {
     return {
@@ -321,7 +95,23 @@ export default {
           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
         }],
       },
+      donutChartData2: {
+
+        datasets: [{
+          data: [6, 5, 4, 1, 14],
+          backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678","#515163"],
+        }],
+      },
       donutChartOptions: {
+        plugins: {
+          legend: {
+            position:'bottom'
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+      donutChartOptions2: {
 
         responsive: true,
         maintainAspectRatio: false,
@@ -489,6 +279,17 @@ h5 {
   width: 25%;
   height: 550px;
   border-radius: 15px;
+}
+.bottom_left-top{
+  color: white;
+  text-align: center;
+  font-size: 20pt;
+  width: 100%;
+  height: 10%;
+}
+.bottom_left-main{
+  width: 100%;
+
 }
 
 .bottom .bottom_right {
