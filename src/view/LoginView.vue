@@ -45,6 +45,8 @@
           if (data.data) {
             localStorage.setItem('accessToken', data.data.accessToken);
             localStorage.setItem('refreshToken', data.data.refreshToken);
+            localStorage.setItem('userRole', data.data.userRole);
+
             location.href="/home"
           }else{
             this.$warningAlert("로그인 정보가 틀립니다.")

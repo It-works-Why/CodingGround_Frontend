@@ -1,5 +1,5 @@
 <template>
-  <img src="@/assets/img/mini.png" alt>
+  <img src="../../assets/img/mini.png" alt>
 
   여긴 관리자페이지!!!!!홈!
 </template>
