@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <Logo class="navbar-brand"></Logo>
         <button class="text-white navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="text-white navbar-toggler-icon"></span>
+          <span class="navbar-dark text-white navbar-toggler-icon"></span>
         </button>
         <div class="pb-1 collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -20,9 +20,15 @@
             <li class="mx-3 nav-item">
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">공지사항</a>
             </li>
+            <li v-if="adminCheck && loginCheck" class="mx-3 nav-item">
+              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">관리자 페이지</a>
+            </li>
           </ul>
-          <span class="navbar-text">
+          <span v-if="!loginCheck" class="navbar-text">
             <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
+          </span>
+          <span v-if="loginCheck" class="navbar-text">
+            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/logout')">로그아웃</button>
           </span>
         </div>
       </div>
@@ -32,12 +38,48 @@
 
 <script>
 import Logo from "@/components/Logo.vue";
-
 export default{
   name:"HeaderVue",
   components: { Logo },
+  created() {
+    if(localStorage.getItem('userRole') != null && localStorage.getItem('accessToken') != null && localStorage.getItem('refreshToken') != null){
+      this.loginCheck = true;
+      if(localStorage.getItem("userRole") === 'ROLE_ADMIN'){
+        this.adminCheck = true;
+      }else{
+        this.adminCheck = false;
+      }
+    }else{
+      this.loginCheck = false;
+      this.adminCheck = false;
+    }
+
+  },
   methods: {
-  }
+    handleStorageChange(event) {
+      if (event.key === 'userRole' && event.key === 'accessToken' && event.key === 'refreshToken') {
+        this.loginCheck = true;
+        if(localStorage.getItem("userRole") === 'ROLE_ADMIN'){
+          this.adminCheck = true;
+        }else{
+          this.adminCheck = false;
+        }
+      }else{
+        this.loginCheck = false;
+        this.adminCheck = false;
+      }
+    }
+  },
+  mounted() {
+    window.addEventListener('storage', this.handleStorageChange);
+  },
+  data(){
+    return{
+      loginCheck : false,
+      adminCheck : false,
+    }
+  },
+
 }
 </script>
 
