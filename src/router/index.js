@@ -21,6 +21,7 @@ import MyInquiryView from "@/view/MyInquiryView.vue";
 import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
 import BattleInGameView from "@/view/BattleInGameView.vue"
+import NoticePostListView from "@/view/notice/NoticePostListView.vue";
 
 const routes = [
   {
@@ -71,6 +72,10 @@ const routes = [
       {
         path: '/community/detail/:id',
         component: DetailCommunityPostView
+      },
+      {
+        path: '/notice/list',
+        component: NoticePostListView
       },
       {
         path: '/notice/write',
