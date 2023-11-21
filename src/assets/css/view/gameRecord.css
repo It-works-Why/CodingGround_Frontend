@@ -55,9 +55,11 @@ h1 {
 textarea {
     width: 100%;
     margin-top: 10px;
-    height: 200px;
+    min-height: 200px;
+    height: auto;
     padding-left: 10px;
     padding-top: 10px;
+    resize: none;
 }
 
 .input-answer-right {
@@ -76,6 +78,7 @@ textarea {
     border: #33FF00 solid 2px;
     border-top: none;
     display: flex;
+    margin-top: -10px;
 }
 
 .input-answer-wrong {
@@ -94,6 +97,8 @@ textarea {
     border: #FF0000 solid 2px;
     border-top: none;
     display: flex;
+    margin-top: -10px;
+
 }
 
 img {

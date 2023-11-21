@@ -20,7 +20,7 @@
         <div>
         <textarea class="input-box input-answer-right" readonly>// 정답일 경우
 void run ();
-        </textarea>\
+        </textarea>
         <a class="answer-img-right">
           <img src="@/assets/img/checks.png">
         </a>
@@ -40,7 +40,7 @@ void run ();
           </div>
         </div>
         <div>
-        <textarea class="input-box input-answer-wrong" readonly>// 오답일 경우
+        <textarea style="resize: none;" class="input-box input-answer-wrong" readonly>// 오답일 경우
 void run ();</textarea>
         <a class="answer-img-wrong">
           <img src="@/assets/img/x.png">
