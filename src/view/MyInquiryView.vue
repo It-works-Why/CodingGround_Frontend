@@ -7,8 +7,8 @@
           <img class="ranking_icon bottom-0 end-0 position-absolute" src="../assets/img/디렉터.png">
         </div>
         <div class="top_box_myinfo">
-          <h1 class="top_box_title">키위새</h1>
-          <h4 class="top_box_title">Megazone Cloud</h4>
+          <h1 class="top_box_name">키위새</h1>
+          <h4 class="top_box_company">Megazone Cloud</h4>
           <div class="top_box_left_button">
             <button class="btn1" type="button" @click="this.$router.push('/mypage/info/edit')">내 정보 수정</button>
             <button class="btn1" type="button" @click="this.$router.push('/mypage')">내 전적 보기</button>
@@ -48,14 +48,18 @@ export default {
   data() {
     return {
       donutChartData2: {
-
+        labels: ['1', '2', '3','4','5~8'],
         datasets: [{
           data: [6, 5, 4, 1, 14],
           backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678","#515163"],
         }],
       },
       donutChartOptions2: {
-
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
         responsive: true,
         maintainAspectRatio: false,
       },
@@ -73,6 +77,17 @@ export default {
   border-color: transparent;
   margin-top: 5px;
   margin-right: 8px;
+  min-width: 129px;
+}
+
+.mp_container .top_box_name {
+  color: white;
+  font-size: 35pt;
+}
+
+.mp_container .top_box_company {
+  color: white;
+  font-size: 20pt;
 }
 
 
@@ -149,6 +164,7 @@ h5 {
   height: 90%;
   font-size: 25px;
   line-height: 25px;
+  min-width: 200px;
 }
 
 .mp_container .top_box_myinfo {

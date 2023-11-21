@@ -41,10 +41,10 @@
     <div class="bottom">
       <div class="bottom_left">
         <div class="bottom_left-top">
-         <p>사용언어</p>
+          <p>사용언어</p>
         </div>
         <div class="bottom_left-main">
-        <donut-chart :chartData="donutChartData" :chartOptions="donutChartOptions"></donut-chart>
+          <donut-chart :chartData="donutChartData" :chartOptions="donutChartOptions"></donut-chart>
         </div>
       </div>
       <div class="bottom_right">
@@ -81,7 +81,7 @@ import GameRecordBox from "@/components/GameRecordBox.vue";
 export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    DonutChart,GameRecordBox,
+    DonutChart, GameRecordBox,
   },
   data() {
     return {
@@ -94,22 +94,36 @@ export default {
         }],
       },
       donutChartData2: {
-
+        labels: ['1', '2', '3','4','5~8'],
         datasets: [{
           data: [6, 5, 4, 1, 14],
-          backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678","#515163"],
+          backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678", "#515163"],
         }],
       },
       donutChartOptions: {
         plugins: {
           legend: {
-            position:'bottom'
+            position: 'bottom',
+            align: 	'start',
+              labels: {
+                padding:20,
+                boxWidth: 40,
+                font: {
+                  size: 20
+              }
+            }
           },
         },
+        color: "white",
         responsive: true,
         maintainAspectRatio: false,
       },
       donutChartOptions2: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
 
         responsive: true,
         maintainAspectRatio: false,
@@ -228,6 +242,7 @@ h5 {
   color: white;
 
 }
+
 .mp_container .top_box_name {
   color: white;
   font-size: 35pt;
@@ -291,14 +306,16 @@ h5 {
   height: 550px;
   border-radius: 15px;
 }
-.bottom_left-top{
+
+.bottom_left-top {
   color: white;
   text-align: center;
   font-size: 20pt;
   width: 100%;
   height: 10%;
 }
-.bottom_left-main{
+
+.bottom_left-main {
   width: 100%;
 
 }
@@ -325,7 +342,8 @@ h5 {
   color: white;
   border: none;
 }
-.bottom_right .box-main{
+
+.bottom_right .box-main {
   width: 100%;
   height: 478px;
   overflow: auto;
