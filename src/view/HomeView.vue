@@ -1,5 +1,10 @@
 <template>
-  <img src="@/assets/img/mini.png" alt>
+  <div>
+    <img src="@/assets/img/mainbanner.svg" alt>
+  </div>
+  <div>
+    <img src="@/assets/img/main.svg">
+  </div>
   <br>
   <button @click="alertBtn('success/test')">성공</button>
   <button @click="alertBtn('fail/test')">실패</button>
@@ -49,9 +54,10 @@ export default {
 </script>
 
 <style scoped>
-img{
-  width: 30%;
-  height: 30%;
+div {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 150px;
 }
 </style>
 
