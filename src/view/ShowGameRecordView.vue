@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-3 mt-3 px-1 py-1 background_box m-auto">
+  <div class="rounded-3 mt-3 px-1 py-1 background_box box-game-record-box m-auto">
     <GameRecordBox></GameRecordBox>
   </div>
   <BlackBox class="rounded-3 mt-4 px-5 py-5 background_box m-auto">
@@ -47,6 +47,7 @@ void run ();</textarea>
         </a>
         </div>
       </div>
+      <WhiteButton class="bottom-list" button-value="목록"></WhiteButton>
     </div>
   </BlackBox>
 </template>
@@ -56,9 +57,10 @@ void run ();</textarea>
 import {defineComponent} from "vue";
 import BlackBox from "@/components/BlackBox.vue";
 import GameRecordBox from "@/components/GameRecordBox.vue";
+import WhiteButton from "@/components/WhiteButton.vue";
 
 export default defineComponent({
-  components: {GameRecordBox, BlackBox}
+  components: {WhiteButton, GameRecordBox, BlackBox}
 })
 </script>
 

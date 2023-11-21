@@ -20,6 +20,7 @@ import DetailNoticePostView from "@/view/notice/DetailNoticePostView.vue";
 import MyInquiryView from "@/view/MyInquiryView.vue";
 import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
+import BattleInGameView from "@/view/BattleInGameView.vue"
 
 const routes = [
   {
@@ -86,6 +87,10 @@ const routes = [
       {
         path: '/battle/list',
         component: BattleListView
+      },
+      {
+        path: '/battle',
+        component: BattleInGameView
       },
       {
         path: '/ranking',
