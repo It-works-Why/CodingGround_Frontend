@@ -17,6 +17,7 @@ import WriteNoticePostView from "@/view/notice/WriteNoticePostView.vue";
 import DetailCommunityPostView from "@/view/community/DetailCommunityPostView.vue";
 import EditNoticePostView from "@/view/notice/EditNoticePostView.vue";
 import DetailNoticePostView from "@/view/notice/DetailNoticePostView.vue";
+import MyInquiryView from "@/view/MyInquiryView.vue";
 
 const routes = [
   {
@@ -39,6 +40,10 @@ const routes = [
       {
         path: '/mypage',
         component: MypageView
+      },
+      {
+        path: '/mypage/inquiry',
+        component: MyInquiryView
       },
       {
         path: '/mypage/info/edit',
