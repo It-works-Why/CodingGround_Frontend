@@ -27,10 +27,27 @@
     </div>
     <div class="bottom">
       <div class="bottom-top">
-        <button class="btn1">글쓰기</button>
+        <WhiteButton class="bottom-list" button-value="글쓰기"></WhiteButton>
       </div>
       <div class="bottom-main">
-
+        <table class="rounded-top-3 text-white fw-bold list_box m-auto">
+          <tr>
+            <td class="ranking">#</td>
+            <td class="title">제목</td>
+            <td class="date">작성일자</td>
+            <td class="nickname">닉네임</td>
+            <td class="answer">답변여부</td>
+          </tr>
+        </table>
+        <table :key="i" :value="userInquiry" v-for="(userInquiry, i) in userInquiryList" class="mt-1 text-white list_box m-auto">
+          <tr>
+            <td class="ranking">{{userInquiry.ranking}}</td>
+            <td class="title">{{userInquiry.title}}</td>
+            <td class="date">{{userInquiry.date}}</td>
+            <td class="nickname">{{userInquiry.nickname}}</td>
+            <td class="answer">{{userInquiry.answer}}</td>
+          </tr>
+        </table>
       </div>
     </div>
   </section>
@@ -39,9 +56,11 @@
 <script>
 import DonutChart from '../components/DonutChart.vue';
 import GameRecordBox from "@/components/GameRecordBox.vue";
+import WhiteButton from "@/components/WhiteButton.vue";
 
 export default {
   components: {
+    WhiteButton,
     // eslint-disable-next-line vue/no-unused-components
     DonutChart,GameRecordBox,
   },
@@ -63,12 +82,31 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
       },
+
+      userInquiryList: [
+        {
+          ranking: '1',
+          title: '1등하면 메가존 들어갈수 있나요? ㅋㅋ',
+          date: '2023.11.11',
+          nickname: '키위새',
+          answer: '답변완료'
+        },
+        {
+          ranking: '2',
+          title: '이거 어떻게 하는 게임인가요?',
+          date: '2023.11.12',
+          nickname: '키위새',
+          answer: '확인중'
+        },
+
+      ],
     };
   },
 };
 </script>
 
 <style scoped>
+
 
 
 .btn1 {
@@ -201,7 +239,7 @@ h5 {
 .mp_container .bottom {
   margin: 10px auto 0;
   padding: 10px;
-  display: flex;
+
   width: 90%;
   height: 550px;
   border-radius: 8px;
@@ -211,15 +249,40 @@ h5 {
 .bottom .bottom-top{
   height: 8%;
   width: 100%;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 .bottom .bottom-main{
-
+  height: 90%;
+  width: 100%;
+  padding: 10px;
 }
 
+.list_box{
+  background: #565656;
+  width: 100%;
+  height: 50px;
 
+  text-align: center;
+}
+.ranking{
+  width: 5%;
+}
+
+.title{
+  width: 35%;
+}
+.date{
+  width: 15%;
+}
+.nickname{
+  width: 20%;
+}
+.answer{
+  width: 10%;
+}
 
 </style>
 

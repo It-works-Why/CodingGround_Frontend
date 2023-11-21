@@ -50,8 +50,7 @@
       <div class="bottom_right">
         <div class="box-top">
           <select class="form-select">
-            <option value="1">JAVA</option>
-            <option value="2">C++</option>
+            <option :key="i" :value="language" v-for="(language,i) in languageSelectData">{{language}}</option>
           </select>
           <select class="form-select">
             <option value="1">전체</option>
@@ -85,12 +84,18 @@ export default {
   },
   data() {
     return {
+      languageSelectData: [
+        "JAVA",
+        "Python",
+        "C++",
+        "C#",
+      ],
       // 도넛 차트 데이터 및 옵션 추가
       donutChartData: {
-        labels: ['Java', 'C++', 'Python'],
+        labels: ['Java', 'C++', 'Python', 'C#'],
         datasets: [{
-          data: [40, 30, 30],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+          data: [40, 30, 30 ,20],
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', "#123456"],
         }],
       },
       donutChartData2: {
@@ -104,7 +109,7 @@ export default {
         plugins: {
           legend: {
             position: 'bottom',
-            align: 	'start',
+            align: 	'center',
               labels: {
                 padding:20,
                 boxWidth: 40,
