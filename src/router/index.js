@@ -17,6 +17,8 @@ import WriteNoticePostView from "@/view/notice/WriteNoticePostView.vue";
 import DetailCommunityPostView from "@/view/community/DetailCommunityPostView.vue";
 import EditNoticePostView from "@/view/notice/EditNoticePostView.vue";
 import DetailNoticePostView from "@/view/notice/DetailNoticePostView.vue";
+import MyInquiryView from "@/view/MyInquiryView.vue";
+import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
 
 const routes = [
@@ -40,6 +42,10 @@ const routes = [
       {
         path: '/mypage',
         component: MypageView
+      },
+      {
+        path: '/mypage/inquiry',
+        component: MyInquiryView
       },
       {
         path: '/mypage/info/edit',
@@ -80,6 +86,10 @@ const routes = [
       {
         path: '/battle/list',
         component: BattleListView
+      },
+      {
+        path: '/ranking',
+        component: RankingListView
       },
 
     ]

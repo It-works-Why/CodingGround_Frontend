@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="box-main-record">
     <div class="box-gamedate">

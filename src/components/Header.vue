@@ -1,18 +1,15 @@
 <template>
   <div class="background">
-    <nav style="padding:0;" class="navbar navbar-expand-lg">
+    <nav style="padding:0;" class="navbar navbar-expand">
       <div class="container-fluid">
         <Logo class="navbar-brand"></Logo>
-        <button class="text-white navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-dark text-white navbar-toggler-icon"></span>
-        </button>
         <div class="pb-1 collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="mx-3 nav-item">
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/battle/list">배틀</a>
             </li>
             <li class="mx-3 nav-item">
-              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">랭킹</a>
+              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/ranking">랭킹</a>
             </li>
             <li class="mx-3 nav-item">
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">커뮤니티</a>

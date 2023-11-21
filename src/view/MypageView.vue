@@ -7,20 +7,18 @@
           <img class="ranking_icon bottom-0 end-0 position-absolute" src="../assets/img/디렉터.png">
         </div>
         <div class="top_box_myinfo">
-          <h1 class="top_box_title">키위새</h1>
-          <h4 class="top_box_title">Megazone Cloud</h4>
+          <h1 class="top_box_name">키위새</h1>
+          <h4 class="top_box_company">Megazone Cloud</h4>
           <div class="top_box_left_button">
-            <button class="btn1" type="button">내 정보 수정</button>
-            <button class="btn1" type="button">내 문의 사항 보기</button>
+            <button class="btn1" type="button" @click="this.$router.push('/mypage/info/edit')">내 정보 수정</button>
+            <button class="btn1" type="button" @click="this.$router.push('/mypage/inquiry')">내 문의 사항 보기</button>
           </div>
         </div>
       </div>
       <div class="top_box_right">
         <div class="top_box">
           <h6 class="top_box_title">순방확률</h6>
-          <p class="top_box_content">30전 16승 14패</p>
-          <h6 class="top_box_title">평균 순위</h6>
-          <p class="top_box_content">4.07th/8</p>
+          <p class="top_box_content">30전 16승 14패 (53.33%)</p>
         </div>
         <div class="top_box">
           <donut-chart :chartData="donutChartData2" :chartOptions="donutChartOptions2"></donut-chart>
@@ -130,6 +128,7 @@ export default {
   border-color: transparent;
   margin-top: 5px;
   margin-right: 8px;
+  min-width: 129px;
 }
 
 
@@ -206,6 +205,7 @@ h5 {
   height: 90%;
   font-size: 25px;
   line-height: 25px;
+  min-width: 200px;
 }
 
 .mp_container .top_box_myinfo {
@@ -226,7 +226,18 @@ h5 {
 
 .mp_container .top_box_title {
   color: white;
+
 }
+.mp_container .top_box_name {
+  color: white;
+  font-size: 35pt;
+}
+
+.mp_container .top_box_company {
+  color: white;
+  font-size: 20pt;
+}
+
 
 .mp_container .top_box_content {
   color: white;
@@ -269,7 +280,7 @@ h5 {
   margin: 10px auto 0;
   display: flex;
   width: 90%;
-  height: 230px;
+  height: 550px;
   border-radius: 8px;
 }
 
