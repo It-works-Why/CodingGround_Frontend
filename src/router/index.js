@@ -22,6 +22,7 @@ import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
 import BattleInGameView from "@/view/BattleInGameView.vue"
 import NoticePostListView from "@/view/notice/NoticePostListView.vue";
+import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
 
 const routes = [
   {
@@ -120,6 +121,10 @@ const routes = [
       {
         path: '/admin/question/register',
         component: AdminQuestionRegisterView
+      },
+      {
+        path: '/admin/notice/list',
+        component: AdminNoticeListView
       }
     ]
   }

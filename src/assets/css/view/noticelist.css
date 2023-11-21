@@ -28,3 +28,8 @@
 .date {
     width: 15%;
 }
+
+.white-btn {
+    margin: 5px 20px 15px 0;
+    float: right;
+}
