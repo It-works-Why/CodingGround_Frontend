@@ -1,0 +1,66 @@
+.top_background_box{
+    background: #3D3D3D;
+    width: 80%;
+    min-width: 1200px;
+}
+.rank_background_box{
+    background: #3D3D3D;
+    width: 80%;
+    height: 700px;
+    min-width: 1200px;
+}
+.season_select{
+    width: 150px;
+    height: 40px;
+    text-align: center;
+    margin-left: 10px;
+    background-color: #565656;
+    color: white;
+    border: none;
+    display: inline-block;
+}
+.search_box{
+    background-color: #565656;
+    width: 350px;
+    height: 40px;
+    margin-right: 10px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    float: right;
+    background-image: url("@/assets/img/SearchIcon.png");
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: 5px center;
+}
+.list_box{
+    table-layout: fixed;
+    background: #565656;
+    width: 90%;
+    height: 50px;
+    min-width: 1180px;
+    text-align: center;
+}
+.ranking{
+    width: 5%;
+}
+
+.title{
+    width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.writer{
+    width: 30%;
+}
+.write_date{
+    width: 15%;
+}
+.cursor{
+    cursor: pointer;
+}
+
+.cursor:hover {
+    transform: scale(1.01);
+}

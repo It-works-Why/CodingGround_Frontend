@@ -12,7 +12,7 @@
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/ranking">랭킹</a>
             </li>
             <li class="mx-3 nav-item">
-              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">커뮤니티</a>
+              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/community/list">커뮤니티</a>
             </li>
             <li class="mx-3 nav-item">
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">공지사항</a>
