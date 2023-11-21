@@ -20,7 +20,7 @@ export default {
       ingredient: "",
     };
   },
-  inject: ['$http'],
+  inject: ['$'],
   methods: {
 
   },

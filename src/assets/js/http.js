@@ -18,24 +18,55 @@ if (token) {
 }
 
 const methods = {
-    http(url, type, data, successFunction) {
-        const config = {
-            url,
-            method: type,
-            responseType: "json",
-        };
+    pendingRequests: [], // 보류 중인 요청들을 저장하는 배열
 
-        if (data !== null) {
-            config.data = data;
-        }
+    http: async function(url, type, data, successFunction) {
+        try {
+            const config = {
+                url,
+                method: type,
+                responseType: "json",
+            };
 
-        axiosInstance(config)
-            .then((response) => {
-                successFunction(response.data);
-            })
-            .catch((error) => {
+            if (data !== null) {
+                config.data = data;
+            }
+
+            const response = await axiosInstance(config);
+            successFunction(response.data);
+        } catch (error) {
+            if(error.response.data.message == "로그인 재시도." && localStorage.getItem("refreshToken") !== null){
+                const refreshToken = localStorage.getItem("refreshToken");
+                axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${refreshToken}`;
+                try {
+                    const response = await axiosInstance.get("/account/get/accessToken", null);
+                    const newAccessToken = response.data.data;
+                    localStorage.setItem("accessToken", newAccessToken);
+                    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+
+                    // 기존 요청을 pendingRequests에 저장
+                    methods.pendingRequests.push({ url, type, data, successFunction });
+
+                    // 새 토큰을 가지고 있는 상태에서 보류 중인 요청들을 실행
+                    methods.executePendingRequests(); // 재시도
+                } catch (error) {
+                    errorMessageToast(error.response.data.message);
+                    localStorage.removeItem('accessToken');
+                    localStorage.removeItem('refreshToken');
+                    localStorage.removeItem('userRole');
+                    location.href="/login";
+                }
+            } else {
                 errorMessageToast(error.response.data.message);
-            });
+            }
+        }
+    },
+
+    executePendingRequests() {
+        while (this.pendingRequests.length > 0) {
+            const { url, type, data, successFunction } = this.pendingRequests.shift();
+            this.http(url, type, data, successFunction);
+        }
     },
 };
 
