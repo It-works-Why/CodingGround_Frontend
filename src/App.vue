@@ -5,15 +5,12 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
 
 export default{
   name: 'App',
   created() {
-    this.initializeToken();
   },
   methods: {
-    ...mapMutations(['initializeToken']),
   }
 }
 </script>

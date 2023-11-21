@@ -96,7 +96,6 @@ export default {
     }
   },
   created(){},
-  inject: ['$http'],
   methods: {
     deleteUser() {
       let isDelete = confirm("ㄹㅇ 삭제할꺼임?");

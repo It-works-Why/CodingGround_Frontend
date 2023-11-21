@@ -28,7 +28,7 @@
             <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
           </span>
           <span v-if="loginCheck" class="navbar-text">
-            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/logout')">로그아웃</button>
+            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="logout()">로그아웃</button>
           </span>
         </div>
       </div>
@@ -68,6 +68,12 @@ export default{
         this.loginCheck = false;
         this.adminCheck = false;
       }
+    },
+    logout() {
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      location.href="/home";
     }
   },
   mounted() {
