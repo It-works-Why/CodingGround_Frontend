@@ -1,10 +1,10 @@
 <template>
-  <div class="box-main-record">
+  <div class="box-main-record" @click="this.$router.push('/mypage/record')">
     <div class="box-gamedate">
       <h5>매칭게임</h5>
       <h7>1일전</h7>
     </div>
-    <div class="box-gamelanguage">
+    <div class="box-gamelanguage" >
       <img class="img_view_rank" src="../assets/img/_java icon.png">
       <h5 class="card-title">Java</h5>
     </div>
@@ -74,10 +74,10 @@ h5 {
   font-size: 20px;
   font-weight: 600;
 }
-.box-main .box-main-record {
+.box-main-record {
   width: 95%;
   background-color: white;
-  margin: 16px auto auto;
+  margin: 7px auto;
   border-radius: 20px;
   display: flex;
   flex-wrap: wrap;
@@ -103,7 +103,7 @@ h5 {
   justify-content: center;
 }
 
-.bottom_right .box-userlists {
+ .box-userlists {
   width: 78%;
   margin-top: 8px;
   margin-bottom: 8px;
@@ -128,20 +128,20 @@ h5 {
   margin-top: 8px;
 }
 
-.mp_container .img_form_rank {
+ .img_form_rank {
   width: auto;
   height: auto;
   overflow: hidden;
 }
 
-.mp_container .img_form_rank > .img_view_rank {
+.img_form_rank > .img_view_rank {
   border-radius: 80px;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.mp_container .img_form_rank > .ranking_icon {
+.img_form_rank > .ranking_icon {
   width: 40px;
   height: 40px;
   z-index: 100;

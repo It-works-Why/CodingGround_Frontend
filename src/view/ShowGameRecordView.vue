@@ -1,6 +1,6 @@
 <template>
-  <div>
-    전적 컴포넌트 자리지롱
+  <div class="rounded-3 mt-3 px-1 py-1 background_box m-auto">
+    <GameRecordBox></GameRecordBox>
   </div>
   <BlackBox class="rounded-3 mt-4 px-5 py-5 background_box m-auto">
     <div class="content text-nowrap py-5">
@@ -55,9 +55,10 @@ void run ();</textarea>
 
 import {defineComponent} from "vue";
 import BlackBox from "@/components/BlackBox.vue";
+import GameRecordBox from "@/components/GameRecordBox.vue";
 
 export default defineComponent({
-  components: {BlackBox}
+  components: {GameRecordBox, BlackBox}
 })
 </script>
 
