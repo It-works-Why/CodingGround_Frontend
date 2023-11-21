@@ -18,11 +18,11 @@
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">커뮤니티 관리</a>
             </li>
             <li class="mx-3 nav-item">
-              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">공지사항 관리</a>
+              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/admin/notice/list">공지사항 관리</a>
             </li>
           </ul>
           <span class="navbar-text">
-            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
+            <butto n type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
           </span>
         </div>
       </div>

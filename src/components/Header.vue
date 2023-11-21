@@ -15,7 +15,7 @@
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">커뮤니티</a>
             </li>
             <li class="mx-3 nav-item">
-              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">공지사항</a>
+              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/notice/list">공지사항</a>
             </li>
             <li v-if="adminCheck && loginCheck" class="mx-3 nav-item">
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">관리자 페이지</a>
