@@ -73,7 +73,7 @@ const routes = [
         component: DetailNoticePostView
       },
       {
-        path: '/battle-list',
+        path: '/battle/list',
         component: BattleListView
       },
 

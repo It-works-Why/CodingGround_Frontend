@@ -9,7 +9,7 @@
             <header class="section-header">
             </header>
             <div class="row">
-              <div class="col-lg-3 col-md-6">
+              <div class="col-3">
                 <div class="service-box red" @click="modalOpen('RANK GAME')">
                   <i class="bi bi-file icon">
                     <img class="img" src="../assets/img/Battle1.png" alt="RANK GAME IMG">
@@ -17,7 +17,7 @@
                   <h3>RANK GAME</h3>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-6">
+              <div class="col-3">
                 <div class="service-box red" @click="modalOpen('MATCHING')">
                   <i class="bi bi-pencil-fill icon">
                     <img class="img" src="../assets/img/Battle2.png" alt="MATCHING IMG">
