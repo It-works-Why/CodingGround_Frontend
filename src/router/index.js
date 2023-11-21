@@ -17,6 +17,8 @@ import WriteNoticePostView from "@/view/notice/WriteNoticePostView.vue";
 import DetailCommunityPostView from "@/view/community/DetailCommunityPostView.vue";
 import EditNoticePostView from "@/view/notice/EditNoticePostView.vue";
 import DetailNoticePostView from "@/view/notice/DetailNoticePostView.vue";
+import WriteInquiryView from "@/view/Inquiry/WriteInquiryView.vue";
+import DetailInquiryView from "@/view/Inquiry/DetailInquiryView.vue";
 import MyInquiryView from "@/view/MyInquiryView.vue";
 import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
@@ -55,6 +57,14 @@ const routes = [
       {
         path: '/mypage/info/edit',
         component: EditMyInfoView
+      },
+      {
+        path: '/mypage/inquiry/write',
+        component: WriteInquiryView
+      },
+      {
+        path: '/mypage/inquiry/detail/:id',
+        component: DetailInquiryView
       },
       {
         path: '/mypage/record',
