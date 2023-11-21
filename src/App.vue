@@ -22,6 +22,7 @@ export default{
 }
 #app {
   width: 100%;
+  min-width: 1200px;
   margin: auto;
 }
 body{
