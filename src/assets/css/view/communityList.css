@@ -34,8 +34,9 @@
     background-position: 5px center;
 }
 .list_box{
+    table-layout: fixed;
     background: #565656;
-    width: 100%;
+    width: 90%;
     height: 50px;
     min-width: 1180px;
     text-align: center;
@@ -43,20 +44,23 @@
 .ranking{
     width: 5%;
 }
-.profileimg{
-    width: 15%;
-    text-align: right;
+
+.title{
+    width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
-.nickname{
-    text-align: left;
+.writer{
     width: 30%;
 }
-.tier{
+.write_date{
     width: 15%;
 }
-.rankpoint{
-    width: 20%;
+.cursor{
+    cursor: pointer;
 }
-.winrate {
-    width: 15%;
+
+.cursor:hover {
+    transform: scale(1.01);
 }

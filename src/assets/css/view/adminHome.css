@@ -1,0 +1,111 @@
+.table-hover tbody tr:hover {
+    cursor: pointer;
+}
+.background_box{
+    background: #3D3D3D;
+    height: auto;
+    width: 70%;
+    min-width: 1200px;
+}
+.box_circle{
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50px;
+}
+.refresh_wrapper{
+    min-width: 1200px;
+    margin: auto;
+    padding: 30px 0 0 30px;
+}
+.wrapper{
+    min-width: 1200px;
+    margin: auto;
+    padding: 30px;
+}
+.box {
+    box-shadow: 0px 1px 18px -12px #607D8B;
+    background-color: #fff;
+    padding: 25px 35px 25px 30px;
+    border-bottom: 3px solid red;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.box:hover {
+    box-shadow: 0px 1px 18px -12px #607D8B;
+    background-color: #3D3D3D;
+    padding: 25px 35px 25px 30px;
+    border-bottom: 3px solid red;
+    margin-bottom: 20px;
+    color: white;
+    cursor: pointer;
+    opacity: 1; /* 호버될 때 나타나게 함 */
+}
+
+/* 나머지 스타일은 동일 */
+.box:hover>dd {
+    color:white;
+}
+.box:hover>dt {
+    color:white;
+}
+
+
+
+.col-md-3 {
+    width: 22%;
+}
+.col-md-3:nth-child(1){
+    float: left;
+    padding-right: 15px;
+}
+.col-md-3:nth-child(2){
+    float: left;
+}
+.col-md-3:nth-child(3){
+    float: right;
+}
+.col-md-3:nth-child(4){
+    padding-right: 15px;
+    float: right;
+}
+.chart_wrapper {
+    width: 100%;
+    display: inline-block;
+    margin: 0 auto; /* 가운데 정렬 */
+}
+.chart_wrapper>div>.chart{
+    box-shadow: 0px 1px 18px -12px #607D8B;
+    background-color: #fff;
+    padding: 25px 35px 25px 30px;
+    border-bottom: 3px solid red;
+}
+
+.box dt {
+    font-size: 22px;
+    color: #495057;
+}
+
+.box dd {
+    font-size: 18px;
+    color: #868e96;
+    text-align: right;
+}
+
+
+.chart_wrapper>.big_chart{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 1px 18px -12px #607D8B;
+    background-color: #fff;
+    padding: 25px 35px 25px 30px;
+    border-bottom: 3px solid red;
+}
+.chart_child{
+    width: 45%;
+    display: inline-block;
+}
+.chart_child:nth-child(2){
+    float: right;
+}

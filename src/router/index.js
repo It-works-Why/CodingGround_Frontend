@@ -20,7 +20,9 @@ import DetailNoticePostView from "@/view/notice/DetailNoticePostView.vue";
 import MyInquiryView from "@/view/MyInquiryView.vue";
 import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
-import BattleInGameView from "@/view/BattleInGameView.vue"
+import CommunityPostView from "@/view/community/CommunityListView.vue";
+
+import BattleInGameView from "@/view/BattleInGameView.vue";
 import NoticePostListView from "@/view/notice/NoticePostListView.vue";
 import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
 
@@ -61,6 +63,14 @@ const routes = [
       {
         path:'/findaccount',
         component: FindAccountView
+      },
+      {
+        path: '/community',
+        redirect: '/community/list',
+      },
+      {
+        path: '/community/list',
+        component: CommunityPostView
       },
       {
         path: '/community/write',

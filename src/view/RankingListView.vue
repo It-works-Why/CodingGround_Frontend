@@ -6,7 +6,7 @@
     <input class="search_box text-white" v-model="searchInput" placeholder="닉네임을 입력해주세요.">
   </div>
 
-  <div class="rounded-3 mt-2 py-2 rank_background_box m-auto">
+  <div class="rounded-3 mt-2 py-2 px-2 rank_background_box m-auto">
     <table class="rounded-top-3 text-white fw-bold list_box m-auto">
       <tr>
         <td class="ranking">#</td>
