@@ -18,6 +18,7 @@ import DetailCommunityPostView from "@/view/community/DetailCommunityPostView.vu
 import EditNoticePostView from "@/view/notice/EditNoticePostView.vue";
 import DetailNoticePostView from "@/view/notice/DetailNoticePostView.vue";
 import MyInquiryView from "@/view/MyInquiryView.vue";
+import RankingListView from "@/view/RankingListView.vue";
 
 const routes = [
   {
@@ -80,6 +81,10 @@ const routes = [
       {
         path: '/battle/list',
         component: BattleListView
+      },
+      {
+        path: '/ranking',
+        component: RankingListView
       },
 
     ]
