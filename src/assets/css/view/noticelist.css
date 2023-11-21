@@ -1,0 +1,30 @@
+.rank_background_box{
+    background: #3D3D3D;
+    width: 80%;
+    height: 700px;
+    min-width: 1200px;
+}
+
+.list_box{
+    background: #565656;
+    width: 90%;
+    height: 50px;
+    min-width: 1180px;
+    text-align: center;
+}
+
+.num {
+    width: 5%;
+}
+
+.title {
+    width: 65%;
+}
+
+.nickname {
+    width: 15%;
+}
+
+.date {
+    width: 15%;
+}
