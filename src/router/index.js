@@ -33,6 +33,9 @@ import AdminCommunityListView from "@/view/admin/AdminCommunityListView.vue"
 const routes = [
   {
     path: '/',
+    meta:{
+      title : '코딩그라운드'
+    },
     redirect: '/home',
     component: TemplateView,
     children: [
@@ -130,6 +133,9 @@ const routes = [
   {
     path: '/admin',
     redirect: '/admin/home',
+    meta:{
+      title : '코딩그라운드 관리자 페이지'
+    },
     component: AdminTemplateView,
     children: [
       {
@@ -165,5 +171,9 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 });
+router.afterEach((to) => {
+  const title = to.meta.title
+  if(title) document.title = title
+})
 
 export default router;
