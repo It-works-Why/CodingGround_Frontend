@@ -47,7 +47,7 @@ void run ();</textarea>
         </a>
         </div>
       </div>
-      <WhiteButton class="bottom-list" button-value="목록"></WhiteButton>
+      <WhiteButton class="bottom-list" button-value="목록"  @click="this.$router.push('/mypage')"></WhiteButton>
     </div>
   </BlackBox>
 </template>
