@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-3 mt-3 px-1 py-1 background_box box-game-record-box m-auto">
-    <GameRecordBox></GameRecordBox>
+    <GameRecordBox :gameRecord="gameRecordData[0]"></GameRecordBox>
   </div>
   <BlackBox class="rounded-3 mt-4 px-5 py-5 background_box m-auto">
     <div class="content text-nowrap py-5">
@@ -54,14 +54,28 @@ void run ();</textarea>
 
 <script>
 
-import {defineComponent} from "vue";
 import BlackBox from "@/components/BlackBox.vue";
 import GameRecordBox from "@/components/GameRecordBox.vue";
 import WhiteButton from "@/components/WhiteButton.vue";
 
-export default defineComponent({
-  components: {WhiteButton, GameRecordBox, BlackBox}
-})
+export default {
+  components: {WhiteButton, GameRecordBox, BlackBox},
+  data() {
+    return {
+      gameRecordData: [
+        {
+          gametype: '일반게임',
+          gameDate: '2일전',
+          gamelanguage: 'JAVA',
+          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
+          gameusers: ['치치는치치야', '키위새', '프론트의신_소희', '팀장이대로괜찮', '이게왜되지', '관관이형', '일본인한형', '야구하러갈래']
+        },
+      ],
+    }
+  },
+};
+
+
 </script>
 
 <style src="@/assets/css/view/gameRecord.css" scoped/>

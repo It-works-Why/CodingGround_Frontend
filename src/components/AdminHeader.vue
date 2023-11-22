@@ -22,7 +22,7 @@
             </li>
           </ul>
           <span class="navbar-text">
-            <butto n type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
+            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
           </span>
         </div>
       </div>
