@@ -1,3 +1,68 @@
+.top_background_box {
+    background: #3D3D3D;
+    width: 80%;
+    min-width: 1200px;
+}
+
+.rank_background_box {
+    background: #3D3D3D;
+    width: 80%;
+    height: 700px;
+    min-width: 1200px;
+}
+
+.search_box {
+    background-color: #565656;
+    width: 350px;
+    height: 40px;
+    margin-left: 10px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    background-image: url("@/assets/img/SearchIcon.png");
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: 5px center;
+}
+
+.list_box {
+    table-layout: fixed;
+    background: #565656;
+    width: 100%;
+    height: 50px;
+    min-width: 1180px;
+    text-align: center;
+}
+
+.question-btn {
+    float: right;
+    margin-right: 10px;
+}
+
+.num {
+    width: 5%;
+}
+.title {
+    width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.time {
+    width: 10%;
+}
+.level {
+    width: 10%;
+}
+.rightPercent {
+    width: 10%;
+}
+.date {
+    width: 15%;
+}
+
+/* 문제 추가 페이지 */
+
 .background_box{
     background: #3D3D3D;
     height: auto;
@@ -75,7 +140,7 @@ textarea {
     height: 150px;
 }
 
-table {
+.test-table {
     width: 100%;
 }
 

@@ -12,7 +12,7 @@
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/admin/question/management">문제 관리</a>
             </li>
             <li class="mx-3 nav-item">
-              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">회원 관리</a>
+              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/admin/user/list">회원 관리</a>
             </li>
             <li class="mx-3 nav-item">
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="#">커뮤니티 관리</a>

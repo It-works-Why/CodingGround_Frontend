@@ -27,7 +27,7 @@
       </div>
       <div>
         <h1>테스트 케이스 <a>(배열 입력시 ','로 구별해주세요.)</a></h1>
-        <table>
+        <table class="test-table">
           <tr class="input-output">
             <td>INPUT</td>
             <td></td>
