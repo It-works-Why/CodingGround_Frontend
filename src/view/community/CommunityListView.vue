@@ -1,12 +1,13 @@
 <template>
-  <div class="rounded-3 mt-3 py-2 top_background_box m-auto">
+  <div class="rounded-3 mt-3 px-2 py-2 top_background_box m-auto">
     <select class="season_select form-select">
-      <option :key="i" :value="season" v-for="(season,i) in seasonSelectData">S{{season}}</option>
+      <option :key="i" :value="search" v-for="(search,i) in communitySelectData">{{search}}</option>
     </select>
-    <input class="search_box text-white" v-model="searchInput" placeholder="닉네임을 입력해주세요.">
+    <input class="search_box text-white" v-model="searchInput" placeholder="검색할 내용을 입력해주세요.">
+    <WhiteButton class="white-btn" button-value="글쓰기"></WhiteButton>
   </div>
 
-  <div class="rounded-3 mt-2 py-2 rank_background_box m-auto">
+  <div class="rounded-3 mt-2 px-2 py-2 rank_background_box m-auto">
     <table class="rounded-top-3 text-white fw-bold list_box m-auto">
       <tr>
         <td class="index">번호</td>
@@ -28,18 +29,16 @@
 </template>
 
 <script>
+import WhiteButton from "@/components/WhiteButton.vue";
+
 export default {
+  components: {WhiteButton},
   data() {
     return {
-      seasonSelectData: [
-        "2023-1",
-        "2023-2",
-        "2023-3",
-        "2023-4",
-        "2023-5",
-        "2023-6",
-        "2023-7",
-        "2023-8",
+      communitySelectData: [
+        "제목",
+        "작성자",
+        "작성 일시",
       ],
       searchInput: "",
       communityListInfo: [
