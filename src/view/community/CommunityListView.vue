@@ -50,8 +50,8 @@ export default {
         },
         {
           index: '2',
-          title: '에이스못먹는치치',
-          writer: '위에글 좀 이상한사람 인듯',
+          title: '위에글 좀 이상한사람 인듯',
+          writer: '에이스못먹는치치',
           writeDate: '2023-11-21',
         },
         {
