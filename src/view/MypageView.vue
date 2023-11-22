@@ -92,6 +92,20 @@ export default {
           gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
           gameusers:['치치는치치야', '키위새', '프론트의신_소희', '팀장이대로괜찮', '이게왜되지', '관관이형' , '일본인한형', '야구하러갈래']
         },
+        {
+          gametype: '랭크게임',
+          gameDate: '3일전',
+          gamelanguage: 'JAVA',
+          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
+          gameusers:['치치는치치야', '키위새', '프론트의신_소희', '팀장이대로괜찮', '이게왜되지', '관관이형' , '일본인한형', '야구하러갈래']
+        },
+        {
+          gametype: '랭크게임',
+          gameDate: '4일전',
+          gamelanguage: 'JAVA',
+          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
+          gameusers:['치치는치치야', '키위새', '프론트의신_소희', '팀장이대로괜찮', '이게왜되지', '관관이형' , '일본인한형', '야구하러갈래']
+        },
       ],
       languageSelectData: [
         "JAVA",
