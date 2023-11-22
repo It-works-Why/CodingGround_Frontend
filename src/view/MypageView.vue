@@ -59,14 +59,7 @@
           </select>
         </div>
         <div class="box-main">
-          <GameRecordBox></GameRecordBox>
-          <GameRecordBox></GameRecordBox>
-          <GameRecordBox></GameRecordBox>
-          <GameRecordBox></GameRecordBox>
-          <GameRecordBox></GameRecordBox>
-          <GameRecordBox></GameRecordBox>
-          <GameRecordBox></GameRecordBox>
-
+          <GameRecordBox :key="i" :gameRecord="gameRecord" v-for="(gameRecord, i) in gameRecordData"  @click="this.$router.push('/mypage/record')"></GameRecordBox>
         </div>
       </div>
     </div>
@@ -84,6 +77,22 @@ export default {
   },
   data() {
     return {
+      gameRecordData: [
+        {
+          gametype: '일반게임',
+          gameDate: '2일전',
+          gamelanguage: 'JAVA',
+          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
+          gameusers:['치치는치치야', '키위새', '프론트의신박소희', '팀장이대로괜찮', '이게왜되지', '관관이형' , '일본인한형', '야구하러갈래']
+        },
+        {
+          gametype: '매칭게임',
+          gameDate: '1일전',
+          gamelanguage: 'JAVA',
+          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
+          gameusers:['치치는치치야', '키위새', '프론트의신박소희', '팀장이대로괜찮', '이게왜되지', '관관이형' , '일본인한형', '야구하러갈래']
+        },
+      ],
       languageSelectData: [
         "JAVA",
         "Python",
