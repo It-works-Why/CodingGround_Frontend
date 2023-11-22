@@ -47,7 +47,7 @@
         <div>
           <p class="modal-title">대결 언어</p>
           <div class="modal-box">
-            <img class="langImg" v-if="langImg === 'java'" src="@/assets/img/Java.png" alt="JAVA IMG">
+            <img class="langImg" v-if="langImg === 'java'" src="../assets/img/Java.png" alt="JAVA IMG">
             <img class="langImg" v-else-if="langImg === 'c'" src="@/assets/img/Camera.png" alt="C IMG">
             <select v-model="langImg" class="modal-select-box">
               <option value="" disabled selected hidden>언어를 선택해주세요.</option>

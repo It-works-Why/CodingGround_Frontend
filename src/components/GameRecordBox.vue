@@ -5,7 +5,7 @@
       <h6>{{gameRecord.gameDate}}</h6>
     </div>
     <div class="box-gamelanguage" >
-      <img class="img_view_rank" src="../assets/img/_java icon.png">
+      <img class="language-img"  :src="require(`@/assets/img/language/${gameRecord.gamelanguage}.png`)">
       <h5 class="card-title">{{gameRecord.gamelanguage}}</h5>
     </div>
     <div class="box-userlists">
@@ -64,6 +64,9 @@ h5 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.box-gamelanguage .language-img{
+  width: 70%;
 }
 
  .box-userlists {
