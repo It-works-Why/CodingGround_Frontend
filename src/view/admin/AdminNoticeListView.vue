@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-3 mt-2 py-2 rank_background_box m-auto">
+  <div class="rounded-3 mt-2 px-2 py-2 rank_background_box m-auto">
     <WhiteButton class="white-btn" button-value="글쓰기"></WhiteButton>
     <table class="rounded-top-3 text-white fw-bold list_box m-auto">
       <tr>
