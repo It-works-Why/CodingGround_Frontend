@@ -69,7 +69,7 @@
           회원 탈퇴를 원하실 경우 <p @click="deleteUser" style="cursor: pointer; text-decoration-line: underline" class="fw-bolder d-inline-block">여기</p>를 클릭해주세요.
         </div>
         <div class="px-5">
-          <input type="button" value="가입하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
+          <input type="button" value="수정하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>

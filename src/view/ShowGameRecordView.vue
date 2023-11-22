@@ -64,7 +64,7 @@ export default {
     return {
       gameRecordData: [
         {
-          gametype: '일반게임',
+          gametype: '랭크게임',
           gameDate: '2일전',
           gamelanguage: 'JAVA',
           gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],

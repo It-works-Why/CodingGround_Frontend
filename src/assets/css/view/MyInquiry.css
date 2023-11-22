@@ -1,0 +1,174 @@
+.btn1 {
+    background-color: white;
+    border-radius: 3px;
+    border-color: transparent;
+    margin-top: 5px;
+    margin-right: 8px;
+    min-width: 129px;
+}
+
+.mp_container .top_box_name {
+    color: white;
+    font-size: 35pt;
+}
+
+.mp_container .top_box_company {
+    color: white;
+    font-size: 20pt;
+}
+
+
+h5 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.mp_container {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.mp_container .top {
+    margin-top: 10px;
+    display: flex;
+    width: 90%;
+    height: 230px;
+    padding: 25px;
+    background-color: #3D3D3D;
+    border-radius: 8px;
+}
+
+
+.mp_container .top_box_right {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+
+.mp_container .top_box_left {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.mp_container .img_form {
+    width: 160px;
+    height: 160px;
+    margin: 40px;
+    overflow: hidden;
+}
+
+.mp_container .img_form > .img_view {
+    border-radius: 80px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mp_container .img_form > .ranking_icon {
+    width: 70px;
+    height: 70px;
+    z-index: 100;
+    object-fit: cover;
+}
+
+.mp_container .top_box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 33%;
+    height: 90%;
+    font-size: 25px;
+    line-height: 25px;
+    min-width: 200px;
+}
+
+.mp_container .top_box_myinfo {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    height: 90%;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.mp_container .top_box_myinfo button {
+    width: 36%;
+    height: 40px;
+    font-size: 14px;
+}
+
+.mp_container .top_box_title {
+    color: white;
+}
+
+.mp_container .top_box_content {
+    color: white;
+    line-height: 25px;
+}
+
+
+.ranking_icon {
+    width: 50px;
+    height: 50px;
+}
+
+.mp_container .bottom {
+    margin: 10px auto 0;
+    padding: 10px;
+
+    width: 90%;
+    height: 550px;
+    border-radius: 8px;
+    background-color: #3D3D3D;
+}
+
+.bottom .bottom-top{
+    height: 8%;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.bottom .bottom-main{
+    height: 90%;
+    width: 100%;
+    padding: 10px;
+}
+
+.list_box{
+    background: #565656;
+    width: 100%;
+    height: 50px;
+
+    text-align: center;
+}
+.ranking{
+    width: 5%;
+}
+
+.title{
+    width: 35%;
+}
+.date{
+    width: 15%;
+}
+.nickname{
+    width: 20%;
+}
+.answer{
+    width: 10%;
+}
