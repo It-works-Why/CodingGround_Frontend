@@ -5,7 +5,7 @@
       <h6>{{gameRecord.gameDate}}</h6>
     </div>
     <div class="box-gamelanguage" >
-      <img class="language-img"  :src="require(`@/assets/img/language/${gameRecord.gamelanguage}.png`)">
+      <img class="language-img" :src="require(`@/assets/img/language/${gameRecord.gamelanguage}.png`)">
       <h5 class="card-title">{{gameRecord.gamelanguage}}</h5>
     </div>
     <div class="box-userlists">
@@ -32,4 +32,4 @@ export default{
 }
 </script>
 
-<style src="../assets/css/components/GameRecordBox.css" scoped />
+<style src="@/assets/css/components/GameRecordBox.css" scoped />

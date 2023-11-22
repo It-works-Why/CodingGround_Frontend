@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-3 mt-3 py-2 top_background_box m-auto">
+  <div class="rounded-3 mt-3 px-2 py-2 top_background_box m-auto">
     <select class="season_select form-select">
       <option :key="i" :value="season" v-for="(season,i) in seasonSelectData">S{{season}}</option>
     </select>

@@ -27,7 +27,7 @@
     </div>
     <div class="bottom">
       <div class="bottom-top">
-        <WhiteButton class="bottom-list" button-value="글쓰기"></WhiteButton>
+        <WhiteButton class="bottom-list" button-value="글쓰기" @click="this.$router.push('/mypage/inquiry/write')"></WhiteButton>
       </div>
       <div class="bottom-main">
         <table class="rounded-top-3 text-white fw-bold list_box m-auto">
