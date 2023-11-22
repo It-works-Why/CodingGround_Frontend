@@ -28,6 +28,7 @@ import BattleInGameView from "@/view/BattleInGameView.vue";
 import NoticePostListView from "@/view/notice/NoticePostListView.vue";
 import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
 import AdminUserManagementView from "@/view/admin/AdminUserManagementView.vue"
+import AdminCommunityListView from "@/view/admin/AdminCommunityListView.vue"
 
 const routes = [
   {
@@ -150,6 +151,10 @@ const routes = [
       {
         path: '/admin/user/list',
         component: AdminUserManagementView
+      },
+      {
+        path: '/admin/community/list',
+        component: AdminCommunityListView
       },
     ]
   }
