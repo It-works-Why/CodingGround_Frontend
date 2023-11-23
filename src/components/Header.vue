@@ -25,6 +25,8 @@
             <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
           </span>
           <span v-if="loginCheck" class="navbar-text">
+
+            <br>
             <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="logout()">로그아웃</button>
           </span>
         </div>

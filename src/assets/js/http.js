@@ -7,6 +7,12 @@ const axiosInstance = axios.create({
     baseURL: "/api",
     headers: {
         "Content-Type": "application/json",
+        'X-RapidAPI-Key': '92645c8b10msh7f8b72338057770p1deaecjsn641c7097464c',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+    },
+    params: {
+        base64_encoded: 'false',
+        fields: '*'
     },
 });
 
