@@ -102,6 +102,10 @@ const routes = [
         component: DetailCommunityPostView
       },
       {
+        path: '/notice',
+        redirect: '/notice/list'
+      },
+      {
         path: '/notice/list',
         component: NoticePostListView
       },

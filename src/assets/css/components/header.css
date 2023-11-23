@@ -3,6 +3,15 @@
 }
 .nav_button{
     color:white;
+    cursor: pointer;
+
+}
+.active{
+    text-decoration : underline;
+    text-underline-offset : 7px;
+}
+.inactive{
+    text-decoration: none;
 }
 @media (max-width: 988px) {
     .nav_button:hover{
