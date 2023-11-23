@@ -1,7 +1,7 @@
 <template>
   <div class="rounded-3 mt-3 px-2 py-2 top_background_box m-auto">
     <input class="search_box text-white" v-model="searchInput" placeholder="닉네임을 입력해주세요.">
-    <WhiteButton class="question-btn" button-value="문의사항"></WhiteButton>
+    <WhiteButton class="question-btn" button-value="문의사항" @click="this.$router.push('/admin/user/inquiry/list')"></WhiteButton>
   </div>
 
   <div class="rounded-3 mt-2 py-2 px-2 rank_background_box m-auto">

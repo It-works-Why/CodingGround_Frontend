@@ -29,6 +29,7 @@ import NoticePostListView from "@/view/notice/NoticePostListView.vue";
 import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
 import AdminUserManagementView from "@/view/admin/AdminUserManagementView.vue"
 import AdminCommunityListView from "@/view/admin/AdminCommunityListView.vue"
+import AdminInquiryListView from "@/view/admin/AdminInquiryListView.vue";
 
 const routes = [
   {
@@ -41,7 +42,7 @@ const routes = [
     children: [
       {
         path:'/home',
-        component:HomeView
+        component: HomeView
       },
       {
         path:'/login',
@@ -104,10 +105,6 @@ const routes = [
         component: NoticePostListView
       },
       {
-        path: '/notice/write',
-        component: WriteNoticePostView
-      },
-      {
         path: '/notice/edit/:id',
         component: EditNoticePostView
       },
@@ -155,8 +152,16 @@ const routes = [
         component: AdminNoticeListView
       },
       {
+        path: '/admin/notice/write',
+        component: WriteNoticePostView
+      },
+      {
         path: '/admin/user/list',
         component: AdminUserManagementView
+      },
+      {
+        path: '/admin/user/inquiry/list',
+        component: AdminInquiryListView
       },
       {
         path: '/admin/community/list',

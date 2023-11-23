@@ -6,10 +6,10 @@
       </div>
 
       <div class="title">
-        <input :value="postData.title" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" />
+        <input :value="postData.title" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">글쓴이 정보</div>
       </div>
-      <textarea :value="postData.content" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" />
+      <textarea :value="postData.content" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" disabled/>
 
       <div class="button">
         <WhiteButton class="list" button-value="목록" ></WhiteButton>
