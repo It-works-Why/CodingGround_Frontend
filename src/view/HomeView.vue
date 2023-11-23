@@ -13,6 +13,18 @@
   <input type="button"  @click="tokenAdminCheck()"  value="관리자 로그인 체크">
   <br>
   <button @click="mybatisTest('mybatis/test')">MyBatis 테스트</button>
+
+  <br>
+  <h3>api 테스트</h3>
+  <input type="text" placeholder="System.in" v-model="body.stdin">
+  <br>
+  <textarea style="height: 300px" v-model="body.source_code" class="code_mirror w-75">
+
+  </textarea>
+  <input @click="run" type="button" value="실행">
+  <input @click="check" type="button" value="확인">
+  <div>console</div>
+  <div>{{ result }}</div>
 </template>
 
 <script>
@@ -21,8 +33,22 @@ export default {
   components: {  },
   data() {
     return {
-      ingredients: [],
-      ingredient: "",
+      body:{
+        source_code : "import java.util.Scanner;\n" +
+            "\n" +
+            "public class Main {\n" +
+            "    public static void main(String[] args) {\n" +
+            "        Scanner scanner = new Scanner(System.in);\n" +
+            "        System.out.print(\"Enter your name: \");\n" +
+            "        String name = scanner.next();\n" +
+            "        System.out.println(\"hello, \" + name);\n" +
+            "    }\n" +
+            "}",
+        language_id: 91,
+        stdin: ""
+      },
+      resultToken : "",
+      result : "",
     };
   },
   methods: {
@@ -45,6 +71,21 @@ export default {
       this.$httpUtil('/test/'+uri,'GET', null,(data) => {
         console.log(data);
         this.$successAlert("콘솔 확인");
+      })
+    },
+    run(){
+        this.$httpUtil('https://judge0-ce.p.rapidapi.com/submissions','POST', this.body, (data) => {
+          this.resultToken = data.token;
+        })
+    },
+    check(){
+      this.$httpUtil(`https://judge0-ce.p.rapidapi.com/submissions/${this.resultToken}`,'GET', this.body, (data) => {
+        console.log(data.compile_output);
+        if(data.stdout == null){
+          this.result = data.compile_output;
+        }else{
+          this.result = data.stdout;
+        }
       })
     }
   },
