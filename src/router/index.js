@@ -30,6 +30,7 @@ import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
 import AdminUserManagementView from "@/view/admin/AdminUserManagementView.vue"
 import AdminCommunityListView from "@/view/admin/AdminCommunityListView.vue"
 import AdminInquiryListView from "@/view/admin/AdminInquiryListView.vue";
+import AdminInquiryDetailView from "@/view/admin/AdminInquiryDetailView.vue";
 
 const routes = [
   {
@@ -162,6 +163,10 @@ const routes = [
       {
         path: '/admin/user/inquiry/list',
         component: AdminInquiryListView
+      },
+      {
+        path: '/admin/user/inquiry/detail/:id',
+        component: AdminInquiryDetailView
       },
       {
         path: '/admin/community/list',
