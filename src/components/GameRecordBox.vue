@@ -5,7 +5,7 @@
       <h6>{{gameRecord.gameDate}}</h6>
     </div>
     <div class="box-gamelanguage" >
-      <img class="language-img" :src="require(`@/assets/img/language/${gameRecord.gamelanguage}.png`)">
+      <img class="language-img" :src="require(`@/assets/img/language/${encodeURIComponent(gameRecord.gamelanguage)}lang.png`)">
       <h5 class="card-title">{{gameRecord.gamelanguage}}</h5>
     </div>
     <div class="box-userlists">
