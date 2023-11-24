@@ -11,7 +11,7 @@
 
       <div class="button">
         <span class="action_button">
-          <WhiteButton class="cancel ms-2" button-value="취소"></WhiteButton>
+          <WhiteButton class="cancel ms-2" button-value="취소" @click="this.$router.push('/admin/notice/list')"></WhiteButton>
           <WhiteButton class="write ms-2" button-value="작성" @click="register"></WhiteButton>
         </span>
       </div>
@@ -36,16 +36,17 @@ export default {
   },
   methods:{
     register() {
-      // this.$httpUtil('/admin/notice/register','POST',this.userInfo,(data) => {
-      //   if(data.data.success){
-      //     this.$router.push('/admin/notice/list');
-      //   }
-      // });
+      this.$httpUtil('/admin/notice/register','POST',this.postData,(data) => {
+        if(data.data.success){
+          this.$router.push('/admin/notice/list');
+        }
+      });
     }
 
   }
 
 }
+
 </script>
 
 <style src="@/assets/css/view/post.css" scoped />

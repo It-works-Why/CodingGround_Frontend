@@ -1,7 +1,5 @@
 <template>
-<!-- 관리자만 글쓰기 버튼 뜨도록 -->
   <div class="rounded-3 mt-2 px-2 py-2 rank_background_box m-auto">
-    <WhiteButton class="white-btn" button-value="글쓰기" @click="this.$router.push('/admin/notice/write')"></WhiteButton>
     <table class="rounded-top-3 text-white fw-bold list_box m-auto">
       <tr>
         <td class="num">#</td>
@@ -11,7 +9,7 @@
       </tr>
     </table>
     <table :key="i" :value="notice" v-for="(notice, i) in noticeList.slice().reverse()" class="mt-1 text-white list_box m-auto"
-           @click="this.$router.push('/admin/notice/detail/' + notice.noticeNum)">
+           @click="this.$router.push('/notice/detail/' + notice.noticeNum)">
       <tr>
         <td class="num">{{notice.noticeNum}}</td>
         <td class="title">{{notice.noticeTitle}}</td>
@@ -23,10 +21,8 @@
 </template>
 
 <script>
-import WhiteButton from "@/components/WhiteButton.vue";
 
 export default {
-  components: {WhiteButton},
   data() {
     return {
       noticeList: [],
@@ -38,6 +34,9 @@ export default {
           console.log(data);
           this.noticeList = data;
       })
+      // axios.get("/admin/notice/list").then(({data}) => {
+      //   console.log(data.noticeList);
+      // });
     }
   },
   mounted() {

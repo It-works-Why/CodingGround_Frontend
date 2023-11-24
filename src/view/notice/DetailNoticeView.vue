@@ -13,11 +13,6 @@
 
       <div class="button">
         <WhiteButton class="edit" button-value="목록" ></WhiteButton>
-        <!--    관리자 권한 제외 버튼 제거    -->
-        <span class="action_button">
-          <WhiteButton class="delete ms-2" button-value="삭제"></WhiteButton>
-          <WhiteButton class="edit ms-2" button-value="수정" ></WhiteButton>
-        </span>
       </div>
     </div>
   </div>

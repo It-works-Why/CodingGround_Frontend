@@ -13,24 +13,24 @@ import AdminQuestionRegisterView from "@/view/admin/AdminQuestionRegisterView.vu
 import BattleListView from "@/view/BattleListView.vue";
 import EditCommunityPostView from "@/view/community/EditCommunityPostView.vue";
 import WriteCommunityPostView from "@/view/community/WriteCommunityPostView.vue";
-import WriteNoticePostView from "@/view/notice/WriteNoticePostView.vue";
 import DetailCommunityPostView from "@/view/community/DetailCommunityPostView.vue";
-import EditNoticePostView from "@/view/notice/EditNoticePostView.vue";
-import DetailNoticePostView from "@/view/notice/DetailNoticePostView.vue";
 import WriteInquiryView from "@/view/Inquiry/WriteInquiryView.vue";
 import DetailInquiryView from "@/view/Inquiry/DetailInquiryView.vue";
 import MyInquiryView from "@/view/MyInquiryView.vue";
 import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
 import CommunityPostView from "@/view/community/CommunityListView.vue";
-
 import BattleInGameView from "@/view/BattleInGameView.vue";
-import NoticePostListView from "@/view/notice/NoticePostListView.vue";
-import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
 import AdminUserManagementView from "@/view/admin/AdminUserManagementView.vue"
 import AdminCommunityListView from "@/view/admin/AdminCommunityListView.vue"
 import AdminInquiryListView from "@/view/admin/AdminInquiryListView.vue";
 import AdminInquiryDetailView from "@/view/admin/AdminInquiryDetailView.vue";
+import NoticeListView from "@/view/notice/NoticeListView.vue";
+import DetailNoticeView from "@/view/notice/DetailNoticeView.vue";
+import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
+import AdminNoticeRegisterPostView from "@/view/admin/AdminNoticeRegisterPostView.vue";
+import AdminNoticeDetailView from "@/view/admin/AdminNoticeDetailView.vue";
+import AdminNoticeEditPostView from "@/view/admin/AdminNoticeEditPostView.vue";
 
 const routes = [
   {
@@ -107,15 +107,11 @@ const routes = [
       },
       {
         path: '/notice/list',
-        component: NoticePostListView
-      },
-      {
-        path: '/notice/edit/:id',
-        component: EditNoticePostView
+        component: NoticeListView
       },
       {
         path: '/notice/detail/:id',
-        component: DetailNoticePostView
+        component: DetailNoticeView
       },
       {
         path: '/battle/list',
@@ -158,7 +154,15 @@ const routes = [
       },
       {
         path: '/admin/notice/write',
-        component: WriteNoticePostView
+        component: AdminNoticeRegisterPostView
+      },
+      {
+        path: '/admin/notice/detail/:id',
+        component: AdminNoticeDetailView
+      },
+      {
+        path: '/admin/notice/edit/:id',
+        component: AdminNoticeEditPostView
       },
       {
         path: '/admin/user/list',
