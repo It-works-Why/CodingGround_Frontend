@@ -22,7 +22,7 @@
             </li>
           </ul>
           <span v-if="!loginCheck" class="navbar-text">
-            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
+            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="clickNav('/login')">로그인/회원가입</button>
           </span>
           <span v-if="loginCheck" class="navbar-text">
 
@@ -41,9 +41,10 @@ export default{
   name:"HeaderVue",
   components: { Logo },
   created() {
-    if(localStorage.getItem('userRole') != null && localStorage.getItem('accessToken') != null && localStorage.getItem('refreshToken') != null){
+    this.userInfo = this.$store.getters.getUser;
+    if(localStorage.getItem('accessToken') != null && localStorage.getItem('refreshToken') != null){
       this.loginCheck = true;
-      if(localStorage.getItem("userRole") === 'ROLE_ADMIN'){
+      if(this.userInfo.userRole == 'ADMIN'){
         this.adminCheck = true;
       }else{
         this.adminCheck = false;
@@ -59,8 +60,14 @@ export default{
   },
   methods: {
     clickNav(url) {
-      this.$router.push(url);
-      this.activeNav(url);
+      const accessToken = localStorage.getItem('accessToken');
+
+      if (!accessToken && !this.freePath.some(path => url.startsWith(path))) {
+        this.$router.push('/login');
+      } else {
+        this.$router.push(url);
+        this.activeNav(url);
+      }
     },
     activeNav(url) {
       this.path = url
@@ -87,6 +94,7 @@ export default{
       localStorage.removeItem('userRole');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      this.$store.commit('logout');
       location.href="/home";
     }
   },
@@ -103,6 +111,8 @@ export default{
       activeNotice : false,
       activeAdmin : false,
       path : '',
+      freePath : ['/home','/login','/notice','/register','/ranking'],
+      userInfo : {},
     }
   },
 

@@ -1,21 +1,14 @@
-.background{
-    background: #3D3D3D;
+.background {
+    background: #3d3d3d;
 }
-.nav_button{
-    color:white;
+.nav_button {
+    color: white;
     cursor: pointer;
-
 }
-.active{
-    text-decoration : underline;
-    text-underline-offset : 7px;
+.active {
+    text-decoration: underline;
+    text-underline-offset: 7px;
 }
-.inactive{
+.inactive {
     text-decoration: none;
-}
-@media (max-width: 988px) {
-    .nav_button:hover{
-        background: #f5f5f5;
-        color: #3D3D3D;
-    }
 }

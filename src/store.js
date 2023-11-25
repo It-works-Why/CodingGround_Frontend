@@ -1,18 +1,64 @@
 import { createStore } from 'vuex';
+import axios from 'axios';
+
 const store = createStore({
     state() {
         return {
-            myStateProperty: 'Initial Value',
-
+            userInfo: {
+                userId: '',
+                userRole: '',
+                userNickname: '',
+            },
+            currentPath: '',
         }
     },
-    mutations :{
-
+    mutations: {
+        addUserInfo(state, userInfo) {
+            state.userInfo = userInfo;
+        },
+        changePath(state, path) {
+            state.currentPath = path;
+        },
+        logout(state) {
+            state.userInfo.userId = '';
+            state.userInfo.userRole = '';
+            state.userInfo.userNickname = '';
+        }
     },
-    actions : {
-
+    actions: {
+        changePath({ commit }, path) {
+            commit('changePath', path);
+        },
+        logout({ commit }) {
+            commit('logout');
+        },
+        async setUserInfo({ commit }) {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+                const response = await axios.get('/api/account/userInfo', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+                const userInfo = {
+                    userId: response.data.data.userId,
+                    userRole: response.data.data.userRole,
+                    userNickname: response.data.data.userNickname
+                };
+                commit('addUserInfo', userInfo);
+            } catch (error) {
+                alert(error);
+            }
+        }
+    },
+    getters: {
+        getUser(state) {
+            return state.userInfo;
+        },
+        getCurrentPath(state) {
+            return state.currentPath;
+        }
     }
-})
+});
 
 export default store;
-

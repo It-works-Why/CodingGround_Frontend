@@ -13,7 +13,8 @@
   <input type="button"  @click="tokenAdminCheck()"  value="관리자 로그인 체크">
   <br>
   <button @click="mybatisTest('mybatis/test')">MyBatis 테스트</button>
-
+  <br>
+  <button @click="getUserInfo">vuex테스트</button>
   <br>
   <h3>api 테스트</h3>
   <input type="text" placeholder="System.in" v-model="body.stdin">
@@ -33,6 +34,7 @@ export default {
   components: {  },
   data() {
     return {
+      userInfo : {},
       body:{
         source_code : "import java.util.Scanner;\n" +
             "\n" +
@@ -44,7 +46,7 @@ export default {
             "        System.out.println(\"hello, \" + name);\n" +
             "    }\n" +
             "}",
-        language_id: 91,
+        language_id: 62,
         stdin: ""
       },
       resultToken : "",
@@ -74,23 +76,31 @@ export default {
       })
     },
     run(){
-        this.$httpUtil('https://judge0-ce.p.rapidapi.com/submissions','POST', this.body, (data) => {
+        this.$httpUtil('https://airspirk.asuscomm.com:2361/submissions','POST', this.body, (data) => {
+          console.log(data);
           this.resultToken = data.token;
         })
     },
     check(){
-      this.$httpUtil(`https://judge0-ce.p.rapidapi.com/submissions/${this.resultToken}`,'GET', this.body, (data) => {
-        console.log(data.compile_output);
+      this.$httpUtil(`https://airspirk.asuscomm.com:2361/submissions/${this.resultToken}`,'GET', this.body, (data) => {
+        console.log(data);
         if(data.stdout == null){
           this.result = data.compile_output;
         }else{
           this.result = data.stdout;
         }
       })
+    },
+    getUserInfo() {
+      console.log(this.userInfo);
     }
   },
   mounted() {
   },
+  created() {
+    this.userInfo = this.$store.getters.getUser;
+    console.log(this.$store.getters.getUser);
+  }
 };
 </script>
 

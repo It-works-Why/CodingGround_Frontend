@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import store from '@/store';
+import axios from 'axios';
 import LoginView from '@/view/account/LoginView.vue';
 import RegisterView from '@/view/account/RegisterView.vue';
 import HomeView from "@/view/HomeView.vue";
@@ -187,11 +189,40 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  linkActiveClass: "route-active",
+  linkExactActiveClass: "route-active"
 });
 router.afterEach((to) => {
   const title = to.meta.title
   if(title) document.title = title
+
 })
+router.beforeEach(async (to, from, next) => {
+  if(localStorage.getItem('accessToken')){
+    if (!store.state.userInfo.userId) {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get('/api/account/userInfo', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        const userInfo = {
+          userId: response.data.data.userId,
+          userRole: response.data.data.userRole,
+          userNickname: response.data.data.userNickname
+        };
+        store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+        // 오류 처리
+      }
+    }
+  }
+  next(); // 다음 단계로 진행
+});
+
 
 export default router;

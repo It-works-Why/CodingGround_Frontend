@@ -45,7 +45,6 @@
           if (data.data) {
             localStorage.setItem('accessToken', data.data.accessToken);
             localStorage.setItem('refreshToken', data.data.refreshToken);
-            localStorage.setItem('userRole', data.data.userRole);
 
             location.href="/home"
           }else{

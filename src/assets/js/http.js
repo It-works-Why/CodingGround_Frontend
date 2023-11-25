@@ -64,6 +64,10 @@ const methods = {
                 }
             } else {
                 errorMessageToast(error.response.data.message);
+                if(error.response.data.message === '로그인이 필요한 기능입니다.'){
+                    alert('로그인이 필요한 기능입니다.')
+                    location.href='/login';
+                }
             }
         }
     },
