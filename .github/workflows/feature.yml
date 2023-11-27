@@ -6,8 +6,6 @@ on:
       - feature
 
 env:
-  ecr_url: 503237308475.dkr.ecr.ca-central-1.amazonaws.com/coding-ground-ecr
-  role_arn: arn:aws:iam::503237308475:role/BSDEV16-ECS-AccessRole
   aws_region: ca-central-1
   
 jobs:
@@ -31,10 +29,12 @@ jobs:
         file: ./Dockerfile
     
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-region: ${{ env.aws_region }}
-        role-to-assume: ${{ env.role_arn }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
     
     - name: Push Image to ECR
       run: |
