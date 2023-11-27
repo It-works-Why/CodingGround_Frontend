@@ -6,7 +6,7 @@ on:
       - feature
 
 env:
-  ecr_url: 503237308475.dkr.ecr.ca-central-1.amazonaws.com/coding-ground-ecr
+  ecr_url: 503237308475.dkr.ecr.ca-central-1.amazonaws.com
   aws_region: ca-central-1
   
 jobs:
@@ -42,6 +42,6 @@ jobs:
       
     - name: Push Image to ECR
       run: |
-        docker tag codingground_frontend:latest ${{ env.ecr_url }}/codingground_frontend:latest
-        docker push ${{ env.ecr_url }}/codingground_frontend:latest
+        docker tag codingground_frontend:latest ${{ env.ecr_url }}/codingground_frontend:${{ steps.date.outputs.date }}
+        docker push ${{ env.ecr_url }}/codingground_frontend:${{ steps.date.outputs.date }}
 
