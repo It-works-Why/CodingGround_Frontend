@@ -30,7 +30,7 @@ jobs:
         file: ./Dockerfile
     
     - name: Configure AWS Credentials
-      uses: aws-action/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-region: ${{ env.aws_region }}
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
