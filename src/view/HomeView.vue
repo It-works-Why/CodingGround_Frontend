@@ -26,6 +26,13 @@
   <input @click="check" type="button" value="확인">
   <div>console</div>
   <div>{{ result }}</div>
+  <br>
+
+  <button @click="connect">WebSocket 연결</button>
+  <button @click="send">메시지 전송</button>
+  <button @click="close">WebSocket 연결 종료</button>
+
+  <textarea v-model="serverMessage"></textarea>
 </template>
 
 <script>
@@ -34,6 +41,7 @@ export default {
   components: {  },
   data() {
     return {
+      serverMessage : '서버 메세지입니다.',
       userInfo : {},
       body:{
         source_code : "import java.util.Scanner;\n" +
@@ -93,7 +101,16 @@ export default {
     },
     getUserInfo() {
       console.log(this.userInfo);
-    }
+    },
+    connect() {
+      this.$battleConnect(); // WebSocket 연결
+    },
+    send() {
+      this.$battleSendMessage('Hello, WebSocket!'); // 메시지 전송
+    },
+    close() {
+      this.$battleCloseWebSocket(); // WebSocket 연결 종료
+    },
   },
   mounted() {
   },

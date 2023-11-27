@@ -12,7 +12,7 @@ import AdminTemplateView from "@/view/admin/AdminTemplateView.vue";
 import AdminHomeView from "@/view/admin/AdminHomeView.vue";
 import AdminQuestionManagementView from "@/view/admin/AdminQuestionManagementView.vue";
 import AdminQuestionRegisterView from "@/view/admin/AdminQuestionRegisterView.vue";
-import BattleListView from "@/view/BattleListView.vue";
+import BattleListView from "@/view/battle/BattleListView.vue";
 import EditCommunityPostView from "@/view/community/EditCommunityPostView.vue";
 import WriteCommunityPostView from "@/view/community/WriteCommunityPostView.vue";
 import DetailCommunityPostView from "@/view/community/DetailCommunityPostView.vue";
@@ -22,7 +22,7 @@ import MyInquiryView from "@/view/MyInquiryView.vue";
 import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
 import CommunityPostView from "@/view/community/CommunityListView.vue";
-import BattleInGameView from "@/view/BattleInGameView.vue";
+import BattleInGameView from "@/view/battle/BattleInGameView.vue";
 import AdminUserManagementView from "@/view/admin/AdminUserManagementView.vue"
 import AdminCommunityListView from "@/view/admin/AdminCommunityListView.vue"
 import AdminInquiryListView from "@/view/admin/AdminInquiryListView.vue";

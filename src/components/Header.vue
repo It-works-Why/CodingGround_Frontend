@@ -6,7 +6,7 @@
         <div class="pb-1 collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="mx-3 nav-item">
-              <a :class="{ 'active': activeBattle, 'inactive': !activeBattle }" class="nav_button text-nowrap fw-bold fs-3" @click="clickNav('/battle')">배틀</a>
+              <a :class="{ 'active': activeBattle, 'inactive': !activeBattle }" class="nav_button text-nowrap fw-bold fs-3" @click="clickNav('/battle/list')">배틀</a>
             </li>
             <li class="mx-3 nav-item">
               <a :class="{'active' : activeRanking, 'inactive' : !activeRanking }" class="nav_button text-nowrap fw-bold fs-3" @click="clickNav('/ranking')">랭킹</a>
@@ -25,7 +25,7 @@
             <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="clickNav('/login')">로그인/회원가입</button>
           </span>
           <span v-if="loginCheck" class="navbar-text">
-
+            <a class="fw-bold mypage_btn text-white" @click="clickNav('/mypage')">{{userInfo.userNickname}}님</a>
             <br>
             <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="logout()">로그아웃</button>
           </span>

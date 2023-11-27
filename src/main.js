@@ -5,6 +5,7 @@ import httpUtil from '@/assets/js/http';
 import validator from 'validator';
 import store from '@/store';
 import alertUtil from '@/assets/js/alert'
+import battleUtil from '@/assets/js/battle'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 const app = createApp(App);
@@ -22,5 +23,6 @@ app.use(router);
 app.use(store);
 app.use(httpUtil);
 app.use(alertUtil);
+app.use(battleUtil);
 
 app.mount('#app');
