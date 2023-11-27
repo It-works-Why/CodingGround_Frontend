@@ -16,7 +16,7 @@
   <br>
   <button @click="getUserInfo">vuex테스트</button>
   <br>
-  <h3>api 테스트</h3>
+  <h3>api 테스트, 테스트</h3>
   <input type="text" placeholder="System.in" v-model="body.stdin">
   <br>
   <textarea style="height: 300px" v-model="body.source_code" class="code_mirror w-75">
