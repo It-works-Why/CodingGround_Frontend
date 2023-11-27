@@ -7,25 +7,25 @@
 
       <div class="title">
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
-          {{postData.userProfileImg}}
+          {{getData.userProfileImg}}
           <div class="user_info_box">
             <div>
-              {{postData.userNickname}}
+              {{getData.userNickname}}
             </div>
             <div>
-              {{postData.noticeTime}}
+              {{getData.noticeTime}}
             </div>
           </div>
         </div>
-        <input :value="postData.noticeTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
+        <input :value="getData.noticeTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
       </div>
-      <textarea :value="postData.noticeContent" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" disabled/>
+      <textarea :value="getData.noticeContent" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" disabled/>
 
       <div class="button">
         <WhiteButton class="edit" button-value="목록" @click="this.$router.push('/admin/notice/list')"></WhiteButton>
         <span class="action_button">
           <WhiteButton class="delete ms-2" button-value="삭제"></WhiteButton>
-          <WhiteButton class="edit ms-2" button-value="수정" @click="this.$router.push(`/admin/notice/edit/${postData.noticeNum}`)"></WhiteButton>
+          <WhiteButton class="edit ms-2" button-value="수정" @click="this.$router.push(`/admin/notice/edit/${getData.noticeNum}`)"></WhiteButton>
         </span>
       </div>
     </div>
@@ -40,14 +40,14 @@ export default {
   components: {WhiteButton},
   data() {
     return {
-      postData: [],
+      getData: [],
     }
   },
   methods: {
     load() {
       this.$httpUtil(`/admin/notice/detail/` + this.$route.params.id, 'GET', null, (data) => {
         console.log(data);
-        this.postData = data;
+        this.getData = data;
       })
     }
   },
