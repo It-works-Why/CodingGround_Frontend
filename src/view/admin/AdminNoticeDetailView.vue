@@ -24,7 +24,7 @@
       <div class="button">
         <WhiteButton class="edit" button-value="목록" @click="this.$router.push('/admin/notice/list')"></WhiteButton>
         <span class="action_button">
-          <WhiteButton class="delete ms-2" button-value="삭제"></WhiteButton>
+          <WhiteButton class="delete ms-2" button-value="삭제" @click="deleteNotice"></WhiteButton>
           <WhiteButton class="edit ms-2" button-value="수정" @click="this.$router.push(`/admin/notice/edit/${getData.noticeNum}`)"></WhiteButton>
         </span>
       </div>
@@ -48,6 +48,12 @@ export default {
       this.$httpUtil(`/admin/notice/detail/` + this.$route.params.id, 'GET', null, (data) => {
         console.log(data);
         this.getData = data;
+      });
+    },
+    deleteNotice() {
+      this.$httpUtil('/admin/notice/delete/' + this.$route.params.id, 'DELETE', null, (data) => {
+        this.$router.push('/admin/notice/list')
+        this.$successAlert(data.data.message);
       })
     }
   },
