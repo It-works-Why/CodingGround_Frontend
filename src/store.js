@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import { errorMessageToast } from "@/assets/js/alert";
 import axios from 'axios';
 
 const store = createStore({
@@ -47,7 +48,7 @@ const store = createStore({
                 };
                 commit('addUserInfo', userInfo);
             } catch (error) {
-                alert(error);
+                errorMessageToast(error)
             }
         }
     },

@@ -33,6 +33,7 @@ import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
 import AdminNoticeRegisterPostView from "@/view/admin/AdminNoticeRegisterPostView.vue";
 import AdminNoticeDetailView from "@/view/admin/AdminNoticeDetailView.vue";
 import AdminNoticeEditPostView from "@/view/admin/AdminNoticeEditPostView.vue";
+import SocketTest from "@/view/battle/SocketTest.vue";
 
 const routes = [
   {
@@ -126,6 +127,10 @@ const routes = [
       {
         path: '/ranking',
         component: RankingListView
+      },
+      {
+        path: '/socket/test',
+        component: SocketTest
       },
 
     ]
