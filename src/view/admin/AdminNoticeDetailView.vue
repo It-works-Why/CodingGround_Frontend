@@ -8,7 +8,7 @@
       <div class="title">
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
           {{postData.userProfileImg}}
-          <div>
+          <div class="user_info_box">
             <div>
               {{postData.userNickname}}
             </div>
