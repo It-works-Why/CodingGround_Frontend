@@ -60,10 +60,8 @@ export default {
       this.editData.noticeContent = content;
 
       this.$httpUtil(`/admin/notice/edit/` + this.$route.params.id, 'PATCH', this.editData, (data) => {
-        console.log(data)
-        if (data.data.success) {
-          this.$router.push('/admin/notice/detail/' + this.$router.params.id)
-        }
+        this.$router.push('/admin/notice/detail/' + this.$route.params.id)
+        this.$successAlert(data.data.message);
       })
     }
   },

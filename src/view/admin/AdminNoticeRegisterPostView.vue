@@ -39,6 +39,7 @@ export default {
       this.$httpUtil('/admin/notice/register','POST',this.postData,(data) => {
         if(data.data.success){
           this.$router.push('/admin/notice/list');
+          this.$successAlert(data.data.message);
         }
       });
     }
