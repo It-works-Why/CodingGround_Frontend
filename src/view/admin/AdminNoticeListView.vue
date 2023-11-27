@@ -19,14 +19,16 @@
         <td class="date">{{notice.noticeTime}}</td>
       </tr>
     </table>
+    <ListPaging></ListPaging>
   </div>
 </template>
 
 <script>
 import WhiteButton from "@/components/WhiteButton.vue";
+import ListPaging from "@/components/Paging.vue";
 
 export default {
-  components: {WhiteButton},
+  components: {ListPaging, WhiteButton},
   data() {
     return {
       noticeList: [],
@@ -38,10 +40,18 @@ export default {
           console.log(data);
           this.noticeList = data;
       })
-    }
+    },
+    // fnGetList() {
+    //   this.$axios.get("/admin/notice/list?page=" + this.$route.query.page, 'GET', null, (data) => {
+    //     this.noticeList = data.data
+    //     this.paging = data.pagination
+    //     this.no = this.paging.totalPost - ((this.paging.page - 1) * 9)
+    //   })
+    // },
   },
   mounted() {
     this.load();
+    // this.fnGetList();
   },
 }
 </script>
