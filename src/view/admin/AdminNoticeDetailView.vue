@@ -6,16 +6,26 @@
       </div>
 
       <div class="title">
+        <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
+          {{postData.userProfileImg}}
+          <div class="user_info_box">
+            <div>
+              {{postData.userNickname}}
+            </div>
+            <div>
+              {{postData.noticeTime}}
+            </div>
+          </div>
+        </div>
         <input :value="postData.noticeTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
-        <div class="text-white px-3 py-2 fs-4 mb-4 info_box">글쓴이 정보</div>
       </div>
       <textarea :value="postData.noticeContent" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" disabled/>
 
       <div class="button">
-        <WhiteButton class="edit" button-value="목록" ></WhiteButton>
+        <WhiteButton class="edit" button-value="목록" @click="this.$router.push('/admin/notice/list')"></WhiteButton>
         <span class="action_button">
           <WhiteButton class="delete ms-2" button-value="삭제"></WhiteButton>
-          <WhiteButton class="edit ms-2" button-value="수정" ></WhiteButton>
+          <WhiteButton class="edit ms-2" button-value="수정" @click="this.$router.push(`/admin/notice/edit/${postData.noticeNum}`)"></WhiteButton>
         </span>
       </div>
     </div>

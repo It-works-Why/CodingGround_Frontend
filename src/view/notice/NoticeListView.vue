@@ -28,20 +28,20 @@ export default {
       noticeList: [],
     }
   },
-  methods: {
-    load() {
-      this.$httpUtil('/admin/notice/list', 'GET', null, (data) => {
-          console.log(data);
-          this.noticeList = data;
-      })
-      // axios.get("/admin/notice/list").then(({data}) => {
-      //   console.log(data.noticeList);
-      // });
-    }
-  },
-  mounted() {
-    this.load();
-  },
+  // methods: {
+    // load() {
+    //   this.$httpUtil('/notice/list', 'GET', null, (data) => {
+    //       console.log(data);
+    //       this.noticeList = data;
+    //   })
+      // axios.get("/notice/list").then(({data}) => {
+  //     //   console.log(data.noticeList);
+  //     // });
+  //   }
+  // },
+  // mounted() {
+  //   this.load();
+  // },
 }
 </script>
 
