@@ -6,15 +6,15 @@
       </div>
 
       <div class="title">
-        <input :value="postData.title" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
+        <input :value="inquiryDetail.contactTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">글쓴이 정보</div>
       </div>
-      <textarea :value="postData.content" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="6" type="text" disabled/>
+      <textarea :value="inquiryDetail.contactContent" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="6" type="text" disabled/>
 
       <div class="text-white fw-bold fs-1 mb-2 w-100">
         문의답변
       </div>
-      <textarea :value="postData.answer" placeholder="답변을 입력해주세요." class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="6" type="text"/>
+      <textarea :value="inquiryDetail.contactAnswer" placeholder="답변을 입력해주세요." class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="6" type="text"/>
 
       <div class="button">
         <WhiteButton class="list" button-value="목록"></WhiteButton>
@@ -35,15 +35,22 @@ import WhiteButton from "@/components/WhiteButton.vue";
 export default {
   data(){
     return{
-      postData: {
-        title: '제목 데이터 바인딩',
-        content: '내용 데이터 바인딩',
-        answer: '답변 내용 바인딩'
-      }
+      inquiryDetail: [],
+
     }
   },
   components: {
     WhiteButton
+  },
+  methods: {
+    getInquiryDetail() {
+      this.$httpUtil('/admin/user/inquiry/detail/' + this.$route.params.id, 'GET', null, (data) => {
+        this.inquiryDetail = data;
+      })
+    }
+  },
+  mounted() {
+    this.getInquiryDetail();
   }
 }
 </script>

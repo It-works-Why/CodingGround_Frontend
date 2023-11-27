@@ -6,7 +6,7 @@ on:
       - feature
 
 env:
-  ecr_url: 503237308475.dkr.ecr.ca-central-1.amazonaws.com/coding-ground-ecr
+  ecr_url: 503237308475.dkr.ecr.ca-central-1.amazonaws.com
   aws_region: ca-central-1
   
 jobs:
@@ -26,7 +26,7 @@ jobs:
       with:
         context: .
         push: false
-        tag: codingground_frontend:latest
+        tags: codingground_frontend:latest
         file: ./Dockerfile
     
     - name: Configure AWS Credentials
@@ -35,9 +35,13 @@ jobs:
         aws-region: ${{ env.aws_region }}
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    
+        
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      
     - name: Push Image to ECR
       run: |
-        docker tag codingground_frontend:latest ${{ env.ecr_url }}:${{ steps.date.outputs.date }}
-        docker push ${{ env.ecr_url }}:${{ steps.date.outputs.date }}
+        docker tag codingground_frontend:latest ${{ env.ecr_url }}/codingground-frontend:${{ steps.date.outputs.date }}
+        docker push ${{ env.ecr_url }}/codingground-frontend:${{ steps.date.outputs.date }}
 
