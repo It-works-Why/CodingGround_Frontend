@@ -39,7 +39,6 @@ export default {
   methods: {
     getInquiryList() {
       this.$httpUtil('/admin/user/inquiry/list', 'GET', null, (data) => {
-       console.log(data);
        this.inquiryList = data;
       })
     }
