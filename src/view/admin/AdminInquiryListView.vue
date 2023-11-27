@@ -6,20 +6,21 @@
   <div class="rounded-3 mt-2 py-2 px-2 rank_background_box m-auto">
     <table class="rounded-top-3 text-white fw-bold list_box m-auto">
       <tr>
-        <td class="ranking">#</td>
+        <td class="contactnum">#</td>
         <td class="title">제목</td>
         <td class="date">작성일자</td>
         <td class="nickname">닉네임</td>
         <td class="answer">답변여부</td>
       </tr>
     </table>
-    <table :key="i" :value="userInquiry" v-for="(userInquiry, i) in userInquiryList" class="mt-1 text-white list_box m-auto">
+    <table :key="i" :value="inquiry" v-for="(inquiry, i) in inquiryList" class="mt-1 text-white list_box m-auto"
+            @click="this.$router.push('/admin/user/inquiry/detail/' + inquiry.contactNum)">
       <tr>
-        <td class="ranking">{{userInquiry.ranking}}</td>
-        <td class="title">{{userInquiry.title}}</td>
-        <td class="date">{{userInquiry.date}}</td>
-        <td class="nickname">{{userInquiry.nickname}}</td>
-        <td class="answer">{{userInquiry.answer}}</td>
+        <td class="contactnum">{{inquiry.contactNum}}</td>
+        <td class="title">{{inquiry.contactTitle}}</td>
+        <td class="date">{{inquiry.contactTime}}</td>
+        <td class="nickname">{{inquiry.userNickname}}</td>
+        <td class="answer">{{ inquiry.answerStatus === 1 ? '답변완료' : '미답변' }}</td>
       </tr>
     </table>
   </div>
@@ -31,25 +32,20 @@ export default {
   data() {
     return {
       searchInput: "",
-      userInquiryList: [
-        {
-          ranking: '1',
-          title: '1등하면 메가존 들어갈수 있나요? ㅋㅋ',
-          date: '2023.11.11',
-          nickname: '키위새',
-          answer: '답변완료'
-        },
-        {
-          ranking: '2',
-          title: '이거 어떻게 하는 게임인가요?',
-          date: '2023.11.12',
-          nickname: '키위새',
-          answer: '확인중'
-        },
-
-      ],
+      inquiryList: [],
 
     }
+  },
+  methods: {
+    getInquiryList() {
+      this.$httpUtil('/admin/user/inquiry/list', 'GET', null, (data) => {
+       console.log(data);
+       this.inquiryList = data;
+      })
+    }
+  },
+  mounted() {
+    this.getInquiryList();
   }
 
 }
