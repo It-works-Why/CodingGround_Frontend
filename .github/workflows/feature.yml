@@ -34,9 +34,9 @@ jobs:
         aws-region: ${{ env.aws_region }}
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
     
     - name: Push Image to ECR
       run: |
-        docker tag CodingGround_Frontend:latest ${{ env.ecr_url }}:${{ steps.tag.outputs.date }}
-        docker push ${{ env.ecr_url }}:${{ steps.tag.outputs.date }}
+        docker tag codingground_frontend:latest ${{ env.ecr_url }}:${{ steps.date.outputs.date }}
+        docker push ${{ env.ecr_url }}:${{ steps.date.outputs.date }}
+
