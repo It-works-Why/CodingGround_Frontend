@@ -204,10 +204,10 @@ router.afterEach((to) => {
 
 })
 router.beforeEach(async (to, from, next) => {
-  if(localStorage.getItem('accessToken')){
+  if(localStorage.getItem('refreshToken')){
     if (!store.state.userInfo.userId) {
       try {
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem('refreshToken');
         const response = await axios.get('/api/account/userInfo', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -221,8 +221,8 @@ router.beforeEach(async (to, from, next) => {
         };
         store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
       } catch (error) {
-        console.error('Error fetching user info:', error);
-        // 오류 처리
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("accessToken");
       }
     }
   }

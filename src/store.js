@@ -35,7 +35,7 @@ const store = createStore({
         },
         async setUserInfo({ commit }) {
             try {
-                const accessToken = localStorage.getItem('accessToken');
+                const accessToken = localStorage.getItem('refreshToken');
                 const response = await axios.get('/api/account/userInfo', {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
@@ -48,7 +48,10 @@ const store = createStore({
                 };
                 commit('addUserInfo', userInfo);
             } catch (error) {
-                errorMessageToast(error)
+                console.log(error);
+                errorMessageToast("로그인 재시도");
+                localStorage.removeItem("refreshToken");
+                localStorage.removeItem("accessToken");
             }
         }
     },
