@@ -4,11 +4,10 @@
       <div class="top_box_left">
         <div class="position-relative img_form">
           <img class="img_view" src="../assets/img/DefaultProfile.png">
-          <img class="ranking_icon bottom-0 end-0 position-absolute" src="../assets/img/디렉터.png">
         </div>
         <div class="top_box_myinfo">
-          <h1 class="top_box_name">키위새</h1>
-          <h4 class="top_box_company">Megazone Cloud</h4>
+          <h1 class="top_box_name">{{userData.userNickname}}</h1>
+          <h4 class="top_box_company">{{userData.userAffiliationDetail}}</h4>
           <div class="top_box_left_button">
             <button class="btn1" type="button" @click="this.$router.push('/mypage/info/edit')">내 정보 수정</button>
             <button class="btn1" type="button" @click="this.$router.push('/mypage/inquiry')">내 문의 사항 보기</button>
@@ -18,7 +17,7 @@
       <div class="top_box_right">
         <div class="top_box">
           <h6 class="top_box_title">순방확률</h6>
-          <p class="top_box_content">30전 16승 14패 (53.33%)</p>
+          <p class="top_box_content">{{userData.matches}}전 {{userData.wins}}승 {{userData.losses}}패 ({{userData.recordPercentage}}%)</p>
         </div>
         <div class="top_box">
           <donut-chart :chartData="donutChartData2" :chartOptions="donutChartOptions2"></donut-chart>
@@ -80,6 +79,9 @@ export default {
   },
   data() {
     return {
+
+      userData: {},
+
       gameRecordData: [
         {
           gametype: '일반게임',
@@ -106,7 +108,7 @@ export default {
       donutChartData2: {
         labels: ['1', '2', '3','4','5~8'],
         datasets: [{
-          data: [6, 5, 4, 1, 14],
+          data: [1,2,3,4,5],
           backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678", "#515163"],
         }],
       },
@@ -143,7 +145,8 @@ export default {
   methods: {
     mypageload(){
       this.$httpUtil('/mypage/myinfo','GET', null,(data) => {
-
+        console.log(data.data);
+        this.userData = data.data;
         this.$successAlert(data.data.message);
       })
     }
