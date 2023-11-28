@@ -1,5 +1,4 @@
 <template>
-<!-- 관리자만 글쓰기 버튼 뜨도록 -->
   <div class="rounded-3 mt-2 px-2 py-2 rank_background_box m-auto">
     <WhiteButton class="white-btn" button-value="글쓰기" @click="this.$router.push('/admin/notice/write')"></WhiteButton>
     <table class="rounded-top-3 text-white fw-bold list_box m-auto">
@@ -10,48 +9,105 @@
         <td class="date">작성일시</td>
       </tr>
     </table>
-    <table :key="i" :value="notice" v-for="(notice, i) in noticeList.slice().reverse()" class="mt-1 text-white list_box m-auto"
+    <table :key="i" :value="notice" v-for="(notice, i) in noticeList" class="mt-1 text-white list_box m-auto"
            @click="this.$router.push('/admin/notice/detail/' + notice.noticeNum)">
       <tr>
         <td class="num">{{notice.noticeNum}}</td>
         <td class="title">{{notice.noticeTitle}}</td>
-        <td class="nickname">{{notice.userNickname}}</td>
-        <td class="date">{{notice.noticeTime}}</td>
+        <td class="nickname">{{notice.user.userNickname}}</td>
+        <td class="date">{{dayjs(notice.noticeTime).format('YYYY-MM-DD HH:mm')}}</td>
       </tr>
     </table>
-    <ListPaging></ListPaging>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center" >
+        <li class="page-item">
+          <a class="page-link" @click="prevBtn" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" :key="i" v-for="i in totalPage">
+          <router-link
+              :to="'/admin/notice/list/' + (i - 1)"
+              class="page-item"
+              :class="{ active: $route.params.pageNum == (i - 1) }"
+          >
+            <a class="page-link" @click="pageBtn(i-1)">{{i}}</a>
+          </router-link>
+        </li>
+        <li class="page-item">
+          <a class="page-link" @click="nextBtn" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
 import WhiteButton from "@/components/WhiteButton.vue";
-import ListPaging from "@/components/Paging.vue";
+import dayjs from 'dayjs';
 
 export default {
-  components: {ListPaging, WhiteButton},
+  computed: {
+    dayjs() {
+      return dayjs
+    }
+  },
+  components: {WhiteButton},
   data() {
     return {
       noticeList: [],
-    }
-  },
-  methods: {
-    load() {
-      this.$httpUtil('/admin/notice/list', 'GET', null, (data) => {
-          console.log(data);
-          this.noticeList = data;
-      })
-    },
-    // fnGetList() {
-    //   this.$axios.get("/admin/notice/list?page=" + this.$route.query.page, 'GET', null, (data) => {
-    //     this.noticeList = data.data
-    //     this.paging = data.pagination
-    //     this.no = this.paging.totalPost - ((this.paging.page - 1) * 9)
-    //   })
-    // },
+      totalPage : 0,
+      totalBlocks : 0,
+      currentBlock : 0,
+      startPage : 0,
+      endPage : 0
+      }
   },
   mounted() {
     this.load();
-    // this.fnGetList();
+  },
+  methods: {
+    load() {
+      this.$httpUtil('/admin/notice/list?page='+ this.$route.params.pageNum, 'GET', null, (noticeList) => {
+        // console.log(noticeList.content);
+        // console.log("totalPages: " + noticeList.totalPages);
+        // console.log("totalElements: " + noticeList.totalElements);
+        // console.log("size: " + noticeList.size);
+        // console.log("number: " + noticeList.number);
+        // console.log("numberOfElements: " + noticeList.numberOfElements);
+        this.noticeList = noticeList.content;
+        this.totalPage = noticeList.totalPages;
+
+        // const currentPage = this.$route.params.pageNum;
+
+        console.log("startPage : " + this.startPage);
+        console.log("endPage : " + this.endPage);
+      })
+    },
+    pageBtn(page) {
+      this.$router.push('/admin/notice/list/' + page)
+          .then(() => {
+            this.load();
+          })
+    },
+    prevBtn() {
+      if (this.$route.params.pageNum > 0) {
+        this.$router.push('/admin/notice/list/' + (this.$route.params.pageNum - 1))
+            .then(() => {
+              this.load();
+            })
+      }
+    },
+    nextBtn() {
+      if (this.$route.params.pageNum < this.totalPage - 1) {
+        this.$router.push('/admin/notice/list/' + (this.$route.params.pageNum + 1))
+            .then(() => {
+              this.load();
+            })
+      }
+    }
   },
 }
 </script>

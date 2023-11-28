@@ -157,6 +157,10 @@ const routes = [
       },
       {
         path: '/admin/notice/list',
+        redirect: '/admin/notice/list/0'
+      },
+      {
+        path: '/admin/notice/list/:pageNum',
         component: AdminNoticeListView
       },
       {
