@@ -25,13 +25,15 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item" :key="startBlock" v-for="startBlock in endBlock">
+        <li class="page-item" :key="i" v-for="i in endBlock">
           <router-link
-              :to="'/admin/notice/list/' + (startBlock - 1)"
+              :to="'/admin/notice/list/' + (i - 1)"
               class="page-item"
-              :class="{ active: $route.params.pageNum == (startBlock - 1) }"
+              :class="{ active: $route.params.pageNum == (i - 1) }"
           >
-            <a class="page-link" @click="pageBtn(startBlock-1)">{{startBlock}}</a>
+            <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
+              {{i}}
+            </a>
           </router-link>
         </li>
         <li class="page-item">
@@ -80,10 +82,10 @@ export default {
         this.noticeList = noticeList.content;
         this.totalPage = noticeList.totalPages;
 
-        this.startBlock = parseInt(noticeList.number / 10) * 10 + 1;
+        this.startBlock = parseInt(parseInt(noticeList.number / 10) * 10 + 1);
         console.log("startBlock : " + this.startBlock);
 
-        const endBlock = this.startBlock + 10;
+        const endBlock = this.startBlock + 9;
         if (endBlock > this.totalPage) {
           this.endBlock = this.totalPage;
         } else {
@@ -100,7 +102,7 @@ export default {
     },
     prevBtn() {
       if (this.$route.params.pageNum > 0) {
-        this.$router.push('/admin/notice/list/' + (this.$route.params.pageNum - 1))
+        this.$router.push('/admin/notice/list/' + parseInt(parseInt(this.startBlock) - parseInt(9)))
             .then(() => {
               this.load();
             })
@@ -108,7 +110,7 @@ export default {
     },
     nextBtn() {
       if (this.$route.params.pageNum < this.totalPage - 1) {
-        this.$router.push('/admin/notice/list/' + (this.$route.params.pageNum + 1))
+        this.$router.push('/admin/notice/list/' + parseInt(parseInt(this.startBlock) + parseInt(9)))
             .then(() => {
               this.load();
             })
