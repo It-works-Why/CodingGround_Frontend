@@ -16,65 +16,114 @@
         <td class="write_date">작성일시</td>
       </tr>
     </table>
-    <table :key="i" :value="community" v-for="(community, i) in communityListInfo" class="mt-1 text-white list_box m-auto">
+    <table :key="i" :value="community" v-for="(community, i) in communityList" class="mt-1 text-white list_box m-auto"
+            @click="this.$router.push('/community/detail/' + community.postNum)">
       <tr class="cursor">
-        <td class="index">{{community.index}}</td>
-        <td class="title">{{community.title}}</td>
-        <td class="writer">{{ community.writer}}</td>
-        <td class="write_date">{{community.writeDate}}</td>
+        <td class="index">{{community.postNum}}</td>
+        <td class="title">{{community.postTitle}}</td>
+        <td class="writer">{{ community.user.userNickname}}</td>
+        <td class="write_date">{{dayjs(community.postTime).format('YYYY-MM-DD HH:mm')}}</td>
       </tr>
     </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center" >
+        <li class="page-item">
+          <a class="page-link" @click="prevBtn" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" :key="i" v-for="i in endBlock">
+          <router-link
+              :to="'/community/list/' + (i - 1)"
+              class="page-item"
+              :class="{ active: $route.params.pageNum == (i - 1) }"
+          >
+            <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
+              {{i}}
+            </a>
+          </router-link>
+        </li>
+        <li class="page-item">
+          <a class="page-link" @click="nextBtn" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
-
 </template>
 
 <script>
 import WhiteButton from "@/components/WhiteButton.vue";
+import dayjs from 'dayjs';
 
 export default {
+  computed: {
+    dayjs() {
+      return dayjs
+    }
+  },
   components: {WhiteButton},
   data() {
     return {
       communitySelectData: [
         "제목",
         "작성자",
-        "작성 일시",
+        "글 내용",
       ],
+      communityList: [],
       searchInput: "",
-      communityListInfo: [
-        {
-          index: '1',
-          title: '헤헤헤커뮤니티 개설',
-          writer: 'LHH',
-          writeDate: '2023-11-21',
-        },
-        {
-          index: '2',
-          title: '위에글 좀 이상한사람 인듯',
-          writer: '에이스못먹는치치',
-          writeDate: '2023-11-21',
-        },
-        {
-          index: '3',
-          title: '이게 왜 되누!',
-          writer: '관관이형',
-          writeDate: '2023-11-21',
-        },
-        {
-          index: '4',
-          title: '텍스트 오버플로우 테스트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트트',
-          writer: '악질유저',
-          writeDate: '2023-11-21',
-        },
-        {
-          index: '5',
-          title: '푸링푸링 푸링푸링',
-          writer: '기가푸링',
-          writeDate: '2023-11-21',
+      totalPage: 0,
+      totalBlocks: 0,
+      currentBlock: 0,
+      startBlock: 0,
+      endBlock: 0,
+    }
+  },
+  mounted() {
+    this.load();
+  },
+  methods: {
+    load() {
+      this.$httpUtil('/community/list?page=' + this.$route.params.pageNum, 'GET', null, (communityList) => {
+        console.log(communityList.content)
+        this.communityList = communityList.content;
+        this.totalPage = communityList.totalPages;
+
+        this.startBlock = parseInt(parseInt(communityList.number / 10 ) * 10 + 1);
+
+        const endBlock = this.startBlock + 9;
+        if (endBlock > this.totalPage ) {
+          this.endBlock = this.totalPage;
+        } else {
+          this.endBlock = endBlock;
         }
-
-      ],
-
+      })
+    },
+    searchBy() {
+      this.$httpUtil('/community/list?searchBy='+this.searchInput, )
+    },
+    pageBtn(page) {
+      this.$router.push('/community/list/' + page)
+          .then(() => {
+            this.load();
+          })
+    },
+    prevBtn() {
+      if (this.$router.params.pageNum > 0) {
+        this.$router.push('/community/list/' + parseInt(parseInt(this.startBlock) - parseInt(9)))
+            .then(() => {
+              this.load();
+            })
+      }
+    },
+    nextBtn() {
+      if (this.$router.params.pageNum < this.totalPage - 1) {
+        this.$router.push('/community/list/' + parseInt(parseInt(this.startBlock) + parseInt(9)))
+            .then(() => {
+              this.load();
+            })
+      }
     }
   }
 

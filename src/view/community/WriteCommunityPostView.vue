@@ -5,14 +5,14 @@
         커뮤니티
       </div>
 
-      <input v-model="postData.title" placeholder="제목을 입력해주세요." class="w-100 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" />
+      <input v-model="postData.postTitle" placeholder="제목을 입력해주세요." class="w-100 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" />
 
-      <textarea v-model="postData.content" placeholder="내용을 입력해주세요." class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" />
+      <textarea v-model="postData.postContent" placeholder="내용을 입력해주세요." class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" />
 
       <div class="button">
         <span class="action_button">
-          <WhiteButton class="cancel ms-2" button-value="취소"></WhiteButton>
-          <WhiteButton class="write ms-2" button-value="작성" ></WhiteButton>
+          <WhiteButton class="cancel ms-2" button-value="취소" @click="this.$router.push('/community/list?page=1')"></WhiteButton>
+          <WhiteButton class="write ms-2" button-value="작성" @click="post"></WhiteButton>
         </span>
       </div>
     </div>
@@ -26,8 +26,8 @@ export default {
   data(){
     return{
       postData: {
-        title: '',
-        content: ''
+        postTitle: '',
+        postContent: ''
       }
     }
   },
@@ -35,9 +35,16 @@ export default {
     WhiteButton,
   },
   methods:{
-
+    post() {
+      this.$httpUtil('/community/write','POST',this.postData,(data) => {
+        if(data.data.success){
+          this.$router.push('/community/list');
+          console.log(this.postData)
+          this.$successAlert(data.data.message);
+        }
+      });
+    }
   }
-
 }
 </script>
 
