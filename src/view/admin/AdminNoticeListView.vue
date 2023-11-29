@@ -29,8 +29,7 @@
           <router-link
               :to="'/admin/notice/list/' + (i - 1)"
               class="page-item"
-              :class="{ active: $route.params.pageNum == (i - 1) }"
-          >
+              :class="{ active: $route.params.pageNum == (i - 1) }">
             <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
               {{i}}
             </a>
@@ -101,7 +100,7 @@ export default {
           })
     },
     prevBtn() {
-      if (this.$route.params.pageNum > 0) {
+      if (this.endBlock > 10) {
         this.$router.push('/admin/notice/list/' + parseInt(parseInt(this.startBlock) - parseInt(9)))
             .then(() => {
               this.load();
@@ -109,7 +108,7 @@ export default {
       }
     },
     nextBtn() {
-      if (this.$route.params.pageNum < this.totalPage - 1) {
+      if (this.endBlock < this.totalPage - 1) {
         this.$router.push('/admin/notice/list/' + parseInt(parseInt(this.startBlock) + parseInt(9)))
             .then(() => {
               this.load();
