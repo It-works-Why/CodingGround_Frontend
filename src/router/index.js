@@ -10,7 +10,6 @@ import FindAccountView from "@/view/account/FindAccountView.vue";
 import EditMyInfoView from "@/view/EditMyInfoView.vue";
 import AdminTemplateView from "@/view/admin/AdminTemplateView.vue";
 import AdminHomeView from "@/view/admin/AdminHomeView.vue";
-import AdminQuestionManagementView from "@/view/admin/AdminQuestionManagementView.vue";
 import AdminQuestionRegisterView from "@/view/admin/AdminQuestionRegisterView.vue";
 import BattleListView from "@/view/battle/BattleListView.vue";
 import EditCommunityPostView from "@/view/community/EditCommunityPostView.vue";
@@ -34,6 +33,7 @@ import AdminNoticeRegisterPostView from "@/view/admin/AdminNoticeRegisterPostVie
 import AdminNoticeDetailView from "@/view/admin/AdminNoticeDetailView.vue";
 import AdminNoticeEditPostView from "@/view/admin/AdminNoticeEditPostView.vue";
 import SocketTest from "@/view/battle/SocketTest.vue";
+import AdminQuestionListView from "@/view/admin/AdminQuestionListView.vue";
 
 const routes = [
   {
@@ -152,8 +152,16 @@ const routes = [
         component: AdminHomeView
       },
       {
-        path: '/admin/question/management',
-        component: AdminQuestionManagementView
+        path: '/admin/question/list',
+        redirect: '/admin/question/list/0'
+      },
+      {
+        path: '/admin/question/list/:pageNum',
+        component: AdminQuestionListView
+      },
+      {
+        path: '/admin/question/list/:pageNum/:keyword',
+        component: AdminQuestionListView
       },
       {
         path: '/admin/question/register',

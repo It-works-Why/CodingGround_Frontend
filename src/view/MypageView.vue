@@ -26,10 +26,10 @@
       </div>
     </div>
     <div class="center">
-      <div class="ranking_lists">
-        <div class="ranking_list">
-          <img class="ranking_icon" src="../assets/img/시니어.png">
-          <h6>S2023-11</h6>
+      <div  class="ranking_lists">
+        <div :key="i" :value="userBadges" v-for="(userBadges, i) in userData.gameBadge" class="ranking_list">
+          <img class="ranking_icon" :src="require('@/assets/img/tier/' + userBadges.num + '.png')">
+          <h6>{{userBadges.name}}</h6>
         </div>
       </div>
     </div>

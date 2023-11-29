@@ -9,7 +9,7 @@
         <div class="pb-1 collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="mx-3 nav-item">
-              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/admin/question/management">문제 관리</a>
+              <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/admin/question/list">문제 관리</a>
             </li>
             <li class="mx-3 nav-item">
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/admin/user/list">회원 관리</a>
