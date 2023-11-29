@@ -22,7 +22,7 @@
       <textarea :value="getData.noticeContent" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" disabled/>
 
       <div class="button">
-        <WhiteButton class="edit" button-value="목록" @click="this.$router.push('/admin/notice/list')"></WhiteButton>
+        <WhiteButton class="edit" button-value="목록" @click="this.$router.back"></WhiteButton>
         <span class="action_button">
           <WhiteButton class="delete ms-2" button-value="삭제" @click="deleteNotice"></WhiteButton>
           <WhiteButton class="edit ms-2" button-value="수정" @click="this.$router.push(`/admin/notice/edit/${getData.noticeNum}`)"></WhiteButton>
@@ -51,7 +51,7 @@ export default {
       });
     },
     deleteNotice() {
-      this.$httpUtil('/admin/notice/delete/' + this.$route.params.id, 'DELETE', null, (data) => {
+      this.$httpUtil('/admin/notice/delete/' + this.$route.params.id, 'PATCH', null, (data) => {
         this.$router.push('/admin/notice/list')
         this.$successAlert(data.data.message);
       })

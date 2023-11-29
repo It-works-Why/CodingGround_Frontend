@@ -106,10 +106,10 @@ const routes = [
       },
       {
         path: '/notice',
-        redirect: '/notice/list'
+        redirect: '/notice/list/0'
       },
       {
-        path: '/notice/list',
+        path: '/notice/list/:pageNum',
         component: NoticeListView
       },
       {
