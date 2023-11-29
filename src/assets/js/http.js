@@ -41,6 +41,7 @@ const methods = {
             const response = await axiosInstance(config);
             successFunction(response.data);
         } catch (error) {
+            console.log(error);
             if(error.response.data.message == "로그인 재시도." && localStorage.getItem("refreshToken") !== null){
                 const refreshToken = localStorage.getItem("refreshToken");
                 axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${refreshToken}`;

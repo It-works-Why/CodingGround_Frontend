@@ -97,10 +97,10 @@ export default {
       ],
       // 도넛 차트 데이터 및 옵션 추가
       donutChartData: {
-        labels: ['Java', 'C++', 'Python', 'C#'],
+        labels: [],
         datasets: [{
-          data: [40, 30, 30 ,20],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', "#123456"],
+          data: [],
+          backgroundColor: [],
         }],
       },
       donutChartData2: {
@@ -145,6 +145,24 @@ export default {
       this.$httpUtil('/mypage/myinfo','GET', null,(data) => {
         console.log(data.data);
         this.userData = data.data;
+        console.log(this.userData.gameLanguage)
+        const colors = [];
+        const dataValues = [];
+        const labels = [];
+        for (let languageInfo of this.userData.gameLanguage) {
+          colors.push('#' + Math.round(Math.random() * 0xffffff).toString(16));
+          labels.push(languageInfo.languageName);
+          dataValues.push(parseInt(languageInfo.languageCount));
+        }
+
+        this.donutChartData = {
+          labels: labels,
+          datasets: [{
+            data: dataValues,
+            backgroundColor: colors,
+          }],
+        };
+
 
         const rankingData = data.data.ranking[0];
 
