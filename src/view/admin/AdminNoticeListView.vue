@@ -25,13 +25,13 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item" :key="i" v-for="i in totalPage">
+        <li class="page-item" :key="startBlock" v-for="startBlock in endBlock">
           <router-link
-              :to="'/admin/notice/list/' + (i - 1)"
+              :to="'/admin/notice/list/' + (startBlock - 1)"
               class="page-item"
-              :class="{ active: $route.params.pageNum == (i - 1) }"
+              :class="{ active: $route.params.pageNum == (startBlock - 1) }"
           >
-            <a class="page-link" @click="pageBtn(i-1)">{{i}}</a>
+            <a class="page-link" @click="pageBtn(startBlock-1)">{{startBlock}}</a>
           </router-link>
         </li>
         <li class="page-item">
@@ -61,8 +61,8 @@ export default {
       totalPage : 0,
       totalBlocks : 0,
       currentBlock : 0,
-      startPage : 0,
-      endPage : 0
+      startBlock : 0,
+      endBlock : 0,
       }
   },
   mounted() {
@@ -71,19 +71,25 @@ export default {
   methods: {
     load() {
       this.$httpUtil('/admin/notice/list?page='+ this.$route.params.pageNum, 'GET', null, (noticeList) => {
-        // console.log(noticeList.content);
-        // console.log("totalPages: " + noticeList.totalPages);
-        // console.log("totalElements: " + noticeList.totalElements);
-        // console.log("size: " + noticeList.size);
-        // console.log("number: " + noticeList.number);
-        // console.log("numberOfElements: " + noticeList.numberOfElements);
+        console.log(noticeList.content);
+        console.log("totalPages: " + noticeList.totalPages);
+        console.log("totalElements: " + noticeList.totalElements);
+        console.log("size: " + noticeList.size);
+        console.log("number: " + noticeList.number);
+        console.log("numberOfElements: " + noticeList.numberOfElements);
         this.noticeList = noticeList.content;
         this.totalPage = noticeList.totalPages;
 
-        // const currentPage = this.$route.params.pageNum;
+        this.startBlock = parseInt(noticeList.number / 10) * 10 + 1;
+        console.log("startBlock : " + this.startBlock);
 
-        console.log("startPage : " + this.startPage);
-        console.log("endPage : " + this.endPage);
+        const endBlock = this.startBlock + 10;
+        if (endBlock > this.totalPage) {
+          this.endBlock = this.totalPage;
+        } else {
+          this.endBlock = endBlock;
+        }
+        console.log("endBlock : " + this.endBlock);
       })
     },
     pageBtn(page) {
