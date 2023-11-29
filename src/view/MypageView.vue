@@ -4,10 +4,11 @@
       <div class="top_box_left">
         <div class="position-relative img_form">
           <img class="img_view" src="../assets/img/DefaultProfile.png">
+          <img class="ranking_icon bottom-0 end-0 position-absolute" :src="require('@/assets/img/tier/' + userData.userInfo.rankNum + '.png')">
         </div>
         <div class="top_box_myinfo">
-          <h1 class="top_box_name">{{userData.userNickname}}</h1>
-          <h4 class="top_box_company">{{userData.userAffiliationDetail}}</h4>
+          <h1 class="top_box_name">{{userData.userInfo.userNickname}}</h1>
+          <h4 class="top_box_company">{{userData.userInfo.userAffiliationDetail}}</h4>
           <div class="top_box_left_button">
             <button class="btn1" type="button" @click="this.$router.push('/mypage/info/edit')">내 정보 수정</button>
             <button class="btn1" type="button" @click="this.$router.push('/mypage/inquiry')">내 문의 사항 보기</button>
@@ -17,7 +18,7 @@
       <div class="top_box_right">
         <div class="top_box">
           <h6 class="top_box_title">순방확률</h6>
-          <p class="top_box_content">{{userData.matches}}전 {{userData.wins}}승 {{userData.losses}}패 ({{userData.recordPercentage}}%)</p>
+          <p class="top_box_content">{{userData.userInfo.matches}}전 {{userData.userInfo.wins}}승 {{userData.userInfo.losses}}패 ({{userData.userInfo.recordPercentage}}%)</p>
         </div>
         <div class="top_box">
           <donut-chart :chartData="donutChartData2" :chartOptions="donutChartOptions2"></donut-chart>
@@ -29,11 +30,6 @@
         <div class="ranking_list">
           <img class="ranking_icon" src="../assets/img/시니어.png">
           <h6>S2023-11</h6>
-        </div>
-
-        <div class="ranking_list">
-          <img class="ranking_icon" src="../assets/img/디렉터.png">
-          <h6>S2023-12</h6>
         </div>
       </div>
     </div>
@@ -80,7 +76,9 @@ export default {
   data() {
     return {
 
-      userData: {},
+      userData: {
+        userInfo: {rankNum : 1},
+      },
 
       gameRecordData: [
         {
@@ -108,7 +106,7 @@ export default {
       donutChartData2: {
         labels: ['1', '2', '3','4','5~8'],
         datasets: [{
-          data: [1,2,3,4,5],
+          data: [],
           backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678", "#515163"],
         }],
       },
@@ -147,8 +145,28 @@ export default {
       this.$httpUtil('/mypage/myinfo','GET', null,(data) => {
         console.log(data.data);
         this.userData = data.data;
-        this.$successAlert(data.data.message);
-      })
+
+        const rankingData = data.data.ranking[0];
+
+        const dataArray = [
+          rankingData.count1 || 0,
+          rankingData.count2 || 0,
+          rankingData.count3 || 0,
+          rankingData.count4 || 0,
+          rankingData.count5 || 0
+        ];
+
+        // 전체 객체를 갱신
+        this.donutChartData2 = {
+          labels: ['1', '2', '3', '4', '5~8'],
+          datasets: [{
+            data: dataArray,
+            backgroundColor: ['#EB9C00', '#758592', '#907659', '#676678', '#515163'],
+          }],
+        };
+
+
+      });
     }
   }
 };
