@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-3 mt-3 px-2 py-2 top_background_box m-auto">
-    <input class="search_box text-white" v-model="searchInput" placeholder="문의사항 제목으로 검색">
+    <input @keyup.enter="getInquiryList" class="search_box text-white" v-model="searchInput" placeholder="문의사항 제목으로 검색">
   </div>
 
   <div class="rounded-3 mt-2 py-2 px-2 rank_background_box m-auto">
@@ -31,14 +31,14 @@
 export default {
   data() {
     return {
-      searchInput: "",
+      searchInput: '',
       inquiryList: [],
 
     }
   },
   methods: {
     getInquiryList() {
-      this.$httpUtil('/admin/user/inquiry/list', 'GET', null, (data) => {
+      this.$httpUtil('/admin/user/inquiry/list?searchInput='+this.searchInput, 'GET', null, (data) => {
        this.inquiryList = data;
       })
     }

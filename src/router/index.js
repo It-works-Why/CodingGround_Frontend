@@ -106,10 +106,10 @@ const routes = [
       },
       {
         path: '/notice',
-        redirect: '/notice/list'
+        redirect: '/notice/list/0'
       },
       {
-        path: '/notice/list',
+        path: '/notice/list/:pageNum',
         component: NoticeListView
       },
       {
@@ -157,6 +157,10 @@ const routes = [
       },
       {
         path: '/admin/notice/list',
+        redirect: '/admin/notice/list/0'
+      },
+      {
+        path: '/admin/notice/list/:pageNum',
         component: AdminNoticeListView
       },
       {

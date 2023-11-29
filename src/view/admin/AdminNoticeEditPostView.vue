@@ -23,7 +23,7 @@
 
       <div class="button">
         <span class="action_button">
-          <WhiteButton class="cancel ms-2" button-value="취소" @click="this.$router.push('/admin/notice/detail/' + this.$router.params.id)"></WhiteButton>
+          <WhiteButton class="cancel ms-2" button-value="취소" @click="this.$router.back"></WhiteButton>
           <WhiteButton class="edit ms-2" button-value="수정" @click="edit"></WhiteButton>
         </span>
       </div>

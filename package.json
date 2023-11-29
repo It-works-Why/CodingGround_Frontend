@@ -16,6 +16,7 @@
     "codemirror": "^5.65.16",
     "codemirror-editor-vue3": "^2.4.1",
     "core-js": "^3.8.3",
+    "dayjs": "^1.11.10",
     "mitt": "^3.0.1",
     "register-service-worker": "^1.7.2",
     "validator": "^13.11.0",
