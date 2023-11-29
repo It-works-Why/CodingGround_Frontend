@@ -1,9 +1,33 @@
 <template>
-  <div>
-    <h1>문제</h1>
-  </div>
+  <body>
+    <div class="background"></div>
+    <div class="content">
+      <div class="loading"><img class="loadingImg" src="../../assets/img/Loading.gif"></div>
+      <div class="battleLoading">게임 참가자가 모두 들어올 때까지 잠시만 기다려 주세요.</div>
+      <div class="userCounter">현재 6/8 명 참가 중...</div>
+      <div class="cancel"><button class="cancel-btn">대기열 취소</button></div>
+    </div>
+  </body>
 </template>
 
 <script>
+export default {
+  data() {
+    return {
 
+    }
+  },
+  created() {
+    // this.$httpUtil('/battle/get/language', 'GET', null, (data) => {
+    //   this.languages = data;
+    //   console.log(this.languages)
+    // })
+  },
+  methods: {
+
+  }
+
+}
 </script>
+
+<style src="@/assets/css/view/battleloading.css" scoped/>

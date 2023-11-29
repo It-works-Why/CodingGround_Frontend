@@ -121,10 +121,6 @@ const routes = [
         component: BattleListView
       },
       {
-        path: '/battle',
-        component: BattleInGameView
-      },
-      {
         path: '/ranking',
         component: RankingListView
       },
@@ -132,6 +128,14 @@ const routes = [
         path: '/socket/test',
         component: SocketTest
       },
+      {
+        path: '/battle/ingame',
+        component: BattleInGameView
+      },
+      {
+        path: '/battle/ingame/:gameId',
+        component: BattleInGameView
+      }
 
     ]
   },

@@ -17,7 +17,7 @@
   <button @click="getUserInfo">vuex테스트</button>
   <br>
   <h3>api 테스트, 테스트</h3>
-  <input type="text" placeholder="System.in" v-model="body.stdin">
+  <input type="text" placeholder="System.in">
   <br>
   <textarea style="height: 300px" v-model="body.source_code" class="code_mirror w-75">
 
@@ -75,7 +75,7 @@ export default {
             "    }\n" +
             "}",
         language_id: 62,
-        stdin: ""
+        stdin: '13\n'+ '10'
       },
       resultToken: "",
       result: "",
@@ -106,13 +106,13 @@ export default {
       })
     },
     run() {
-      this.$httpUtil('https://airspirk.asuscomm.com:2361/submissions', 'POST', this.body, (data) => {
+      this.$httpUtil('https://airspirk.asuscomm.com:42361/submissions', 'POST', this.body, (data) => {
         console.log(data);
         this.resultToken = data.token;
       })
     },
     check() {
-      this.$httpUtil(`https://airspirk.asuscomm.com:2361/submissions/${this.resultToken}`, 'GET', this.body, (data) => {
+      this.$httpUtil(`https://airspirk.asuscomm.com:42361/submissions/${this.resultToken}`, 'GET', this.body, (data) => {
         console.log(data);
         if (data.stdout == null) {
           this.result = data.compile_output;

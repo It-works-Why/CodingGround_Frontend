@@ -34,25 +34,26 @@
     </div>
   </div>
 
-<!--모달-->
+  <!--모달-->
   <div class="modal-wrap" v-show="modalCheck">
     <div class="modal-container">
       <div class="modal-content">
         <div>
           <p class="modal-title">게임 방식</p>
           <div class="modal-box">
-            <a>{{inputTitle}}</a>
+            <a>{{ inputTitle }}</a>
           </div>
         </div>
         <div>
           <p class="modal-title">대결 언어</p>
           <div class="modal-box">
-            <img class="langImg" v-if="langImg === 'java'" src="../../assets/img/Java.png" alt="JAVA IMG">
-            <img class="langImg" v-else-if="langImg === 'c'" src="../../assets/img/Camera.png" alt="C IMG">
-            <select v-model="langImg" class="modal-select-box">
+            <img class="langImg" v-if="language === 'java'" src="../../assets/img/Java.png" alt="JAVA IMG">
+            <img class="langImg" v-else-if="language === 'c'" src="../../assets/img/Camera.png" alt="C IMG">
+            <select v-model="gameLanguage" class="modal-select-box">
               <option value="" disabled selected hidden>언어를 선택해주세요.</option>
-              <option value="java">java</option>
-              <option value="c">C</option>
+              <option :key="i" :value="language.languageName" v-for="(language,i) in languages">
+                {{ language.languageName }}
+              </option>
             </select>
           </div>
         </div>
@@ -66,23 +67,44 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       modalCheck: false,
-      inputTitle : "",
-      langImg: ""
+      inputTitle: "",
+      languages: [],
+      gameLanguage: "",
+      stompClient: "",
+      gameType: "",
     }
   },
-      methods: {
-        modalOpen(gameTitle) {
-          this.modalCheck = !this.modalCheck
-          return this.inputTitle = gameTitle;
-        },
-        gameStart() {
-          
-        }
+  created() {
+    this.$httpUtil('/battle/get/language', 'GET', null, (data) => {
+      this.languages = data;
+      console.log(this.languages)
+    })
+  },
+  methods: {
+    modalOpen(gameTitle) {
+      if(gameTitle === 'RANK GAME'){
+        this.gameType = 'RANK';
+      }else{
+        this.gameType = 'MATCHING'
       }
+      this.modalCheck = !this.modalCheck
+      return this.inputTitle = gameTitle;
+    },
+    gameStart() {
+      let connectGameInfo = {};
+      connectGameInfo.gameLanguage = this.gameLanguage;
+      connectGameInfo.gameType = this.gameType;
+      this.$httpUtil('/battle/join/game', 'POST', connectGameInfo, (data) => {
+        console.log(data.data);
+        this.$router.push('/battle/ingame/'+data.data);
+      })
+    }
+  }
 
 }
 </script>
