@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-3 mt-3 px-2 py-2 top_background_box m-auto">
-    <input class="search_box text-white" v-model="keyword" placeholder="검색하실 문제를 입력해주세요.">
+    <input @keyup.enter="enterKeyword" class="search_box text-white" v-model="keyword" placeholder="검색하실 문제를 입력해주세요.">
     <WhiteButton class="question-btn" button-value="문제 추가" @click="this.$router.push('/admin/question/register')"></WhiteButton>
   </div>
 
@@ -94,7 +94,7 @@ export default {
         this.$httpUtil('/admin/question/list?page='+ this.$route.params.pageNum,
             'GET', null, (questionList) => {
               console.log("keyword : " + this.$route.params.keyword);
-              console.log("page : " + this.$route.params.page);
+              console.log("page : " + this.$route.params.pageNum);
               // console.log(questionList.content);
               // console.log("totalPages: " + questionList.totalPages);
               // console.log("totalElements: " + questionList.totalElements);
@@ -119,7 +119,7 @@ export default {
         this.$httpUtil('/admin/question/list?keyword='+ this.$route.params.keyword + '&page=' + this.$route.params.pageNum,
             'GET', null, (questionList) => {
               console.log("keyword : " + this.$route.params.keyword);
-              console.log("page : " + this.$route.params.page);
+              console.log("page : " + this.$route.params.pageNum);
               // console.log(questionList.content);
               // console.log("totalPages: " + questionList.totalPages);
               // console.log("totalElements: " + questionList.totalElements);
@@ -158,11 +158,17 @@ export default {
     },
     nextBtn() {
       if (this.endBlock < this.totalPage - 1) {
-        this.$router.push('/admin/question/list/' + this.$route.params.parseInt(parseInt(this.startBlock) + parseInt(9)) + '/' + this.$route.params.keyword)
+        this.$router.push('/admin/question/list/' + parseInt(parseInt(this.startBlock) + parseInt(9)) + '/' + this.$route.params.keyword)
             .then(() => {
               this.load();
             })
       }
+    },
+    enterKeyword() {
+      this.$router.push('/admin/question/list/0/' + this.keyword)
+          .then(() => {
+            this.load();
+          })
     }
   },
 }
@@ -170,5 +176,3 @@ export default {
 </script>
 
 <style src="@/assets/css/view/adminQuestion.css" scoped/>
-
-

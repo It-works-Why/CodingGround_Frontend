@@ -34,6 +34,8 @@ import AdminNoticeDetailView from "@/view/admin/AdminNoticeDetailView.vue";
 import AdminNoticeEditPostView from "@/view/admin/AdminNoticeEditPostView.vue";
 import SocketTest from "@/view/battle/SocketTest.vue";
 import AdminQuestionListView from "@/view/admin/AdminQuestionListView.vue";
+import AdminQuestionDetailView from "@/view/admin/AdminQuestionDetailView.vue";
+import AdminQuestionEditView from "@/view/admin/AdminQuestionEditView.vue";
 
 const routes = [
   {
@@ -166,6 +168,14 @@ const routes = [
       {
         path: '/admin/question/register',
         component: AdminQuestionRegisterView
+      },
+      {
+        path: '/admin/question/detail/:id',
+        component: AdminQuestionDetailView
+      },
+      {
+        path: '/admin/question/edit/:id',
+        component: AdminQuestionEditView
       },
       {
         path: '/admin/notice/list',

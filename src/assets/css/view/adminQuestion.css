@@ -121,6 +121,7 @@ h1 a {
 }
 
 .input-time-out {
+    text-align: center;
     width: 80%;
     height: 100%;
 }
