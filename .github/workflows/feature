@@ -1,0 +1,47 @@
+name: Frontend build and push to S3
+
+on:
+  push:
+    branches:
+      - feature
+
+env:
+  ecr_url: bsdev16-codingground-frontend
+  aws_region: ca-central-1
+  
+jobs:
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check Code
+      uses: actions/checkout@v2
+      
+    - name: Set up Node.js 
+      uses: actions/setup-node@v2
+      with:
+        node-version: 10
+
+    - name: install depenencies
+      run: npm install
+
+    - name: npm Build
+      run: npm run build
+      
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-region: ${{ env.aws_region }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        
+    - name: Install AWS CLI
+      run: |
+        curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+
+    - name: Sync files to S3
+      run: |
+        aws s3 sync dist/ s3://${{ env.s3_bucket }}
