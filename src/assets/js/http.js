@@ -41,33 +41,44 @@ const methods = {
             const response = await axiosInstance(config);
             successFunction(response.data);
         } catch (error) {
-            console.log(error);
-            if(error.response.data.message == "로그인 재시도." && localStorage.getItem("refreshToken") !== null){
-                const refreshToken = localStorage.getItem("refreshToken");
-                axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${refreshToken}`;
-                try {
-                    const response = await axiosInstance.get("/account/get/accessToken", null);
-                    const newAccessToken = response.data.data;
-                    localStorage.setItem("accessToken", newAccessToken);
-                    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+            if(error.response.data){
+                if(error.response.data.message){
+                    if(error.response.data.message == "로그인 재시도." && localStorage.getItem("refreshToken") !== null){
+                        const refreshToken = localStorage.getItem("refreshToken");
+                        axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${refreshToken}`;
+                        try {
+                            const response = await axiosInstance.get("/account/get/accessToken", null);
+                            const newAccessToken = response.data.data;
+                            localStorage.setItem("accessToken", newAccessToken);
+                            axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
 
-                    // 기존 요청을 pendingRequests에 저장
-                    methods.pendingRequests.push({ url, type, data, successFunction });
+                            // 기존 요청을 pendingRequests에 저장
+                            methods.pendingRequests.push({ url, type, data, successFunction });
 
-                    // 새 토큰을 가지고 있는 상태에서 보류 중인 요청들을 실행
-                    methods.executePendingRequests(); // 재시도
-                } catch (error) {
-                    errorMessageToast(error.response.data.message);
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('refreshToken');
-                    localStorage.removeItem('userRole');
-                    location.href="/login";
+                            // 새 토큰을 가지고 있는 상태에서 보류 중인 요청들을 실행
+                            methods.executePendingRequests(); // 재시도
+                        } catch (error) {
+                            errorMessageToast(error.response.data.message);
+                            localStorage.removeItem('accessToken');
+                            localStorage.removeItem('refreshToken');
+                            localStorage.removeItem('userRole');
+                            location.href="/login";
+                        }
+                    } else {
+                        errorMessageToast(error.response.data.message);
+                        if(error.response.data.message === '로그인이 필요한 기능입니다.'){
+                            alert('로그인이 필요한 기능입니다.')
+                            location.href='/login';
+                        }
+                    }
+                }else{
+                    errorMessageToast("서버에 문제가 발생 했습니다.");
                 }
-            } else {
-                errorMessageToast(error.response.data.message);
-                if(error.response.data.message === '로그인이 필요한 기능입니다.'){
-                    alert('로그인이 필요한 기능입니다.')
-                    location.href='/login';
+            }else{
+                if(error.response){
+                    errorMessageToast(error.response);
+                }else{
+                    console.log(error);
                 }
             }
         }
