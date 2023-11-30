@@ -6,7 +6,7 @@
         <div class="pb-1 collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="mx-3 nav-item">
-              <a :class="{ 'active': activeBattle, 'inactive': !activeBattle }" class="nav_button text-nowrap fw-bold fs-3" @click="clickNav('/battle/list')">배틀</a>
+              <a :class="{ 'active': activeBattle, 'inactive': !activeBattle }" class="nav_button text-nowrap fw-bold fs-3" @click="clickNav('/battle/list')">BATTLE</a>
             </li>
             <li class="mx-3 nav-item">
               <a :class="{'active' : activeRanking, 'inactive' : !activeRanking }" class="nav_button text-nowrap fw-bold fs-3" @click="clickNav('/ranking')">랭킹</a>
