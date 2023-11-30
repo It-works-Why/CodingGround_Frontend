@@ -51,7 +51,7 @@
             <img class="langImg" v-else-if="language === 'c'" src="../../assets/img/Camera.png" alt="C IMG">
             <select v-model="gameLanguage" class="modal-select-box">
               <option value="" disabled selected hidden>언어를 선택해주세요.</option>
-              <option :key="i" :value="language.languageName" v-for="(language,i) in languages">
+              <option :key="i" :value="language.languageCode" v-for="(language,i) in languages">
                 {{ language.languageName }}
               </option>
             </select>
@@ -77,6 +77,8 @@ export default {
       gameLanguage: "",
       stompClient: "",
       gameType: "",
+      gameKey: "",
+      language: "",
     }
   },
   created() {
@@ -100,8 +102,25 @@ export default {
       connectGameInfo.gameLanguage = this.gameLanguage;
       connectGameInfo.gameType = this.gameType;
       this.$httpUtil('/battle/join/game', 'POST', connectGameInfo, (data) => {
-        console.log(data.data);
-        this.$router.push('/battle/ingame/'+data.data);
+        this.gameKey = data.data.gameId;
+        if(data.data.isReconnect == true){
+          const isReconnect = confirm("진행중인 게임이 있습니다. 재접속 하시겠습니까?");
+          if(isReconnect){
+            this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
+              this.$router.push('/battle/ingame/'+this.gameKey);
+              this.$successAlert(data.data.message);
+              return;
+            })
+          }else{
+            this.$httpUtil('/battle/disconnect/game','POST', null, (data) => {
+              this.$successAlert(data.data.message);
+              this.gameStart();
+              return;
+            })
+          }
+        }
+        this.$router.push('/battle/ingame/'+this.gameKey);
+        return;
       })
     }
   }
