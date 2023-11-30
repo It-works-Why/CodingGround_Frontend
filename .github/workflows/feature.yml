@@ -23,7 +23,9 @@ jobs:
         node-version: 14
 
     - name: install depenencies
-      run: npm install
+      run: |
+        npm ci
+        npm install vue-template-compiler
 
     - name: npm Build
       run: npm run build
