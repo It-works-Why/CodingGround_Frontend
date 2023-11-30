@@ -11,7 +11,6 @@
         <td class="title">문제</td>
         <td class="time">제한 시간</td>
         <td class="level">난이도</td>
-        <td class="rightPercent">정답률</td>
         <td class="date">작성 일자</td>
       </tr>
     </table>
@@ -20,9 +19,8 @@
       <tr>
         <td class="num">{{question.questionNum}}</td>
         <td class="title">{{question.questionTitle}}</td>
-        <td class="time">{{question.questionLimitTime}}</td>
-        <td class="level">{{question.questionDifficult}}</td>
-        <td class="rightPercent">정답률</td>
+        <td class="time">{{question.questionLimitTime}}분</td>
+        <td class="level">LEVEL {{question.questionDifficult}}</td>
         <td class="date">{{dayjs(question.questionRegdate).format('YYYY-MM-DD HH:mm')}}</td>
       </tr>
     </table>
