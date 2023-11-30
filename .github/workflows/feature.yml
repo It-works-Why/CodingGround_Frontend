@@ -6,7 +6,7 @@ on:
       - feature
 
 env:
-  ecr_url: bsdev16-codingground-frontend
+  s3_bucket: bsdev16-codingground-frontend
   aws_region: ca-central-1
   
 jobs:
