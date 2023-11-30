@@ -79,7 +79,7 @@ const routes = [
         component: DetailInquiryView
       },
       {
-        path: '/mypage/record',
+        path: '/mypage/record/:gamenum',
         component: ShowGameRecordView
       },
       {

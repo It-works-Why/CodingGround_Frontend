@@ -73,6 +73,18 @@ export default {
       ],
     }
   },
+  methods: {
+    load() {
+      this.$httpUtil('/mypage/gamerecord/' + this.$route.params.gamenum, 'GET', null, (data) => {
+        console.log(data.data);
+
+      });
+    },
+  },
+  mounted() {
+    this.load();
+
+  },
 };
 
 
