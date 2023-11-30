@@ -41,7 +41,7 @@
     width: 5%;
 }
 .title {
-    width: 50%;
+    width: 60%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -50,9 +50,6 @@
     width: 10%;
 }
 .level {
-    width: 10%;
-}
-.rightPercent {
     width: 10%;
 }
 .date {
