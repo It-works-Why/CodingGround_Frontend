@@ -191,19 +191,15 @@ h5 {
 }
 
 .bottom_right .box-top {
+    color: white;
+    text-align: center;
+    margin-left: 35px;
+    font-size: 20pt;
     width: 100%;
     margin-top: 16px;
-    align-items: center;
     display: flex;
 }
 
-.box-top .form-select {
-    width: 15%;
-    margin-left: 20px;
-    background-color: #565656;
-    color: white;
-    border: none;
-}
 
 .bottom_right .box-main {
     width: 100%;

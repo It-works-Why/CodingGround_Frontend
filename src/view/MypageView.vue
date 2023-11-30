@@ -43,18 +43,9 @@
         </div>
       </div>
       <div class="bottom_right">
-        <div class="box-top">
-          <select class="form-select">
-            <option :key="i" :value="language" v-for="(language,i) in languageSelectData">{{language}}</option>
-          </select>
-          <select class="form-select">
-            <option value="1">전체</option>
-            <option value="2">랭크</option>
-            <option value="3">일반</option>
-          </select>
-        </div>
+        <div class="box-top">최근전적</div>
         <div class="box-main">
-          <GameRecordBox :key="i" :gameRecord="gameRecord" v-for="(gameRecord, i) in gameRecordData"  @click="this.$router.push('/mypage/record')"></GameRecordBox>
+          <GameRecordBox :key="i" :gameRecord="gameRecord" v-for="(gameRecord, i) in gameRecordData"   @record-click="redirectToRecordPage"></GameRecordBox>
         </div>
       </div>
     </div>
@@ -66,6 +57,7 @@ import DonutChart from '../components/DonutChart.vue';
 import GameRecordBox from "@/components/GameRecordBox.vue";
 
 export default {
+
   created() {
     this.mypageload();
   },
@@ -82,18 +74,13 @@ export default {
 
       gameRecordData: [
         {
-          gametype: '일반게임',
-          gameDate: '1일전',
-          gamelanguage: 'JAVA',
-          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
-          gameusers:['치치는치치야', '키위새', '프론트의신_소희', '팀장이대로괜찮', '이게왜되지', '관관이형' , '일본인한형', '야구하러갈래']
+          gamenum: '',
+          gametype: '',
+          gameDate: '',
+          gamelanguage: '',
+          gameusersprofile: [],
+          gameusers:[]
         },
-      ],
-      languageSelectData: [
-        "JAVA",
-        "Python",
-        "C++",
-        "C#",
       ],
       // 도넛 차트 데이터 및 옵션 추가
       donutChartData: {
@@ -145,7 +132,19 @@ export default {
       this.$httpUtil('/mypage/myinfo','GET', null,(data) => {
         console.log(data.data);
         this.userData = data.data;
-        console.log(this.userData.gameLanguage)
+
+        this.gameRecordData = this.userData.gameInfoData.map(gameInfo => {
+          return{
+            gamenum: gameInfo.gameNum,
+            gametype: gameInfo.gameType,
+            gameDate: gameInfo.timeDifference,
+            gamelanguage: gameInfo.languageName,
+            gameusersprofile: gameInfo.userProfileImgList,
+            gameusers: gameInfo.userNicknamesList
+          }
+        } )
+
+
         const colors = [];
         const dataValues = [];
         const labels = [];
@@ -185,6 +184,10 @@ export default {
 
 
       });
+    },
+
+    redirectToRecordPage(gamenum) {
+      this.$router.push('/mypage/record/' + gamenum);
     }
   }
 };
