@@ -1,9 +1,9 @@
 <template>
   <div class="rounded-3 mt-3 px-2 py-2 top_background_box m-auto">
-    <select class="season_select form-select">
-      <option :key="i" :value="search" v-for="(search,i) in communitySelectData">{{search}}</option>
-    </select>
-    <input class="search_box text-white" v-model="searchInput" placeholder="검색할 내용을 입력해주세요.">
+<!--    <select class="season_select form-select">-->
+<!--      <option :key="i" :value="search" v-for="(search,i) in communitySelectData">{{search}}</option>-->
+<!--    </select>-->
+    <input @keyup.enter="search" class="search_box text-white" v-model="searchInput" placeholder="검색할 내용을 입력해주세요.">
     <WhiteButton class="white-btn" button-value="글쓰기" @click="this.$router.push('/community/write')"></WhiteButton>
   </div>
 
@@ -34,10 +34,19 @@
         </li>
         <li class="page-item" :key="i" v-for="i in endBlock">
           <router-link
+              v-if="this.$route.params.searchInput"
+              :to="'/community/list/' + (i - 1)  + '/' + this.searchInput"
+              class="page-item"
+              :class="{ active: $route.params.pageNum == (i - 1) }">
+            <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
+              {{i}}
+            </a>
+          </router-link>
+          <router-link
+              v-else
               :to="'/community/list/' + (i - 1)"
               class="page-item"
-              :class="{ active: $route.params.pageNum == (i - 1) }"
-          >
+              :class="{ active: $route.params.pageNum == (i - 1) }">
             <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
               {{i}}
             </a>
@@ -85,23 +94,45 @@ export default {
   },
   methods: {
     load() {
-      this.$httpUtil('/community/list?page=' + this.$route.params.pageNum, 'GET', null, (communityList) => {
-        console.log(communityList.content)
-        this.communityList = communityList.content;
-        this.totalPage = communityList.totalPages;
+      if (!this.$route.params.searchInput || this.$route.params.searchInput == "undefined") {
+        this.$httpUtil('/community/list?page=' + this.$route.params.pageNum,
+        'GET', null, (communityList) => {
+          console.log(communityList.content)
+          this.communityList = communityList.content;
+          this.totalPage = communityList.totalPages;
 
-        this.startBlock = parseInt(parseInt(communityList.number / 10 ) * 10 + 1);
+          this.startBlock = parseInt(parseInt(communityList.number / 10 ) * 10 + 1);
 
-        const endBlock = this.startBlock + 9;
-        if (endBlock > this.totalPage ) {
-          this.endBlock = this.totalPage;
-        } else {
-          this.endBlock = endBlock;
-        }
-      })
+          const endBlock = this.startBlock + 9;
+          if (endBlock > this.totalPage ) {
+            this.endBlock = this.totalPage;
+          } else {
+            this.endBlock = endBlock;
+          }
+        })
+      } else {
+        this.$httpUtil('/community/list?searchInput=' + this.$route.params.searchInput + '&page=' + this.$route.params.pageNum,
+        'GET', null, (communityList) => {
+          console.log("searchInput : " +this.$route.params.searchInput)
+          this.communityList = communityList.content;
+          this.totalPage = communityList.totalPages;
+
+          this.startBlock = parseInt(parseInt(communityList.number / 10 ) * 10 + 1);
+
+          const endBlock = this.startBlock + 9;
+          if (endBlock > this.totalPage ) {
+            this.endBlock = this.totalPage;
+          } else {
+            this.endBlock = endBlock;
+          }
+        })
+      }
     },
-    searchBy() {
-      this.$httpUtil('/community/list?searchBy='+this.searchInput, )
+    search() {
+      this.$router.push('/community/list/0/' + this.searchInput)
+          .then(() => {
+            this.load();
+          })
     },
     pageBtn(page) {
       this.$router.push('/community/list/' + page)
