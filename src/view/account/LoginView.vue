@@ -38,6 +38,8 @@
       }
     },
     created(){
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
     },
     methods: {
       login() {
