@@ -75,7 +75,7 @@ const routes = [
         component: WriteInquiryView
       },
       {
-        path: '/mypage/inquiry/detail/:id',
+        path: '/mypage/inquiry/detail/:contactNum',
         component: DetailInquiryView
       },
       {
