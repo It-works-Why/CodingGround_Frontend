@@ -75,7 +75,7 @@ const routes = [
         component: WriteInquiryView
       },
       {
-        path: '/mypage/inquiry/detail/:id',
+        path: '/mypage/inquiry/detail/:contactNum',
         component: DetailInquiryView
       },
       {
@@ -88,10 +88,18 @@ const routes = [
       },
       {
         path: '/community',
-        redirect: '/community/list',
+        redirect: '/community/list/0',
       },
       {
         path: '/community/list',
+        redirect: '/community/list/0',
+      },
+      {
+        path: '/community/list/:pageNum',
+        component: CommunityPostView
+      },
+      {
+        path: '/community/list/:pageNum/:searchInput',
         component: CommunityPostView
       },
       {

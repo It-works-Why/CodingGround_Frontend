@@ -64,11 +64,11 @@ export default {
     return {
       gameRecordData: [
         {
-          gametype: '랭크게임',
-          gameDate: '2일전',
-          gamelanguage: 'JAVA',
-          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
-          gameusers: ['치치는치치야', '키위새', '프론트의신_소희', '팀장이대로괜찮', '이게왜되지', '관관이형', '일본인한형', '야구하러갈래']
+          gametype: '',
+          gameDate: '',
+          gamelanguage: '',
+          gameusersprofile: [],
+          gameusers: []
         },
       ],
     }
@@ -77,7 +77,18 @@ export default {
     load() {
       this.$httpUtil('/mypage/gamerecord/' + this.$route.params.gamenum, 'GET', null, (data) => {
         console.log(data.data);
+        this.userData = data.data;
 
+        this.gameRecordData = this.userData.gameInfoData.map(gameInfo => {
+          return{
+            gamenum:'',
+            gametype: gameInfo.gameType,
+            gameDate: gameInfo.timeDifference,
+            gamelanguage: gameInfo.languageName,
+            gameusersprofile: gameInfo.userProfileImgList,
+            gameusers: gameInfo.userNicknamesList
+          }
+        } )
       });
     },
   },

@@ -6,18 +6,18 @@
       </div>
 
       <div class="title">
-        <input :value="postData.title" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
-        <div class="text-white px-3 py-2 fs-4 mb-4 info_box">글쓴이 정보</div>
+        <input :value="userData.contactTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
+        <div class="text-white px-3 py-2 fs-4 mb-4 info_box">{{userData.userNickname}}</div>
       </div>
-      <textarea :value="postData.content" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="6" type="text" disabled/>
+      <textarea :value="userData.contactContent" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="6" type="text" disabled/>
 
       <div class="text-white fw-bold fs-1 mb-2 w-100">
         문의답변
       </div>
-      <textarea :value="postData.answer" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="6" type="text" disabled/>
+      <textarea :value="userData.contactAnswer" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="6" type="text" disabled/>
 
       <div class="button">
-        <WhiteButton class="list" button-value="목록"></WhiteButton>
+        <WhiteButton class="list" button-value="목록"  @click="this.$router.push('/mypage/inquiry')"></WhiteButton>
       </div>
     </div>
   </div>
@@ -30,16 +30,26 @@ import WhiteButton from "@/components/WhiteButton.vue";
 export default {
   data(){
     return{
-      postData: {
-        title: '제목 데이터 바인딩',
-        content: '내용 데이터 바인딩',
-        answer: '답변 내용 바인딩'
-      }
+      userData:{
+        useStatus: 1
+      },
     }
   },
   components: {
     WhiteButton
-  }
+  },
+  methods: {
+    myinqurydetailload() {
+      this.$httpUtil('/mypage/myinquiry/detail/' + this.$route.params.contactNum, 'GET', null, (data) => {
+        this.userData = data.data;
+
+      });
+    }
+  },
+  mounted() {
+    this.myinqurydetailload();
+
+  },
 }
 </script>
 

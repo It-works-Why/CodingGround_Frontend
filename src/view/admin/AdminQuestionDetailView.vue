@@ -23,26 +23,22 @@
         </div>
       </div>
       <div>
-        <h1>테스트 케이스 <a>(배열 입력시 ','로 구별해주세요.)</a></h1>
+        <h1 class="test-case-title">테스트 케이스 <a>(배열 입력시 ','로 구별해주세요.)</a></h1>
         <table class="test-table">
           <tr class="input-output">
             <td>INPUT</td>
-            <td></td>
             <td>OUTPUT</td>
           </tr>
           <tr>
             <td><textarea v-model="getData1.testCaseInput" class="input-box input-test" disabled/></td>
-            <td></td>
             <td><textarea v-model="getData1.testCaseOutput" class="input-box input-test" disabled/></td>
           </tr>
           <tr>
             <td><textarea v-model="getData2.testCaseInput" class="input-box input-test" disabled/></td>
-            <td></td>
             <td><textarea v-model="getData2.testCaseOutput" class="input-box input-test" disabled/></td>
           </tr>
           <tr>
             <td><textarea v-model="getData3.testCaseInput" class="input-box input-test" disabled/></td>
-            <td></td>
             <td><textarea v-model="getData3.testCaseOutput" class="input-box input-test" disabled/></td>
           </tr>
         </table>
