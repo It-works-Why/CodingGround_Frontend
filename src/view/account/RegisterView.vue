@@ -63,8 +63,8 @@
               <span class="ps-5">
                 <select v-model="userInfo.userAffiliation" class="options rounded-3 select_box text-center text-white fs-5 p-1 input_box">
                   <option selected value="학생" class="options">학생</option>
-                  <option value="괴물" class="options">괴물</option>
-                  <option value="사람" class="options">사람</option>
+                  <option value="직장인" class="options">직장인</option>
+                  <option value="무직" class="options">무직</option>
                 </select>
                 <input v-model="userInfo.userAffiliationDetail" class="text-center w-50 fs-5 text-white options ms-2 p-1 rounded-3" type="text" placeholder="소속을 입력해주세요.">
               </span>

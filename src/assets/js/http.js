@@ -61,10 +61,8 @@ const methods = {
                             // 새 토큰을 가지고 있는 상태에서 보류 중인 요청들을 실행
                             methods.executePendingRequests(); // 재시도
                         } catch (error) {
-                            errorMessageToast(error.response.data.message);
                             localStorage.removeItem('accessToken');
                             localStorage.removeItem('refreshToken');
-                            localStorage.removeItem('userRole');
                             location.href="/login";
                         }
                     } else {

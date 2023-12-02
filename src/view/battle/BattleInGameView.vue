@@ -3,7 +3,7 @@
     <div class="background"></div>
     <div class="content">
       <div class="loading"><img class="loadingImg" src="../../assets/img/Loading.gif"></div>
-      <div class="battleLoading" @click="test">게임 참가자가 모두 들어올 때까지 잠시만 기다려 주세요.</div>
+      <div class="battleLoading">게임 참가자가 모두 들어올 때까지 잠시만 기다려 주세요.</div>
       <div class="userCounter">현재 {{ playUserTotalCount }}/8 명 참가 중...</div>
       <div class="cancel"><button class="cancel-btn">대기열 취소</button></div>
     </div>
@@ -17,7 +17,8 @@ export default {
       gameData : {
         gameInfo : {
           gameId: '',
-          userId: ''
+          userId: '',
+          gameStatus : false,
         },
       },
       userData : {},
@@ -45,14 +46,14 @@ export default {
       const socket = new SockJS('http://localhost:8090/ws');
       // eslint-disable-next-line no-undef
       this.stompClient = Stomp.over(socket);
-
-      this.stompClient.connect({}, this.onConnected, this.onError);
+      this.stompClient.connect({"gameId" : "abc"}, this.onConnected, this.onError);
     },
     onConnected() {
       this.stompClient.send("/app/join/queue/"+this.gameData.gameInfo.gameId, {}, this.userData.userId);
 
       this.stompClient.subscribe('/topic/public/getGameUsersData/failed/'+this.gameData.gameInfo.gameId + "/" + this.userData.userId, this.connectError);
       this.stompClient.subscribe('/topic/public/getGameUsersData/succeed/'+this.gameData.gameInfo.gameId, this.getGameUsersData);
+      this.stompClient.subscribe('/topic/public/gameStart/'+this.gameData.gameInfo.gameId, this.gameStarting);
 
     },
     onError(error) {
@@ -75,6 +76,11 @@ export default {
       this.playUserTotalCount = gameUsersData.userTotalCount;
       this.playUsersData = gameUsersData.playUsers;
     },
+    gameStarting(payload) {
+      console.log(payload)
+      this.gameStatus = payload.body;
+      alert(this.gameStatus);
+    }
   }
 
 }
