@@ -14,11 +14,6 @@ const app = createApp(App);
 app.config.productionTip = false;
 
 app.config.globalProperties.$validator = validator;
-const accessToken = localStorage.getItem('accessToken');
-
-if (accessToken) {
-    store.dispatch('setUserInfo'); // 여기서 dispatch를 사용하여 action 호출
-}
 
 app.use(InstallCodemirro);
 app.use(router);

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import store from '@/store';
-import axios from 'axios';
+// import axios from 'axios';
+import { httpRequest } from '@/assets/js/http'
 import LoginView from '@/view/account/LoginView.vue';
 import RegisterView from '@/view/account/RegisterView.vue';
 import HomeView from "@/view/HomeView.vue";
@@ -238,30 +239,44 @@ router.afterEach((to) => {
 
 })
 router.beforeEach(async (to, from, next) => {
-  if(localStorage.getItem('refreshToken')){
-    if (!store.state.userInfo.userId) {
-      try {
-        const accessToken = localStorage.getItem('refreshToken');
-        const response = await axios.get('/api/account/userInfo', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        });
-
-        const userInfo = {
-          userId: response.data.data.userId,
-          userRole: response.data.data.userRole,
-          userNickname: response.data.data.userNickname
-        };
+  try {
+    if (localStorage.getItem("accessToken") != null) {
+      await httpRequest("/account/userInfo", "GET", null, (data) => {
+        console.log(data);
+        let userInfo = data.data;
         store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
-      } catch (error) {
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("accessToken");
-      }
+      })
     }
+  } catch (e) {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   }
+
+  // if(localStorage.getItem('refreshToken')){
+  //   if (!store.state.userInfo.userId) {
+  //     try {
+  //       const accessToken = localStorage.getItem('refreshToken');
+  //       const response = await axios.get('/api/account/userInfo', {
+  //         headers: {
+  //           'Authorization': `Bearer ${accessToken}`
+  //         }
+  //       });
+  //
+  //       const userInfo = {
+  //         userId: response.data.data.userId,
+  //         userRole: response.data.data.userRole,
+  //         userNickname: response.data.data.userNickname
+  //       };
+  //       store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
+  //     } catch (error) {
+  //       localStorage.removeItem("refreshToken");
+  //       localStorage.removeItem("accessToken");
+  //     }
+  //   }
+  // }
   next(); // 다음 단계로 진행
 });
+
 
 
 export default router;

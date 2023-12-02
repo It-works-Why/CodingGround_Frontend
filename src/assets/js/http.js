@@ -1,6 +1,9 @@
 import axios from "axios";
 import { errorMessageToast } from "@/assets/js/alert";
 
+
+
+
 // 기존에 설정한 axiosInstance에 토큰 추가하기
 const axiosInstance = axios.create({
     timeout: 10000, // 타임아웃 설정 (10초)
@@ -91,7 +94,7 @@ const methods = {
         }
     },
 };
-
+export const httpRequest = methods.http;
 export default {
     install(Vue) {
         Vue.config.globalProperties.$httpUtil = methods.http;
