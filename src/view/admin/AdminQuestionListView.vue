@@ -31,22 +31,20 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item" :key="i" v-for="i in endBlock">
+        <li :key="i" v-for="i in endBlock">
           <router-link
               v-if="this.$route.params.keyword && startBlock <= i && endBlock >= i"
-              @click="pageBtn(i-1)"
               :to="'/admin/question/list/' + (i - 1) + '/' + this.keyword"
-              class="page-link"
+              class="page-item"
               :class="{ active: $route.params.pageNum == (i - 1) }">
-              {{i}}
+              <a class="page-link">{{i}}</a>
           </router-link>
           <router-link
               v-else-if="!this.$route.params.keyword && startBlock <= i && endBlock >= i"
-              @click="pageBtn(i-1)"
               :to="'/admin/question/list/' + (i - 1)"
               class="page-item"
               :class="{ active: $route.params.pageNum == (i - 1) }">
-              {{i}}
+            <a class="page-link">{{i}}</a>
           </router-link>
         </li>
         <li class="page-item">
@@ -138,12 +136,6 @@ export default {
             })
       }
     },
-    pageBtn(page) {
-      this.$router.push('/admin/question/list/' + page + '/' + this.$route.params.keyword)
-          .then(() => {
-            this.load();
-          })
-    },
     prevBtn() {
       if (this.endBlock > 10) {
         this.$router.push('/admin/question/list/' + parseInt(parseInt(this.startBlock) - parseInt(9)) + '/' + this.$route.params.keyword)
@@ -166,6 +158,13 @@ export default {
             this.load();
           })
     }
+  },
+  watch: {
+    // watch for changes in route parameters
+    '$route.params.pageNum': 'load'
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
   },
 }
 

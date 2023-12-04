@@ -24,15 +24,13 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item" :key="i" v-for="i in endBlock">
+        <li :key="i" v-for="i in endBlock">
           <router-link
-              @click="pageBtn(i-1)"
               v-if="startBlock <= i && endBlock >= i"
               :to="'/notice/list/' + (i - 1)"
-              class="page-link"
-              :class="{ active: $route.params.pageNum == (i - 1) }"
-          >
-            {{i}}
+              class="page-item"
+              :class="{ active: $route.params.pageNum == (i - 1) }">
+            <a class="page-link">{{i}}</a>
           </router-link>
         </li>
         <li class="page-item">
@@ -86,12 +84,6 @@ export default {
         // console.log("endBlock : " + this.endBlock);
       })
     },
-    pageBtn(page) {
-      this.$router.push('/notice/list/' + page)
-          .then(() => {
-            this.load();
-          })
-    },
     prevBtn() {
       if (this.endBlock > 10) {
         this.$router.push('/notice/list/' + parseInt(parseInt(this.startBlock) - parseInt(9)))
@@ -108,6 +100,13 @@ export default {
             })
       }
     }
+  },
+  watch: {
+    // watch for changes in route parameters
+    '$route.params.pageNum': 'load'
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
   },
 }
 </script>
