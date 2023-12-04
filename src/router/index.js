@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import store from '@/store';
 // import axios from 'axios';
-import { httpRequest } from '@/assets/js/http'
+import {httpRequest} from '@/assets/js/http'
 import LoginView from '@/view/account/LoginView.vue';
 import RegisterView from '@/view/account/RegisterView.vue';
 import HomeView from "@/view/HomeView.vue";
@@ -22,7 +22,7 @@ import MyInquiryView from "@/view/MyInquiryView.vue";
 import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
 import CommunityPostView from "@/view/community/CommunityListView.vue";
-import BattleInGameView from "@/view/battle/BattleInGameView.vue";
+import BattleWaitingRoomView from "@/view/battle/BattleWaitingRoomView.vue";
 import AdminUserManagementView from "@/view/admin/AdminUserManagementView.vue"
 import AdminCommunityListView from "@/view/admin/AdminCommunityListView.vue"
 import AdminInquiryListView from "@/view/admin/AdminInquiryListView.vue";
@@ -37,6 +37,8 @@ import SocketTest from "@/view/battle/SocketTest.vue";
 import AdminQuestionListView from "@/view/admin/AdminQuestionListView.vue";
 import AdminQuestionDetailView from "@/view/admin/AdminQuestionDetailView.vue";
 import AdminQuestionEditView from "@/view/admin/AdminQuestionEditView.vue";
+import BattleIngameView from "@/view/battle/BattleIngameView.vue";
+import BattleIngameReconnectView from "@/view/battle/BattleIngameReconnectView.vue";
 import BattleView from "@/view/battle/BattleView.vue";
 
 
@@ -146,12 +148,16 @@ const routes = [
         component: SocketTest
       },
       {
-        path: '/battle/ingame',
-        component: BattleInGameView
+        path: '/battle/waiting/:gameId',
+        component: BattleWaitingRoomView
       },
       {
         path: '/battle/ingame/:gameId',
-        component: BattleInGameView
+        component: BattleIngameView
+      },
+      {
+        path: '/battle/ingame/:gameId/reconnect',
+        component: BattleIngameReconnectView
       },
       {
         path: '/battle',
@@ -252,7 +258,6 @@ router.beforeEach(async (to, from, next) => {
   try {
     if (localStorage.getItem("accessToken") != null) {
       await httpRequest("/account/userInfo", "GET", null, (data) => {
-        console.log(data);
         let userInfo = data.data;
         store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
       })

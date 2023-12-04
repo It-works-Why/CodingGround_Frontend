@@ -24,8 +24,6 @@ export default {
       userData : {},
       playUsersData : [],
       playUserTotalCount : '',
-      gameStatus : "WAIT",
-
     }
   },
   created() {
@@ -43,10 +41,12 @@ export default {
     // 처음 들어올때 created() 문에 들어갈 소켓연결
     connect() {
       // eslint-disable-next-line no-undef
-      const socket = new SockJS('http://localhost:8090/ws');
+          const socket = new SockJS('http://localhost:8090/ws');
+      const data = {};
+      data.gameId = this.gameData.gameInfo.gameId;
       // eslint-disable-next-line no-undef
       this.stompClient = Stomp.over(socket);
-      this.stompClient.connect({"gameId" : "abc"}, this.onConnected, this.onError);
+      this.stompClient.connect(data, this.onConnected, this.onError);
     },
     onConnected() {
       this.stompClient.send("/app/join/queue/"+this.gameData.gameInfo.gameId, {}, this.userData.userId);
@@ -77,9 +77,9 @@ export default {
       this.playUsersData = gameUsersData.playUsers;
     },
     gameStarting(payload) {
-      console.log(payload)
-      this.gameStatus = payload.body;
-      alert(this.gameStatus);
+      if(payload.body){
+        this.$router.push("/battle/ingame/"+this.gameData.gameInfo.gameId);
+      }
     }
   }
 

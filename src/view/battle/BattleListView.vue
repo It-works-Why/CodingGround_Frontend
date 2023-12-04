@@ -107,7 +107,7 @@ export default {
           const isReconnect = confirm("진행중인 게임이 있습니다. 재접속 하시겠습니까?");
           if(isReconnect){
             this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
-              this.$router.push('/battle/ingame/'+this.gameKey);
+              this.$router.push('/battle/waiting/'+this.gameKey);
               this.$successAlert(data.data.message);
               return;
             })
@@ -121,10 +121,11 @@ export default {
         }
         if(data.data.connectType == "failed"){
           this.$errorAlert("이미 대기방에 접속중입니다. 잠시후 다시시도 해주십시오.");
+          location.reload();
           return;
         }
         if(data.data.connectType == "succeed"){
-          this.$router.push('/battle/ingame/'+this.gameKey);
+          this.$router.push('/battle/waiting/'+this.gameKey);
           return;
         }
 
