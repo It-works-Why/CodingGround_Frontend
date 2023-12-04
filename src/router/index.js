@@ -64,8 +64,12 @@ const routes = [
         component: MypageView
       },
       {
-        path: '/mypage/inquiry',
+        path: '/mypage/inquiry/:pageNum',
         component: MyInquiryView
+      },
+      {
+        path: '/mypage/inquiry/',
+        redirect:'/mypage/inquiry/0'
       },
       {
         path: '/mypage/info/edit',

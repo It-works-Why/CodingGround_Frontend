@@ -41,13 +41,39 @@
         </table>
         <table :key="i" :value="userInquiry" v-for="(userInquiry, i) in userInquiryList" class="mt-1 text-white list_box m-auto" >
           <tr @click="contactdetailPage(userInquiry.contactNum)">
-            <td class="ranking">{{i + 1}}</td>
+            <td class="ranking">{{userInquiry.number}}</td>
             <td class="title">{{userInquiry.title}}</td>
             <td class="date">{{userInquiry.date}}</td>
             <td class="nickname">{{userInquiry.nickname}}</td>
             <td class="answer">{{ getAnswerStatus(userInquiry.answer) }}</td>
           </tr>
         </table>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center" >
+            <li class="page-item">
+              <a class="page-link" @click="prevBtn" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" :key="i" v-for="i in endBlock">
+              <router-link
+                  v-if="startBlock <= i && endBlock >= i"
+                  :to="'/mypage/inquiry/' + (i - 1)"
+                  class="page-item"
+                  :class="{ active: $route.params.pageNum == (i - 1) }">
+                <a class="page-link" >
+                  {{i}}
+                </a>
+              </router-link>
+            </li>
+            <li class="page-item">
+              <a class="page-link" @click="nextBtn" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
       </div>
     </div>
   </section>
@@ -59,8 +85,9 @@ import GameRecordBox from "@/components/GameRecordBox.vue";
 import WhiteButton from "@/components/WhiteButton.vue";
 
 export default {
-  created() {
-    this.myinquryload();
+  mounted () {
+    let pageNum = this.$route.params.pageNum;
+    this.myinquryload(pageNum);
   },
   components: {
     WhiteButton,
@@ -69,6 +96,22 @@ export default {
   },
   data() {
     return {
+
+      totalPage : 0,
+      totalBlocks : 0,
+      currentBlock : 0,
+      startBlock : 0,
+      endBlock : 0,
+
+      userInquiryList: [
+        {
+          ranking: '',
+          title: '',
+          date: '',
+          nickname: '',
+          answer: ''
+        },
+      ],
 
       userData:{
         userInfo: {rankNum : 1},
@@ -91,17 +134,21 @@ export default {
       },
 
 
-      userInquiryList: [
-        {
-          ranking: '',
-          title: '',
-          date: '',
-          nickname: '',
-          answer: ''
-        },
-      ],
+
     };
   },
+  watch: {
+    '$route.params.pageNum': function(newPageNum, oldPageNum) {
+      if (newPageNum !== undefined && newPageNum !== oldPageNum) {
+        this.myinquryload(newPageNum);
+      }
+    },
+  },
+  beforeRouteUpdate(to, from, next) {
+
+    next();
+  },
+
   methods: {
 
     getAnswerStatus(answerStatus) {
@@ -109,16 +156,30 @@ export default {
     },
 
     myinquryload() {
-      this.$httpUtil('/mypage/myinquiry/', 'GET', null, (data) => {
+      this.$httpUtil('/mypage/myinquiry/' + this.$route.params.pageNum , 'GET', null, (data) => {
         console.log(data.data);
         this.userData = data.data;
-        console.log(this.userData.userInfo.userNickname)
+        // console.log(this.userData.totalPageNum.totalPages)
+        // console.log(this.userData.pageNum)
+
+        this.totalPage = this.userData.totalPageNum.totalPages
+
+        this.startBlock = parseInt(parseInt(this.userData.pageNum / 10) * 10 + 1);
+        // console.log("startBlock : " + this.startBlock);
+
+        const endBlock = this.startBlock + 9;
+        if (endBlock > this.totalPage) {
+          this.endBlock = this.totalPage;
+        } else {
+          this.endBlock = endBlock;
+        }
 
         const rankingData = data.data.ranking[0];
 
 
         this.userInquiryList = this.userData.contactList.map(contact =>{
           return{
+            number: contact.number,
             contactNum: contact.contactNum,
             title: contact.contactTitle,
             date: contact.contactTime,
@@ -148,6 +209,23 @@ export default {
     },
     contactdetailPage(contactNum) {
       this.$router.push('/mypage/inquiry/detail/' + contactNum);
+    },
+
+    prevBtn() {
+      if (this.endBlock > 10) {
+        this.$router.push('/mypage/myinquiry/' + parseInt(parseInt(this.startBlock) - parseInt(9)))
+            .then(() => {
+              this.myinquryload();
+            })
+      }
+    },
+    nextBtn() {
+      if (this.endBlock < this.totalPage - 1) {
+        this.$router.push('/mypage/myinquiry/' + parseInt(parseInt(this.startBlock) + parseInt(9)))
+            .then(() => {
+              this.myinquryload();
+            })
+      }
     }
   },
 };
