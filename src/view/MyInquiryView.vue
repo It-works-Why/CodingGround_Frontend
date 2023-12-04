@@ -4,11 +4,11 @@
       <div class="top_box_left">
         <div class="position-relative img_form">
           <img class="img_view" src="../assets/img/DefaultProfile.png">
-          <img class="ranking_icon bottom-0 end-0 position-absolute" src="../assets/img/디렉터.png">
+          <img class="ranking_icon bottom-0 end-0 position-absolute" :src="require('@/assets/img/tier/' + userData.userInfo.rankNum + '.png')">
         </div>
         <div class="top_box_myinfo">
-          <h1 class="top_box_name">키위새</h1>
-          <h4 class="top_box_company">Megazone Cloud</h4>
+          <h1 class="top_box_name">{{userData.userInfo.userNickname}}</h1>
+          <h4 class="top_box_company">{{userData.userInfo.userAffiliationDetail}}</h4>
           <div class="top_box_left_button">
             <button class="btn1" type="button" @click="this.$router.push('/mypage/info/edit')">내 정보 수정</button>
             <button class="btn1" type="button" @click="this.$router.push('/mypage')">내 전적 보기</button>
@@ -18,7 +18,7 @@
       <div class="top_box_right">
         <div class="top_box">
           <h6 class="top_box_title">순방확률</h6>
-          <p class="top_box_content">30전 16승 14패 (53.33%)</p>
+          <p class="top_box_content">{{userData.userInfo.matches}}전 {{userData.userInfo.wins}}승 {{userData.userInfo.losses}}패 ({{userData.userInfo.recordPercentage}}%)</p>
         </div>
         <div class="top_box">
           <donut-chart :chartData="donutChartData2" :chartOptions="donutChartOptions2"></donut-chart>
@@ -39,15 +39,41 @@
             <td class="answer">답변여부</td>
           </tr>
         </table>
-        <table :key="i" :value="userInquiry" v-for="(userInquiry, i) in userInquiryList" class="mt-1 text-white list_box m-auto">
-          <tr>
-            <td class="ranking">{{userInquiry.ranking}}</td>
+        <table :key="i" :value="userInquiry" v-for="(userInquiry, i) in userInquiryList" class="mt-1 text-white list_box m-auto" >
+          <tr @click="contactdetailPage(userInquiry.contactNum)">
+            <td class="ranking">{{userInquiry.number}}</td>
             <td class="title">{{userInquiry.title}}</td>
             <td class="date">{{userInquiry.date}}</td>
             <td class="nickname">{{userInquiry.nickname}}</td>
-            <td class="answer">{{userInquiry.answer}}</td>
+            <td class="answer">{{ getAnswerStatus(userInquiry.answer) }}</td>
           </tr>
         </table>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center" >
+            <li class="page-item">
+              <a class="page-link" @click="prevBtn" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" :key="i" v-for="i in endBlock">
+              <router-link
+                  v-if="startBlock <= i && endBlock >= i"
+                  :to="'/mypage/inquiry/' + (i - 1)"
+                  class="page-item"
+                  :class="{ active: $route.params.pageNum == (i - 1) }">
+                <a class="page-link" >
+                  {{i}}
+                </a>
+              </router-link>
+            </li>
+            <li class="page-item">
+              <a class="page-link" @click="nextBtn" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
       </div>
     </div>
   </section>
@@ -59,6 +85,10 @@ import GameRecordBox from "@/components/GameRecordBox.vue";
 import WhiteButton from "@/components/WhiteButton.vue";
 
 export default {
+  mounted () {
+    let pageNum = this.$route.params.pageNum;
+    this.myinquryload(pageNum);
+  },
   components: {
     WhiteButton,
     // eslint-disable-next-line vue/no-unused-components
@@ -66,10 +96,30 @@ export default {
   },
   data() {
     return {
+
+      totalPage : 0,
+      totalBlocks : 0,
+      currentBlock : 0,
+      startBlock : 0,
+      endBlock : 0,
+
+      userInquiryList: [
+        {
+          ranking: '',
+          title: '',
+          date: '',
+          nickname: '',
+          answer: ''
+        },
+      ],
+
+      userData:{
+        userInfo: {rankNum : 1},
+      },
       donutChartData2: {
         labels: ['1', '2', '3','4','5~8'],
         datasets: [{
-          data: [6, 5, 4, 1, 14],
+          data: [],
           backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678","#515163"],
         }],
       },
@@ -83,24 +133,100 @@ export default {
         maintainAspectRatio: false,
       },
 
-      userInquiryList: [
-        {
-          ranking: '1',
-          title: '1등하면 메가존 들어갈수 있나요? ㅋㅋ',
-          date: '2023.11.11',
-          nickname: '키위새',
-          answer: '답변완료'
-        },
-        {
-          ranking: '2',
-          title: '이거 어떻게 하는 게임인가요?',
-          date: '2023.11.12',
-          nickname: '키위새',
-          answer: '확인중'
-        },
 
-      ],
+
     };
+  },
+  watch: {
+    '$route.params.pageNum': function(newPageNum, oldPageNum) {
+      if (newPageNum !== undefined && newPageNum !== oldPageNum) {
+        this.myinquryload(newPageNum);
+      }
+    },
+  },
+  beforeRouteUpdate(to, from, next) {
+
+    next();
+  },
+
+  methods: {
+
+    getAnswerStatus(answerStatus) {
+      return answerStatus === 1 ? '답변완료' : '답변중';
+    },
+
+    myinquryload() {
+      this.$httpUtil('/mypage/myinquiry/' + this.$route.params.pageNum , 'GET', null, (data) => {
+        console.log(data.data);
+        this.userData = data.data;
+        // console.log(this.userData.totalPageNum.totalPages)
+        // console.log(this.userData.pageNum)
+
+        this.totalPage = this.userData.totalPageNum.totalPages
+
+        this.startBlock = parseInt(parseInt(this.userData.pageNum / 10) * 10 + 1);
+        // console.log("startBlock : " + this.startBlock);
+
+        const endBlock = this.startBlock + 9;
+        if (endBlock > this.totalPage) {
+          this.endBlock = this.totalPage;
+        } else {
+          this.endBlock = endBlock;
+        }
+
+        const rankingData = data.data.ranking[0];
+
+
+        this.userInquiryList = this.userData.contactList.map(contact =>{
+          return{
+            number: contact.number,
+            contactNum: contact.contactNum,
+            title: contact.contactTitle,
+            date: contact.contactTime,
+            nickname: contact.userNickname,
+            answer: contact.answerStatus
+          }
+        })
+
+        const dataArray = [
+          rankingData.count1 || 0,
+          rankingData.count2 || 0,
+          rankingData.count3 || 0,
+          rankingData.count4 || 0,
+          rankingData.count5 || 0
+        ];
+
+        // 전체 객체를 갱신
+        this.donutChartData2 = {
+          labels: ['1', '2', '3', '4', '5~8'],
+          datasets: [{
+            data: dataArray,
+            backgroundColor: ['#EB9C00', '#758592', '#907659', '#676678', '#515163'],
+          }],
+        };
+
+      });
+    },
+    contactdetailPage(contactNum) {
+      this.$router.push('/mypage/inquiry/detail/' + contactNum);
+    },
+
+    prevBtn() {
+      if (this.endBlock > 10) {
+        this.$router.push('/mypage/myinquiry/' + parseInt(parseInt(this.startBlock) - parseInt(9)))
+            .then(() => {
+              this.myinquryload();
+            })
+      }
+    },
+    nextBtn() {
+      if (this.endBlock < this.totalPage - 1) {
+        this.$router.push('/mypage/myinquiry/' + parseInt(parseInt(this.startBlock) + parseInt(9)))
+            .then(() => {
+              this.myinquryload();
+            })
+      }
+    }
   },
 };
 </script>

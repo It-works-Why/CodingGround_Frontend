@@ -6,13 +6,23 @@
       </div>
 
       <div class="title">
-        <input :value="postData.title" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
-        <div class="text-white px-3 py-2 fs-4 mb-4 info_box">글쓴이 정보</div>
+        <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
+          {{getData.userProfileImg}}
+          <div class="user_info_box">
+            <div>
+              {{getData.userNickname}}
+            </div>
+            <div>
+              {{getData.noticeTime}}
+            </div>
+          </div>
+        </div>
+        <input :value="getData.noticeTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
       </div>
-      <textarea :value="postData.content" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" disabled/>
+      <textarea :value="getData.noticeContent" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" disabled/>
 
       <div class="button">
-        <WhiteButton class="edit" button-value="목록" ></WhiteButton>
+        <WhiteButton class="edit" button-value="목록" @click="this.$router.back"></WhiteButton>
       </div>
     </div>
   </div>
@@ -23,18 +33,29 @@
 import WhiteButton from "@/components/WhiteButton.vue";
 
 export default {
+  components: {WhiteButton},
   data() {
     return {
-      postData: {
-        title: '제목 데이터 바인딩',
-        content: '내용 데이터 바인딩'
-      }
+      getData: [],
     }
   },
-  components: {
-    WhiteButton
-  }
-
+  methods: {
+    load() {
+      this.$httpUtil(`/notice/detail/` + this.$route.params.id, 'GET', null, (data) => {
+        console.log(data);
+        this.getData = data;
+      });
+    },
+    deleteNotice() {
+      this.$httpUtil('/notice/delete/' + this.$route.params.id, 'PATCH', null, (data) => {
+        this.$router.push('/notice/list')
+        this.$successAlert(data.data.message);
+      })
+    }
+  },
+  mounted() {
+    this.load();
+  },
 }
 </script>
 

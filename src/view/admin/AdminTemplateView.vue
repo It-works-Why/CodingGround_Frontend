@@ -13,14 +13,23 @@ export default {
   components: {
     AdminHeader, Alert
   },
+  created() {
+    this.userData = this.$store.getters.getUser;
+    if(this.userData.userRole !== 'ADMIN'){
+      this.$router.push("/home");
+      this.$errorAlert("이건댐?");
+    }
+  },
   data() {
     return {
+      userData : {},
+
     };
   },
-  inject: ['$http'],
   methods: {
   },
   mounted() {
+
   },
 };
 </script>

@@ -4,11 +4,11 @@
       <div class="top_box_left">
         <div class="position-relative img_form">
           <img class="img_view" src="../assets/img/DefaultProfile.png">
-          <img class="ranking_icon bottom-0 end-0 position-absolute" src="../assets/img/디렉터.png">
+          <img class="ranking_icon bottom-0 end-0 position-absolute" :src="require('@/assets/img/tier/' + userData.userInfo.rankNum + '.png')">
         </div>
         <div class="top_box_myinfo">
-          <h1 class="top_box_name">키위새</h1>
-          <h4 class="top_box_company">Megazone Cloud</h4>
+          <h1 class="top_box_name">{{userData.userInfo.userNickname}}</h1>
+          <h4 class="top_box_company">{{userData.userInfo.userAffiliationDetail}}</h4>
           <div class="top_box_left_button">
             <button class="btn1" type="button" @click="this.$router.push('/mypage/info/edit')">내 정보 수정</button>
             <button class="btn1" type="button" @click="this.$router.push('/mypage/inquiry')">내 문의 사항 보기</button>
@@ -18,7 +18,7 @@
       <div class="top_box_right">
         <div class="top_box">
           <h6 class="top_box_title">순방확률</h6>
-          <p class="top_box_content">30전 16승 14패 (53.33%)</p>
+          <p class="top_box_content">{{userData.userInfo.matches}}전 {{userData.userInfo.wins}}승 {{userData.userInfo.losses}}패 ({{userData.userInfo.recordPercentage}}%)</p>
         </div>
         <div class="top_box">
           <donut-chart :chartData="donutChartData2" :chartOptions="donutChartOptions2"></donut-chart>
@@ -26,15 +26,10 @@
       </div>
     </div>
     <div class="center">
-      <div class="ranking_lists">
-        <div class="ranking_list">
-          <img class="ranking_icon" src="../assets/img/시니어.png">
-          <h6>S2023-11</h6>
-        </div>
-
-        <div class="ranking_list">
-          <img class="ranking_icon" src="../assets/img/디렉터.png">
-          <h6>S2023-12</h6>
+      <div  class="ranking_lists">
+        <div :key="i" :value="userBadges" v-for="(userBadges, i) in userData.gameBadge" class="ranking_list">
+          <img class="ranking_icon" :src="require('@/assets/img/tier/' + userBadges.num + '.png')">
+          <h6>{{userBadges.name}}</h6>
         </div>
       </div>
     </div>
@@ -48,18 +43,9 @@
         </div>
       </div>
       <div class="bottom_right">
-        <div class="box-top">
-          <select class="form-select">
-            <option :key="i" :value="language" v-for="(language,i) in languageSelectData">{{language}}</option>
-          </select>
-          <select class="form-select">
-            <option value="1">전체</option>
-            <option value="2">랭크</option>
-            <option value="3">일반</option>
-          </select>
-        </div>
+        <div class="box-top">최근전적</div>
         <div class="box-main">
-          <GameRecordBox :key="i" :gameRecord="gameRecord" v-for="(gameRecord, i) in gameRecordData"  @click="this.$router.push('/mypage/record')"></GameRecordBox>
+          <GameRecordBox :key="i" :gameRecord="gameRecord" v-for="(gameRecord, i) in gameRecordData"   @record-click="redirectToRecordPage"></GameRecordBox>
         </div>
       </div>
     </div>
@@ -71,6 +57,7 @@ import DonutChart from '../components/DonutChart.vue';
 import GameRecordBox from "@/components/GameRecordBox.vue";
 
 export default {
+
   created() {
     this.mypageload();
   },
@@ -80,33 +67,33 @@ export default {
   },
   data() {
     return {
+
+      userData: {
+        userInfo: {rankNum : 1},
+      },
+
       gameRecordData: [
         {
-          gametype: '일반게임',
-          gameDate: '1일전',
-          gamelanguage: 'JAVA',
-          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
-          gameusers:['치치는치치야', '키위새', '프론트의신_소희', '팀장이대로괜찮', '이게왜되지', '관관이형' , '일본인한형', '야구하러갈래']
+          gamenum: '',
+          gametype: '',
+          gameDate: '',
+          gamelanguage: '',
+          gameusersprofile: [],
+          gameusers:[]
         },
-      ],
-      languageSelectData: [
-        "JAVA",
-        "Python",
-        "C++",
-        "C#",
       ],
       // 도넛 차트 데이터 및 옵션 추가
       donutChartData: {
-        labels: ['Java', 'C++', 'Python', 'C#'],
+        labels: [],
         datasets: [{
-          data: [40, 30, 30 ,20],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', "#123456"],
+          data: [],
+          backgroundColor: [],
         }],
       },
       donutChartData2: {
         labels: ['1', '2', '3','4','5~8'],
         datasets: [{
-          data: [6, 5, 4, 1, 14],
+          data: [],
           backgroundColor: ['#EB9C00', '#758592', '#907659', "#676678", "#515163"],
         }],
       },
@@ -143,9 +130,64 @@ export default {
   methods: {
     mypageload(){
       this.$httpUtil('/mypage/myinfo','GET', null,(data) => {
+        console.log(data.data);
+        this.userData = data.data;
 
-        this.$successAlert(data.data.message);
-      })
+        this.gameRecordData = this.userData.gameInfoData.map(gameInfo => {
+          return{
+            gamenum: gameInfo.gameNum,
+            gametype: gameInfo.gameType,
+            gameDate: gameInfo.timeDifference,
+            gamelanguage: gameInfo.languageName,
+            gameusersprofile: gameInfo.userProfileImgList,
+            gameusers: gameInfo.userNicknamesList
+          }
+        } )
+
+
+        const colors = [];
+        const dataValues = [];
+        const labels = [];
+        for (let languageInfo of this.userData.gameLanguage) {
+          colors.push('#' + Math.round(Math.random() * 0xffffff).toString(16));
+          labels.push(languageInfo.languageName);
+          dataValues.push(parseInt(languageInfo.languageCount));
+        }
+
+        this.donutChartData = {
+          labels: labels,
+          datasets: [{
+            data: dataValues,
+            backgroundColor: colors,
+          }],
+        };
+
+
+        const rankingData = data.data.ranking[0];
+
+        const dataArray = [
+          rankingData.count1 || 0,
+          rankingData.count2 || 0,
+          rankingData.count3 || 0,
+          rankingData.count4 || 0,
+          rankingData.count5 || 0
+        ];
+
+        // 전체 객체를 갱신
+        this.donutChartData2 = {
+          labels: ['1', '2', '3', '4', '5~8'],
+          datasets: [{
+            data: dataArray,
+            backgroundColor: ['#EB9C00', '#758592', '#907659', '#676678', '#515163'],
+          }],
+        };
+
+
+      });
+    },
+
+    redirectToRecordPage(gamenum) {
+      this.$router.push('/mypage/record/' + gamenum);
     }
   }
 };

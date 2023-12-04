@@ -6,15 +6,25 @@
       </div>
 
       <div class="title">
-        <input v-model="postData.title" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" />
-        <div class="text-white px-3 py-2 fs-4 mb-4 info_box">글쓴이 정보</div>
+        <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
+        {{getData.userProfileImg}}
+          <div class="user_info_box">
+            <div>
+              {{getData.userNickname}}
+            </div>
+            <div>
+              {{getData.postTime}}
+            </div>
+          </div>
+        </div>
+        <input v-model="getData.postTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" />
       </div>
-      <textarea v-model="postData.content" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" />
+      <textarea v-model="getData.postContent" class="w-100 text-white px-4 py-2 fs-4 mb-3 content_box" rows="11" type="text" />
 
       <div class="button">
         <span class="action_button">
-          <WhiteButton class="cancel ms-2" button-value="취소"></WhiteButton>
-          <WhiteButton class="edit ms-2" button-value="수정" ></WhiteButton>
+          <WhiteButton class="cancel ms-2" button-value="취소" @click="this.$router.back"></WhiteButton>
+          <WhiteButton class="edit ms-2" button-value="수정" @click="edit"></WhiteButton>
         </span>
       </div>
     </div>
@@ -26,18 +36,40 @@
 import WhiteButton from "@/components/WhiteButton.vue";
 
 export default {
+  components: {
+    WhiteButton
+  },
   data(){
     return{
-      postData: {
-        title: '제목 데이터 바인딩',
-        content: '내용 데이터 바인딩'
+      getData: [],
+      editData: {
+        postTitle: '',
+        postContent: ''
       }
     }
   },
-  components: {
-    WhiteButton
-  }
+  methods: {
+    load() {
+      this.$httpUtil('/community/detail/' + this.$route.params.id, 'GET', null, (data) => {
+        this.getData = data;
+      });
+    },
+    edit() {
+      const title = this.getData.postTitle;
+      const content = this.getData.postContent;
 
+      this.editData.postTitle = title;
+      this.editData.postContent = content;
+
+      this.$httpUtil('/community/edit/' + this.$route.params.id, 'PATCH', this.editData, (data) => {
+        this.$router.push('/community/detail/' + this.$route.params.id)
+        this.$successAlert(data.data.message);
+      })
+    }
+  },
+  mounted() {
+    this.load();
+  },
 }
 </script>
 

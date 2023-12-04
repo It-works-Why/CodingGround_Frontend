@@ -52,9 +52,8 @@ export default {
 
   methods: {
     load() {
-      this.$httpUtil('/user/ranking/list', 'GET', null, (data) => {
-        console.log(data);
-        this.userRankingList = data;
+      this.$httpUtil('/ranking/list', 'GET', null, (data) => {
+        this.userRankingList = data.data;
       })
     }
   },

@@ -11,7 +11,7 @@
 
       <div class="button">
         <span class="action_button">
-          <WhiteButton class="cancel ms-2" button-value="취소" @click="this.$router.push('/admin/notice/list')"></WhiteButton>
+          <WhiteButton class="cancel ms-2" button-value="취소" @click="this.$router.push('/admin/notice/list?page=1')"></WhiteButton>
           <WhiteButton class="write ms-2" button-value="작성" @click="register"></WhiteButton>
         </span>
       </div>

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
-import axios from 'axios';
+// import { errorMessageToast } from "@/assets/js/alert";
+// import axios from 'axios';
 
 const store = createStore({
     state() {
@@ -32,24 +33,27 @@ const store = createStore({
         logout({ commit }) {
             commit('logout');
         },
-        async setUserInfo({ commit }) {
-            try {
-                const accessToken = localStorage.getItem('accessToken');
-                const response = await axios.get('/api/account/userInfo', {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`
-                    }
-                });
-                const userInfo = {
-                    userId: response.data.data.userId,
-                    userRole: response.data.data.userRole,
-                    userNickname: response.data.data.userNickname
-                };
-                commit('addUserInfo', userInfo);
-            } catch (error) {
-                alert(error);
-            }
-        }
+        // async setUserInfo({ commit }) {
+        //     try {
+        //         const accessToken = localStorage.getItem('refreshToken');
+        //         const response = await axios.get('/api/account/userInfo', {
+        //             headers: {
+        //                 'Authorization': `Bearer ${accessToken}`
+        //             }
+        //         });
+        //         const userInfo = {
+        //             userId: response.data.data.userId,
+        //             userRole: response.data.data.userRole,
+        //             userNickname: response.data.data.userNickname
+        //         };
+        //         commit('addUserInfo', userInfo);
+        //     } catch (error) {
+        //         console.log(error);
+        //         errorMessageToast("로그인 재시도");
+        //         localStorage.removeItem("refreshToken");
+        //         localStorage.removeItem("accessToken");
+        //     }
+        // }
     },
     getters: {
         getUser(state) {

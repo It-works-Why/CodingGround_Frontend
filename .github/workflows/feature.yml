@@ -1,4 +1,4 @@
-name: Frontend build and push to ECR
+name: Frontend build and push to S3
 
 on:
   push:
@@ -6,42 +6,44 @@ on:
       - feature
 
 env:
-  ecr_url: 503237308475.dkr.ecr.ca-central-1.amazonaws.com
+  s3_bucket: bsdev16-codingground-frontend
   aws_region: ca-central-1
   
 jobs:
   build:
     runs-on: ubuntu-latest
-        
+    
     steps:
     - name: Check Code
       uses: actions/checkout@v2
 
-    - name: Get the date
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y%m%d')"
-    
-    - name: Build Docker image
-      uses: docker/build-push-action@v2
+    - name: Install dependencies
+      run: |
+        npm ci
+        npm install vue-template-compiler
+        
+    - name: Clean and Reinstall dependencies
+      run: |
+        rm -rf node_modules
+        rm package-lock.json
+        npm install
+        npm install @popperjs/core@latest
+
+    - name: Set up Node.js 
+      uses: actions/setup-node@v2
       with:
-        context: .
-        push: false
-        tags: codingground_frontend:latest
-        file: ./Dockerfile
-    
+        node-version: 14
+
+    - name: npm Build
+      run: npm run build
+      
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-region: ${{ env.aws_region }}
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-      
-    - name: Push Image to ECR
-      run: |
-        docker tag codingground_frontend:latest ${{ env.ecr_url }}/codingground-frontend:${{ steps.date.outputs.date }}
-        docker push ${{ env.ecr_url }}/codingground-frontend:${{ steps.date.outputs.date }}
 
+    - name: Sync files to S3
+      run: |
+        aws s3 sync dist/ s3://${{ env.s3_bucket }}

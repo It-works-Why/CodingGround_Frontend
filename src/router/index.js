@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import store from '@/store';
-import axios from 'axios';
+// import axios from 'axios';
+import { httpRequest } from '@/assets/js/http'
 import LoginView from '@/view/account/LoginView.vue';
 import RegisterView from '@/view/account/RegisterView.vue';
 import HomeView from "@/view/HomeView.vue";
@@ -10,7 +11,6 @@ import FindAccountView from "@/view/account/FindAccountView.vue";
 import EditMyInfoView from "@/view/EditMyInfoView.vue";
 import AdminTemplateView from "@/view/admin/AdminTemplateView.vue";
 import AdminHomeView from "@/view/admin/AdminHomeView.vue";
-import AdminQuestionManagementView from "@/view/admin/AdminQuestionManagementView.vue";
 import AdminQuestionRegisterView from "@/view/admin/AdminQuestionRegisterView.vue";
 import BattleListView from "@/view/battle/BattleListView.vue";
 import EditCommunityPostView from "@/view/community/EditCommunityPostView.vue";
@@ -33,6 +33,12 @@ import AdminNoticeListView from "@/view/admin/AdminNoticeListView.vue";
 import AdminNoticeRegisterPostView from "@/view/admin/AdminNoticeRegisterPostView.vue";
 import AdminNoticeDetailView from "@/view/admin/AdminNoticeDetailView.vue";
 import AdminNoticeEditPostView from "@/view/admin/AdminNoticeEditPostView.vue";
+import SocketTest from "@/view/battle/SocketTest.vue";
+import AdminQuestionListView from "@/view/admin/AdminQuestionListView.vue";
+import AdminQuestionDetailView from "@/view/admin/AdminQuestionDetailView.vue";
+import AdminQuestionEditView from "@/view/admin/AdminQuestionEditView.vue";
+import BattleView from "@/view/battle/BattleView.vue";
+
 
 const routes = [
   {
@@ -60,8 +66,12 @@ const routes = [
         component: MypageView
       },
       {
-        path: '/mypage/inquiry',
+        path: '/mypage/inquiry/:pageNum',
         component: MyInquiryView
+      },
+      {
+        path: '/mypage/inquiry/',
+        redirect:'/mypage/inquiry/0'
       },
       {
         path: '/mypage/info/edit',
@@ -72,11 +82,11 @@ const routes = [
         component: WriteInquiryView
       },
       {
-        path: '/mypage/inquiry/detail/:id',
+        path: '/mypage/inquiry/detail/:contactNum',
         component: DetailInquiryView
       },
       {
-        path: '/mypage/record',
+        path: '/mypage/record/:gamenum',
         component: ShowGameRecordView
       },
       {
@@ -85,10 +95,18 @@ const routes = [
       },
       {
         path: '/community',
-        redirect: '/community/list',
+        redirect: '/community/list/0',
       },
       {
         path: '/community/list',
+        redirect: '/community/list/0',
+      },
+      {
+        path: '/community/list/:pageNum',
+        component: CommunityPostView
+      },
+      {
+        path: '/community/list/:pageNum/:searchInput',
         component: CommunityPostView
       },
       {
@@ -105,10 +123,10 @@ const routes = [
       },
       {
         path: '/notice',
-        redirect: '/notice/list'
+        redirect: '/notice/list/0'
       },
       {
-        path: '/notice/list',
+        path: '/notice/list/:pageNum',
         component: NoticeListView
       },
       {
@@ -120,13 +138,25 @@ const routes = [
         component: BattleListView
       },
       {
-        path: '/battle',
-        component: BattleInGameView
-      },
-      {
         path: '/ranking',
         component: RankingListView
       },
+      {
+        path: '/socket/test',
+        component: SocketTest
+      },
+      {
+        path: '/battle/ingame',
+        component: BattleInGameView
+      },
+      {
+        path: '/battle/ingame/:gameId',
+        component: BattleInGameView
+      },
+      {
+        path: '/battle',
+        component: BattleView
+      }
 
     ]
   },
@@ -143,15 +173,35 @@ const routes = [
         component: AdminHomeView
       },
       {
-        path: '/admin/question/management',
-        component: AdminQuestionManagementView
+        path: '/admin/question/list',
+        redirect: '/admin/question/list/0'
+      },
+      {
+        path: '/admin/question/list/:pageNum',
+        component: AdminQuestionListView
+      },
+      {
+        path: '/admin/question/list/:pageNum/:keyword',
+        component: AdminQuestionListView
       },
       {
         path: '/admin/question/register',
         component: AdminQuestionRegisterView
       },
       {
+        path: '/admin/question/detail/:id',
+        component: AdminQuestionDetailView
+      },
+      {
+        path: '/admin/question/edit/:id',
+        component: AdminQuestionEditView
+      },
+      {
         path: '/admin/notice/list',
+        redirect: '/admin/notice/list/0'
+      },
+      {
+        path: '/admin/notice/list/:pageNum',
         component: AdminNoticeListView
       },
       {
@@ -199,30 +249,44 @@ router.afterEach((to) => {
 
 })
 router.beforeEach(async (to, from, next) => {
-  if(localStorage.getItem('accessToken')){
-    if (!store.state.userInfo.userId) {
-      try {
-        const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.get('/api/account/userInfo', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        });
-
-        const userInfo = {
-          userId: response.data.data.userId,
-          userRole: response.data.data.userRole,
-          userNickname: response.data.data.userNickname
-        };
+  try {
+    if (localStorage.getItem("accessToken") != null) {
+      await httpRequest("/account/userInfo", "GET", null, (data) => {
+        console.log(data);
+        let userInfo = data.data;
         store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-        // 오류 처리
-      }
+      })
     }
+  } catch (e) {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   }
+
+  // if(localStorage.getItem('refreshToken')){
+  //   if (!store.state.userInfo.userId) {
+  //     try {
+  //       const accessToken = localStorage.getItem('refreshToken');
+  //       const response = await axios.get('/api/account/userInfo', {
+  //         headers: {
+  //           'Authorization': `Bearer ${accessToken}`
+  //         }
+  //       });
+  //
+  //       const userInfo = {
+  //         userId: response.data.data.userId,
+  //         userRole: response.data.data.userRole,
+  //         userNickname: response.data.data.userNickname
+  //       };
+  //       store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
+  //     } catch (error) {
+  //       localStorage.removeItem("refreshToken");
+  //       localStorage.removeItem("accessToken");
+  //     }
+  //   }
+  // }
   next(); // 다음 단계로 진행
 });
+
 
 
 export default router;

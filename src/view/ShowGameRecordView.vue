@@ -8,46 +8,67 @@
         <div>
           <h1>1라운드</h1>
           <div class="input-question">
-            <input class="input-box input-title" type="text" value="킬러문항 없다더니 '불수능'… 13년 만에 수능 만점자 '0명'" readonly>
-            <input class="input-box input-time input-time-out" type="text" value="16분" readonly>
-            <input class="input-box input-level" type="text" value="LEVEL 1" readonly>
+            <input :value="gameRoundOne[0].questionTitle" class="input-box input-title" readonly type="text">
+            <input :value="gameRoundOne[0].questionLimitTime + '분'" class="input-box input-time input-time-out" readonly
+                   type="text">
+            <input :value="'LEVEL' + gameRoundOne[0].questionDifficult" class="input-box input-level" readonly
+                   type="text">
           </div>
           <div>
-          <textarea class="input-box input-content" readonly>지난 16일 치러진 2024학년도 대학수학능력시험(수능)에서 '전 과목 만점' 소식이 좀처럼 나오지 않고 있다. 21일 뉴스1에 따르면 이날 전국진로진학상담교사협의회(전진협) 등은 2024학년도 수능에서 전 과목 만점자는 아직 없는 것으로 파악했다. 문·이과 통합형 수능 체제에서 전 과목 만점자는 국어·수학·탐구(2과목) 영역에서 원점수 만점을 받고 절대평가인 영어·한국사에서 1등급을 받은 수험생을 의미한다.
-          </textarea>
+            <textarea :value="gameRoundOne[0].questionContent" class="input-box input-content"
+                      readonly="text"> </textarea>
           </div>
         </div>
         <div>
-        <textarea class="input-box input-answer-right" readonly>// 정답일 경우
-void run ();
-        </textarea>
-        <a class="answer-img-right">
-          <img src="@/assets/img/checks.png">
-        </a>
+  <textarea v-if="gameRoundOne[0].roundRecordAnswerCorrect === 1" :value="gameRoundOne[0].roundRecordAnswer" class="input-box input-answer-right" readonly>
+
+  </textarea>
+          <a v-if="gameRoundOne[0].roundRecordAnswerCorrect === 1" class="answer-img-right">
+            <img src="@/assets/img/checks.png">
+          </a>
+        </div>
+
+        <div>
+  <textarea v-if="gameRoundOne[0].roundRecordAnswerCorrect === 0" :value="gameRoundOne[0].roundRecordAnswer" class="input-box input-answer-wrong" readonly
+            style="resize: none;">
+  </textarea>
+          <a v-if="gameRoundOne[0].roundRecordAnswerCorrect === 0" class="answer-img-wrong">
+            <img src="@/assets/img/x.png">
+          </a>
         </div>
       </div>
       <div class="round">
         <div>
           <h1>2라운드</h1>
           <div class="input-question">
-            <input class="input-box input-title" type="text" value="킬러문항 없다더니 '불수능'… 13년 만에 수능 만점자 '0명'" readonly>
-            <input class="input-box input-time input-time-out" type="text" value="16분" readonly>
-            <input class="input-box input-level" type="text" value="LEVEL 1" readonly>
+            <input class="input-box input-title" readonly type="text" :value="gameRoundTwo[0].questionTitle">
+            <input class="input-box input-time input-time-out" readonly type="text" :value="gameRoundTwo[0].questionLimitTime + '분'">
+            <input class="input-box input-level" readonly type="text" :value="'LEVEL' + gameRoundTwo[0].questionDifficult">
           </div>
           <div>
-          <textarea class="input-box input-content" readonly>지난 16일 치러진 2024학년도 대학수학능력시험(수능)에서 '전 과목 만점' 소식이 좀처럼 나오지 않고 있다. 21일 뉴스1에 따르면 이날 전국진로진학상담교사협의회(전진협) 등은 2024학년도 수능에서 전 과목 만점자는 아직 없는 것으로 파악했다. 문·이과 통합형 수능 체제에서 전 과목 만점자는 국어·수학·탐구(2과목) 영역에서 원점수 만점을 받고 절대평가인 영어·한국사에서 1등급을 받은 수험생을 의미한다.
-          </textarea>
+            <textarea :value="gameRoundTwo[0].questionContent" class="input-box input-content"
+                      readonly="text"> </textarea>
           </div>
         </div>
         <div>
-        <textarea style="resize: none;" class="input-box input-answer-wrong" readonly>// 오답일 경우
-void run ();</textarea>
-        <a class="answer-img-wrong">
-          <img src="@/assets/img/x.png">
-        </a>
+  <textarea v-if="gameRoundTwo[0].roundRecordAnswerCorrect === 1" :value="gameRoundTwo[0].roundRecordAnswer" class="input-box input-answer-right" readonly>
+
+  </textarea>
+          <a v-if="gameRoundTwo[0].roundRecordAnswerCorrect === 1" class="answer-img-right">
+            <img src="@/assets/img/checks.png">
+          </a>
+        </div>
+
+        <div>
+  <textarea v-if="gameRoundTwo[0].roundRecordAnswerCorrect === 0" class="input-box input-answer-wrong" readonly
+            style="resize: none;">
+  </textarea>
+          <a v-if="gameRoundTwo[0].roundRecordAnswerCorrect === 0" class="answer-img-wrong">
+            <img src="@/assets/img/x.png">
+          </a>
         </div>
       </div>
-      <WhiteButton class="bottom-list" button-value="목록"  @click="this.$router.push('/mypage')"></WhiteButton>
+      <WhiteButton button-value="목록" class="bottom-list" @click="this.$router.push('/mypage')"></WhiteButton>
     </div>
   </BlackBox>
 </template>
@@ -62,20 +83,120 @@ export default {
   components: {WhiteButton, GameRecordBox, BlackBox},
   data() {
     return {
+      gameRoundOne: [{
+        gameNum: '',
+        questionContent: '',
+        questionDifficult: '',
+        questionLimitTime: '',
+        questionTitle: '',
+        round: '',
+        roundRecordAnswer: '',
+        roundRecordAnswerCorrect: ''
+      }],
+
+      gameRoundTwo: [{
+        gameNum: '',
+        questionContent: '',
+        questionDifficult: '',
+        questionLimitTime: '',
+        questionTitle: '',
+        round: '',
+        roundRecordAnswer: '',
+        roundRecordAnswerCorrect: ''
+      }],
+
       gameRecordData: [
         {
-          gametype: '랭크게임',
-          gameDate: '2일전',
-          gamelanguage: 'JAVA',
-          gameusersprofile: ['DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile', 'DefaultProfile',],
-          gameusers: ['치치는치치야', '키위새', '프론트의신_소희', '팀장이대로괜찮', '이게왜되지', '관관이형', '일본인한형', '야구하러갈래']
+          gametype: '',
+          gameDate: '',
+          gamelanguage: '',
+          gameusersprofile: [],
+          gameusers: []
         },
       ],
     }
+  },
+  methods: {
+    load() {
+      this.$httpUtil('/mypage/gamerecord/' + this.$route.params.gamenum, 'GET', null, (data) => {
+        console.log(data.data);
+        this.userData = data.data;
+
+        if (this.userData.gameRecordRoundOne && this.userData.gameRecordRoundOne.length > 0) {
+          this.gameRoundOne = this.userData.gameRecordRoundOne.map(roundOne => {
+            return {
+              gameNum: roundOne.gameNum,
+              questionContent: roundOne.questionContent,
+              questionDifficult: roundOne.questionDifficult,
+              questionLimitTime: roundOne.questionLimitTime,
+              questionTitle: roundOne.questionTitle,
+              round: roundOne.round,
+              roundRecordAnswer: roundOne.roundRecordAnswer,
+              roundRecordAnswerCorrect: roundOne.roundRecordAnswerCorrect
+            }
+          });
+        } else {
+          // gameRoundOne이 비어있을 경우 기본 값을 설정
+          this.gameRoundOne = [{
+            gameNum: '',
+            questionContent: '',
+            questionDifficult: '',
+            questionLimitTime: '',
+            questionTitle: '',
+            round: '',
+            roundRecordAnswer: '',
+            roundRecordAnswerCorrect: ''
+          }];
+        }
+
+        if (this.userData.gameRecordRoundTwo && this.userData.gameRecordRoundTwo.length > 0) {
+          this.gameRoundTwo = this.userData.gameRecordRoundTwo.map(roundTwo => {
+            return {
+              gameNum: roundTwo.gameNum,
+              questionContent: roundTwo.questionContent,
+              questionDifficult: roundTwo.questionDifficult,
+              questionLimitTime: roundTwo.questionLimitTime,
+              questionTitle: roundTwo.questionTitle,
+              round: roundTwo.round,
+              roundRecordAnswer: roundTwo.roundRecordAnswer,
+              roundRecordAnswerCorrect: roundTwo.roundRecordAnswerCorrect
+            }
+          });
+        } else {
+          // gameRoundTwo가 비어있을 경우 기본 값을 설정
+          this.gameRoundTwo = [{
+            gameNum: '',
+            questionContent: '',
+            questionDifficult: '',
+            questionLimitTime: '',
+            questionTitle: '',
+            round: '',
+            roundRecordAnswer: '',
+            roundRecordAnswerCorrect: ''
+          }];
+        }
+
+
+        this.gameRecordData = this.userData.gameInfoData.map(gameInfo => {
+          return {
+            gamenum: '',
+            gametype: gameInfo.gameType,
+            gameDate: gameInfo.timeDifference,
+            gamelanguage: gameInfo.languageName,
+            gameusersprofile: gameInfo.userProfileImgList,
+            gameusers: gameInfo.userNicknamesList
+          }
+        })
+      });
+    },
+  },
+  mounted() {
+    this.load();
+
   },
 };
 
 
 </script>
 
-<style src="@/assets/css/view/gameRecord.css" scoped/>
+<style scoped src="@/assets/css/view/gameRecord.css"/>

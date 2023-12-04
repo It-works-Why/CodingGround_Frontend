@@ -8,8 +8,8 @@
           <Logo2Vue></Logo2Vue>
         </div>
         <div class="px-4 input_box">
-          <input v-model="userInfo.userId" type="text" class="mt-3 form-control" placeholder="아이디">
-          <input v-model="userInfo.userPassword" type="password" class="mt-4 form-control" placeholder="비밀번호">
+          <input v-model="userInfo.userId" @keyup.enter="login()" type="text" class="mt-3 form-control" placeholder="아이디">
+          <input v-model="userInfo.userPassword" @keyup.enter="login()" type="password" class="mt-4 form-control" placeholder="비밀번호">
           <input type="button"  @click="login()" class="fs-4 login_button mt-3" value="로그인">
           <br>
           <input type="button" @click="this.$router.push('/register')" class="fs-6 fw-medium register_button mt-4" value="회원가입">
@@ -38,6 +38,8 @@
       }
     },
     created(){
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
     },
     methods: {
       login() {
