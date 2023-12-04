@@ -229,7 +229,11 @@ const routes = [
         component: AdminInquiryDetailView
       },
       {
-        path: '/admin/community/list',
+        path: '/admin/community/list/',
+        redirect: '/admin/community/list/0'
+      },
+      {
+        path: '/admin/community/list/:pageNum',
         component: AdminCommunityListView
       },
     ]
