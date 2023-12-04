@@ -44,13 +44,15 @@
 }
 
 .page-link {
+    border-radius: 10px;
     font-size: 16px;
     color: #FFFFFF;
     background-color: #3D3D3D;
     border: none;
 }
 
-.page-item.active .page-link {
+.page-link.active {
+    border-radius: 10px;
     z-index: 1;
     color: black;
     font-weight: 600;

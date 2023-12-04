@@ -33,22 +33,20 @@
         </li>
         <li class="page-item" :key="i" v-for="i in endBlock">
           <router-link
-              v-if="this.$route.params.keyword"
+              v-if="this.$route.params.keyword && startBlock <= i && endBlock >= i"
+              @click="pageBtn(i-1)"
               :to="'/admin/question/list/' + (i - 1) + '/' + this.keyword"
-              class="page-item"
+              class="page-link"
               :class="{ active: $route.params.pageNum == (i - 1) }">
-            <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
               {{i}}
-            </a>
           </router-link>
           <router-link
-              v-else
+              v-else-if="!this.$route.params.keyword && startBlock <= i && endBlock >= i"
+              @click="pageBtn(i-1)"
               :to="'/admin/question/list/' + (i - 1)"
               class="page-item"
               :class="{ active: $route.params.pageNum == (i - 1) }">
-            <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
               {{i}}
-            </a>
           </router-link>
         </li>
         <li class="page-item">

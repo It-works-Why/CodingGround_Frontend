@@ -26,13 +26,13 @@
         </li>
         <li class="page-item" :key="i" v-for="i in endBlock">
           <router-link
+              @click="pageBtn(i-1)"
+              v-if="startBlock <= i && endBlock >= i"
               :to="'/notice/list/' + (i - 1)"
-              class="page-item"
+              class="page-link"
               :class="{ active: $route.params.pageNum == (i - 1) }"
           >
-            <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
-              {{i}}
-            </a>
+            {{i}}
           </router-link>
         </li>
         <li class="page-item">
