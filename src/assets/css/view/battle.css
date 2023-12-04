@@ -1,0 +1,160 @@
+.content {
+    display: flex;
+    height: 1000px;
+}
+
+p {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+h1 {
+    font-weight: 800;
+}
+
+.section-left {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 20%;
+}
+
+.section-center {
+    width: 60%;
+}
+
+.section-right {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 20%;
+}
+
+.question {
+    margin-bottom: 10px;
+    height: 65%;
+}
+
+.result {
+    height: 35%;
+}
+
+.console {
+    color: white;
+}
+
+.console-box {
+    height: 80%;
+    margin-bottom: 10px;
+}
+
+.test {
+    height: 20%;
+}
+
+.time {
+    height: 20%;
+    margin-bottom: 10px;
+    text-align: center;
+    color: white;
+}
+
+.participant {
+    height: 80%;
+    color: white;
+}
+
+.input-box {
+    width: 100%;
+    font-size: 14px;
+    background: none;
+    border: none;
+}
+
+.title-box {
+    height: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.content-box {
+    height: 480px;
+}
+
+.input-title {
+    font-weight: 550;
+    color: #A60000;
+    text-align: center;
+}
+
+.input-content {
+    height: 85%;
+}
+
+.input-time {
+    text-align: center;
+    font-weight: 550;
+}
+
+.round-img {
+    margin-right: 0;
+    width: 40px;
+    height: 40px;
+}
+
+.btn {
+    margin-bottom: 5px;
+    font-size: 14px;
+    float: right;
+    color: white;
+    border-radius: 30px;
+    width: 80px;
+    height: 35px;
+    box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 0.25);
+}
+
+.blue-btn {
+    background-color: #0042A6;
+    margin-right: 10px;
+}
+
+.red-btn {
+    background-color: #A60000;
+}
+
+.status {
+    margin-top: 20px;
+    display: flex;
+}
+
+.top_box_left {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.img_form {
+    width: 50px;
+    height: 50px;
+    margin: 30px;
+}
+
+.img_form > .img_view {
+    border-radius: 80px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img_form > .ranking_icon {
+    width: 20px;
+    height: 20px;
+    z-index: 100;
+    object-fit: cover;
+}
+
+.ranking_icon {
+    width: 50px;
+    height: 50px;
+}

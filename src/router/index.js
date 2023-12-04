@@ -37,6 +37,8 @@ import SocketTest from "@/view/battle/SocketTest.vue";
 import AdminQuestionListView from "@/view/admin/AdminQuestionListView.vue";
 import AdminQuestionDetailView from "@/view/admin/AdminQuestionDetailView.vue";
 import AdminQuestionEditView from "@/view/admin/AdminQuestionEditView.vue";
+import BattleView from "@/view/battle/BattleView.vue";
+
 
 const routes = [
   {
@@ -146,6 +148,10 @@ const routes = [
       {
         path: '/battle/ingame/:gameId',
         component: BattleInGameView
+      },
+      {
+        path: '/battle',
+        component: BattleView
       }
 
     ]
