@@ -57,7 +57,7 @@
         </div>
         <ConsoleBox class="console">{{getData.result}}</ConsoleBox>
         <p class="text-white">제출은 1번만 가능합니다. 제한 시간이 지나면 자동으로 제출됩니다.</p>
-        <button class="btn red-btn">제출</button>
+        <button @click="send" class="btn red-btn">제출</button>
         <button class="btn blue-btn">실행</button>
       </BlackBox>
 
@@ -119,6 +119,7 @@ export default {
   components: {ConsoleBox, GrayBox, BlackBox},
   data() {
     return {
+      stompClient: '',
       code: '',
       cmOptions: {
         mode: "text/x-java",
@@ -183,6 +184,19 @@ export default {
       ]
     };
   },
+  methods:{
+    send(){
+      this.stompClient.send("/app/send", {}, this.$route.params.gameId);
+    },
+    alertMessage(payload){
+      alert(payload.body);
+    }
+  },
+  created(){
+    this.stompClient = this.$store.getters.getStompClient;
+    this.stompClient.subscribe('/topic/public/get/message/'+this.$route.params.gameId, this.alertMessage);
+  },
+
 }
 </script>
 
