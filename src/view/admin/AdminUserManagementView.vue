@@ -25,12 +25,12 @@
         <td class="id">{{user.userId}}</td>
         <td class="affiliation">{{user.userAffiliation}}({{user.userAffiliationDetail}})</td>
         <td>
-          <select v-model="user.userStatus" class="status">
+          <select v-model="this.userStatus[i]" class="status">
             <option value="ACTIVE">일반 회원</option>
             <option value="BLOCK">블랙 회원</option>
             <option value="DELETED">회원 탈퇴</option>
           </select>
-          <button class="change-btn" type="button">변경</button>
+          <button @click="changeUserStatus(i)" class="change-btn" type="button">변경</button>
         </td>
       </tr>
     </table>
@@ -72,6 +72,11 @@ export default {
       totalPage : 0,
       startBlock : 0,
       endBlock : 10,
+      userStatus: [],
+      editUserStatusData: {
+        userNum: '',
+        userStatus: ''
+      }
 
     }
   },
@@ -81,6 +86,10 @@ export default {
         this.userList = data.userManageListDtoList;
         this.totalPage = Math.ceil(data.totalPage / 10);
         this.startBlock = parseInt(parseInt(this.$route.params.pageNum / 10) * 10 + 1);
+
+        for (let userList of data.userManageListDtoList) {
+          this.userStatus.push(userList.userStatus);
+        }
 
         const endBlock = this.startBlock + 9;
         if (endBlock > this.totalPage) {
@@ -114,6 +123,19 @@ export default {
             })
       }
     },
+    changeUserStatus(i) {
+      if (confirm("회원 상태를 정말로 변경하시겠습니까?")) {
+        this.editUserStatusData.userNum = this.userList[i].userNum;
+        this.editUserStatusData.userStatus = this.userStatus[i];
+        console.log(this.editUserStatusData);
+        this.$httpUtil('/admin/user/changestatus', 'PATCH', this.editUserStatusData, (data) => {
+          this.$router.go(0);
+          this.$successAlert(data.data.message);
+        })
+      } else {
+        this.$warningAlert("취소되었습니다.")
+      }
+    }
   },
   mounted() {
     this.getUserList();
