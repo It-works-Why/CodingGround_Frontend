@@ -224,8 +224,12 @@ const routes = [
         component: AdminNoticeEditPostView
       },
       {
-        path: '/admin/user/list',
+        path: '/admin/user/list/:pageNum',
         component: AdminUserManagementView
+      },
+      {
+        path: '/admin/user/list',
+        redirect: '/admin/user/list/1'
       },
       {
         path: '/admin/user/inquiry/list/:pageNum',
