@@ -3,9 +3,13 @@
     <div class="background"></div>
     <div class="content">
       <div class="loading"><img class="loadingImg" src="../../assets/img/Loading.gif"></div>
-      <div class="battleLoading">게임 참가자가 모두 들어올 때까지 잠시만 기다려 주세요.</div>
-      <div class="userCounter">현재 {{ playUserTotalCount }}/8 명 참가 중...</div>
-      <div class="cancel"><button class="cancel-btn">대기열 취소</button></div>
+      <div v-if="disableBtn" class="battleLoading"></div>
+      <div v-if="!disableBtn" class="battleLoading">게임 참가자가 모두 들어올 때까지 잠시만 기다려 주세요.</div>
+      <div v-if="disableBtn" class="userCounter">게임 시작 준비중...</div>
+      <div v-if="!disableBtn" class="userCounter">현재 {{ playUserTotalCount }}/8 명 참가 중...</div>
+
+      <div id="count_down" class="userCounter" v-if="disableBtn"> {{currentCountDown}}초 후에 시작</div>
+      <div v-if="!disableBtn" class="cancel"><button :disabled="disableBtn" class="cancel-btn" @click="disconnect">대기열 취소</button></div>
     </div>
   </body>
 </template>
@@ -14,6 +18,10 @@
 export default {
   data() {
     return {
+      countdownInterval : '',
+      differenceTime : '',
+      disableBtn : false,
+      currentCountDown : '',
       gameData : {
         gameInfo : {
           gameId: '',
@@ -24,8 +32,6 @@ export default {
       userData : {},
       playUsersData : [],
       playUserTotalCount : '',
-      gameStatus : "WAIT",
-
     }
   },
   created() {
@@ -40,13 +46,20 @@ export default {
 
   },
   methods: {
+    disconnect() {
+      location.href = "/home";
+    },
     // 처음 들어올때 created() 문에 들어갈 소켓연결
     connect() {
       // eslint-disable-next-line no-undef
       const socket = new SockJS('http://localhost:8090/ws');
+      const data = {};
+      data.gameId = this.gameData.gameInfo.gameId;
       // eslint-disable-next-line no-undef
-      this.stompClient = Stomp.over(socket);
-      this.stompClient.connect({"gameId" : "abc"}, this.onConnected, this.onError);
+      const stompClient = Stomp.over(socket);
+      stompClient.connect(data, this.onConnected, this.onError);
+      this.$store.commit('setConnection', stompClient);
+      this.stompClient = this.$store.getters.getStompClient;
     },
     onConnected() {
       this.stompClient.send("/app/join/queue/"+this.gameData.gameInfo.gameId, {}, this.userData.userId);
@@ -64,9 +77,8 @@ export default {
       this.$errorAlert("비정상적인 접근이 감지 되었습니다.");
       this.$router.push("/home")
     },
-    send(event) {
+    send() {
       this.stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(this.gameData));
-      event.preventDefault();
     },
     onMessageReceived(payload) {
       console.log(payload)
@@ -77,10 +89,22 @@ export default {
       this.playUsersData = gameUsersData.playUsers;
     },
     gameStarting(payload) {
-      console.log(payload)
-      this.gameStatus = payload.body;
-      alert(this.gameStatus);
-    }
+      console.log(payload);
+      this.counter();
+    },
+    counter() {
+      let currentCountDown = 11;
+
+      const handle = setInterval(() => {
+        currentCountDown -= 1;
+        this.currentCountDown = Math.ceil(currentCountDown).toLocaleString();
+        this.disableBtn = true;
+        if (currentCountDown == 0) {
+          this.$router.push("/battle/ingame/"+this.gameData.gameInfo.gameId);
+          clearInterval(handle);
+        }
+      }, 1000);
+    },
   }
 
 }
