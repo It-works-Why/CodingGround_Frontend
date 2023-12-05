@@ -19,9 +19,11 @@
             <div class="my-3 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">아이디</span>
               <span class="ps-5">
-                <input v-model="userInfo.userId" placeholder="아이디를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-if="this.idCheck === 1" v-model="userInfo.userId" style="width: 70%" class="text-white fs-4 input_box" type="text" disabled/>
+                <input v-if="this.idCheck === 0" v-model="userInfo.userId" placeholder="아이디를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
-              <WhiteButton class="ms-5" button-value="중복확인"></WhiteButton>
+              <WhiteButton v-if="this.idCheck === 1" class="ms-5" button-value="사용가능"></WhiteButton>
+              <WhiteButton v-if="this.idCheck === 0" class="ms-5" button-value="중복확인" @click="checkId"></WhiteButton>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
@@ -40,8 +42,11 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">닉네임</span>
               <span class="ps-5">
-                <input v-model="userInfo.userNickname" placeholder="닉네임을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-if="this.nicknameCheck === 1" v-model="userInfo.userNickname" style="width: 70%" class="text-white fs-4 input_box" type="text" disabled/>
+                <input v-if="this.nicknameCheck === 0" v-model="userInfo.userNickname" placeholder="닉네임을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
+              <WhiteButton v-if="this.nicknameCheck === 1" class="ms-5" button-value="사용가능"></WhiteButton>
+              <WhiteButton v-if="this.nicknameCheck === 0" class="ms-5" button-value="중복확인" @click="checkNickname"></WhiteButton>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
@@ -52,7 +57,8 @@
               <span class="ps-5">
                 <input v-model="userInfo.userEmail" placeholder="이메일을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
-              <WhiteButton class="ms-5" button-value="인증하기"></WhiteButton>
+              <WhiteButton v-if="this.emailCheck === 1" class="ms-5" button-value="인증완료" @click="certificationEmail"></WhiteButton>
+              <WhiteButton class="ms-5" button-value="인증하기" @click="certificationEmail"></WhiteButton>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
@@ -79,6 +85,24 @@
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 end-0"></div>
     </div>
   </div>
+
+<!--  모달 -->
+  <div class="modal-wrap" v-show="modalCheck">
+    <div class="modal-container">
+      <div class="modal-content">
+        <div>
+          <p class="modal-title">이메일로 전송된 인증번호를 입력해주세요.</p>
+          <div class="modal-box">
+            <input class="input-number" v-model="certificationNumber" type="text" placeholder="인증번호를 입력해주세요."/>
+          </div>
+        </div>
+      </div>
+      <div class="modal-btn">
+        <button @click="modalOpen">취소</button>
+        <button @click="checkEmail()">인증</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -91,6 +115,7 @@ export default {
   },
   data(){
     return{
+      modalCheck: false,
       imgFile: "",
       whiteButtonString : '중복확인',
       userInfo:{
@@ -102,19 +127,83 @@ export default {
         userAffiliationDetail : '',
         userProfileImg : '',
       },
+      certificationNumber : '',
+      key : '',
+      emailCheck : 0,
+      idCheck : 0,
+      nicknameCheck : 0,
+
     }
   },
-  created(){},
+  created(){
+
+  },
   methods: {
+    modalOpen() {
+      this.modalCheck = !this.modalCheck
+    },
     handleImageError(e) {
       e.target.src = require("../../assets/img/DefaultProfile.png");
     },
     register() {
-      this.$httpUtil('/account/register','POST',this.userInfo,(data) => {
-        if(data.data.success){
-          this.$router.push('/login');
+      if (this.emailCheck === 1 && this.idCheck === 1 && this.nicknameCheck ===1) {
+        this.$httpUtil('/account/register','POST',this.userInfo,(data) => {
+          if(data.data.success){
+            this.$successAlert("가입되었습니다.");
+            this.$router.push('/login');
+          }
+        });
+      } else if (this.idCheck === 0) {
+        this.$errorAlert("아이디 중복 확인을 해주세요.");
+      } else if (this.nicknameCheck === 0) {
+        this.$errorAlert("닉네임 중복 확인을 해주세요.");
+      } else if (this.emailCheck === 0) {
+        this.$errorAlert("이메일 인증을 해주세요.");
+      }
+    },
+    checkId() {
+      this.$httpUtil('/account/check/userId', 'POST', this.userInfo, (data) => {
+        console.log(data);
+        if (data === 1) {
+          this.idCheck = 1;
+          this.$successAlert("사용 가능한 아이디 입니다.");
+        } else {
+          this.$errorAlert("이미 사용 중인 아이디 입니다.");
         }
-      });
+      })
+    },
+    checkNickname() {
+      this.$httpUtil('/account/check/userNickname', 'POST', this.userInfo, (data) => {
+        console.log(data);
+        if (data === 1) {
+          this.nicknameCheck = 1;
+          this.$successAlert("사용 가능한 닉네임 입니다.");
+        } else {
+          this.$errorAlert("이미 사용 중인 닉네임 입니다.");
+        }
+      })
+    },
+    certificationEmail() {
+      this.$httpUtil('/account/send/email', 'POST', this.userInfo, (data) => {
+        this.key = data.key;
+        // console.log(data.key);
+        if (data.exist) {
+          this.$errorAlert("이미 사용 중인 이메일 입니다.")
+        } else {
+          this.modalCheck = !this.modalCheck;
+          this.$successAlert("이메일이 전송되었습니다.");
+        }
+      })
+    },
+    checkEmail() {
+      if (this.certificationNumber === this.key) {
+        this.emailCheck = 1;
+        this.modalCheck = !this.modalCheck
+        this.$successAlert("인증되었습니다.");
+      } else {
+        this.modalCheck = !this.modalCheck
+        this.$errorAlert("인증번호를 다시 입력해주세요.");
+      }
     }
   }
 }
