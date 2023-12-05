@@ -25,10 +25,10 @@
         <td class="id">{{user.userId}}</td>
         <td class="affiliation">{{user.userAffiliation}}({{user.userAffiliationDetail}})</td>
         <td>
-          <select class="status">
-            <option selected>일반 회원</option>
-            <option>블랙 회원</option>
-            <option>회원 탈퇴</option>
+          <select v-model="user.userStatus" class="status">
+            <option value="ACTIVE">일반 회원</option>
+            <option value="BLOCK">블랙 회원</option>
+            <option value="DELETED">회원 탈퇴</option>
           </select>
           <button class="change-btn" type="button">변경</button>
         </td>
