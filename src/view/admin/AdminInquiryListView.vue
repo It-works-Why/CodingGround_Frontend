@@ -65,7 +65,6 @@ export default {
   methods: {
     getInquiryList() {
       this.$httpUtil('/admin/user/inquiry/list/'+ this.$route.params.pageNum +'?searchInput='+this.searchInput, 'GET', null, (data) => {
-        console.log(data)
         this.inquiryList = data.contactListDtoList;
         this.totalPage = Math.ceil(data.totalPage / 10);
         this.startBlock = parseInt(parseInt(this.$route.params.pageNum / 10) * 10 + 1);

@@ -80,3 +80,26 @@
     font-size: 14px;
     font-weight: 550;
 }
+
+/* 페이지네이션 속성 */
+.pagination {
+    padding-top: 10px;
+}
+
+.page-link {
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #3D3D3D;
+    border: none;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: black;
+    font-weight: 600;
+    background-color: white;
+}
+
+.pagination a {
+    text-decoration: none;
+}
