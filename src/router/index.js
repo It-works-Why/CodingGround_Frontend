@@ -40,6 +40,7 @@ import AdminQuestionEditView from "@/view/admin/AdminQuestionEditView.vue";
 import BattleIngameView from "@/view/battle/BattleIngameView.vue";
 import BattleIngameReconnectView from "@/view/battle/BattleIngameReconnectView.vue";
 import BattleView from "@/view/battle/BattleView.vue";
+import AdminCommunityDetailView from "@/view/admin/AdminCommunityDetailView.vue";
 
 
 const routes = [
@@ -241,6 +242,14 @@ const routes = [
       {
         path: '/admin/community/list/:pageNum',
         component: AdminCommunityListView
+      },
+      {
+        path: '/admin/community/list/:pageNum/:keyword/:type',
+        component: AdminCommunityListView
+      },
+      {
+        path: '/admin/community/detail/:id',
+        component: AdminCommunityDetailView
       },
     ]
   }
