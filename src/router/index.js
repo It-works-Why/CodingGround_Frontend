@@ -233,7 +233,7 @@ const routes = [
       },
       {
         path: '/admin/user/inquiry/list',
-        redirect: '/admin/user/inquiry/list/0'
+        redirect: '/admin/user/inquiry/list/1'
       },
       {
         path: '/admin/user/inquiry/detail/:id',
