@@ -132,7 +132,6 @@ export default {
       emailCheck : 0,
       idCheck : 0,
       nicknameCheck : 0,
-
     }
   },
   created(){
@@ -201,7 +200,6 @@ export default {
         this.modalCheck = !this.modalCheck
         this.$successAlert("인증되었습니다.");
       } else {
-        this.modalCheck = !this.modalCheck
         this.$errorAlert("인증번호를 다시 입력해주세요.");
       }
     }
