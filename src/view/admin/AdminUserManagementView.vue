@@ -45,26 +45,7 @@ export default {
   data() {
     return {
       searchInput: "",
-      userList: [
-        {
-          num: '1',
-          profileImg: '',
-          nickname: '치치는치치야',
-          email: 'chichiischichi@naver.com',
-          id: 'chichi',
-          affiliation: '학생(MegaZone Cloud)',
-        },
-        {
-          num: '2',
-          profileImg: '',
-          nickname: '치치는치치야',
-          email: 'chichiischichi@naver.com',
-          id: 'chichi',
-          affiliation: '학생(MegaZone Cloud)',
-        },
-
-
-      ],
+      userList: [],
 
     }
   }

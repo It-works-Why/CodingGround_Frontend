@@ -228,8 +228,12 @@ const routes = [
         component: AdminUserManagementView
       },
       {
-        path: '/admin/user/inquiry/list',
+        path: '/admin/user/inquiry/list/:pageNum',
         component: AdminInquiryListView
+      },
+      {
+        path: '/admin/user/inquiry/list',
+        redirect: '/admin/user/inquiry/list/0'
       },
       {
         path: '/admin/user/inquiry/detail/:id',
