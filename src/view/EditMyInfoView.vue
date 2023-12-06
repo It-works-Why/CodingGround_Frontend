@@ -19,48 +19,41 @@
             <div class="my-3 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">아이디</span>
               <span class="ps-5">
-                <input disabled :value="myId" style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input disabled v-model="userInfo.userId" style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
             </div>
             <div class="my-3 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">이메일</span>
               <span class="ps-5">
-                <input disabled :value="myEmail" style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input disabled v-model="userInfo.userEmail" style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
-            </div>
-            <div class="w-100">
-              <span class="title d-inline-block"></span>
-              <span class="ps-5 text-white">아이디는 영문,숫자를 필수로 포함하여 20자 이하로 작성해주세요.</span>
             </div>
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">비밀번호</span>
               <span class="ps-5">
-                <input placeholder="비밀번호를 입력해주세요." :value="myPassword" style="width: 70%; color:#C0C0C0" class="fs-4 input_box" type="password" />
+                <span class="text-white">* 비밀번호는 변경을 원하시는 경우 [비밀번호 변경] 버튼을 눌러주세요.</span>
+                <WhiteButton class="ms-5" button-value="비밀번호 변경" @click="modalOpen"></WhiteButton>
               </span>
-            </div>
-            <div class="w-100">
-              <span class="title d-inline-block"></span>
-              <span class="ps-5 text-white">비밀번호는 알파벳 대/소문자, 숫자, 특수문자(~ ! @ # $ % ^ & *)를 포함하여 8자리 이상으로 작성해주세요.</span>
             </div>
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">닉네임</span>
               <span class="ps-5">
-                <input placeholder="닉네임을 입력해주세요." :value="myNickname" style="width: 70%; color:#C0C0C0" class="fs-4 input_box" type="text" />
+                <input v-model="userInfo.userNickname" placeholder="닉네임을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
-              <span class="ps-5 text-white">닉네임은 한문, 영문, 숫자 상관없이 8자 이하로 작성해주세요. 닉네임은 마이페이지에서 변경 가능 합니다.</span>
+              <span class="ps-5 text-white">닉네임은 한문, 영문, 숫자 상관없이 8자 이하로 작성해주세요.</span>
             </div>
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">소속</span>
               <span class="ps-5">
-                <select disabled class="options rounded-3 select_box text-center text-white fs-5 p-1 input_box">
-                  <option class="options">학생</option>
-                  <option class="options">괴물</option>
-                  <option class="options">사람</option>
+                <select v-model="userInfo.userAffiliation" class="options rounded-3 select_box text-center text-white fs-5 p-1 input_box">
+                  <option selected value="학생" class="options">학생</option>
+                  <option value="직장인" class="options">직장인</option>
+                  <option value="무직" class="options">무직</option>
                 </select>
-                <input style="color:#C0C0C0" :value="myAffiliation" class="text-center w-50 fs-5 options ms-2 p-1 rounded-3" type="text" placeholder="소속을 입력해주세요.">
+                <input v-model="userInfo.userAffiliationDetail" class="text-center w-50 fs-5 text-white options ms-2 p-1 rounded-3" type="text" placeholder="소속을 입력해주세요.">
               </span>
             </div>
           </div>
@@ -69,43 +62,127 @@
           회원 탈퇴를 원하실 경우 <p @click="deleteUser" style="cursor: pointer; text-decoration-line: underline" class="fw-bolder d-inline-block">여기</p>를 클릭해주세요.
         </div>
         <div class="px-5">
-          <input type="button" value="수정하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
+          <input type="button" value="수정하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white" @click="editMyInfo()">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 end-0"></div>
     </div>
   </div>
+
+  <!--  모달 -->
+  <div class="modal-wrap" v-show="modalCheck">
+    <div class="modal-container">
+      <div class="modal-content">
+        <div>
+          <p class="modal-title">비밀번호를 변경해주세요.</p>
+          <p class="modal-p">비밀번호는 알파벳 대/소문자, 숫자, 특수문자(~ ! @ # $ % ^ & *)를 포함하여 8자리 이상으로 작성해주세요.</p>
+          <div class="modal-box">
+            <input class="input-number" v-model="updatePassword.userPassword" type="password" placeholder="비밀번호를 입력해주세요."/>
+          </div>
+        </div>
+      </div>
+      <div class="modal-btn">
+        <button @click="modalOpen">취소</button>
+        <button @click="editPassword()">변경</button>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 
+import WhiteButton from "@/components/WhiteButton.vue";
 
 export default {
   components: {
-
+    WhiteButton
   },
   data(){
-    return{
+    return {
+      modalCheck: false,
       imgFile: "",
-      myId : "qwer5412",
-      myPassword : "qqwweerr1231",
-      myNickname : "lomadia",
-      myAffiliation : "메가존클라우드",
-      myEmail : "hhun6840@naver.com",
-      whiteButtonString : '중복확인',
+      userInfo: [],
+      updatePassword: {
+        userEmail: '',
+        userPassword: ''
+      },
+      updateMyInfoNoNickname: {
+        userEmail: '',
+        userAffiliation: '',
+        userAffiliationDetail: ''
+      },
+      updateMyInfo: {
+        userEmail: '',
+        userNickname: '',
+        userAffiliation: '',
+        userAffiliationDetail: ''
+      },
+      nicknameCheck : 0,
+      nickname: '',
     }
   },
-  created(){},
+  mounted(){
+    this.load();
+  },
   methods: {
+    load() {
+      this.$httpUtil('/account/get/userInfoDetail', 'GET', null, (data) => {
+        console.log(data);
+        this.userInfo = data;
+        this.nickname = data.userNickname;
+      })
+    },
+    modalOpen() {
+      this.modalCheck = !this.modalCheck
+    },
     deleteUser() {
-      let isDelete = confirm("ㄹㅇ 삭제할꺼임?");
+      let isDelete = confirm("탈퇴하시겠습니까?");
       if(isDelete){
-        alert("삭제!!");
+        this.$successAlert("탈퇴 처리 되었습니다.")
       }
     },
     handleImageError(e) {
       e.target.src = require("../assets/img/DefaultProfile.png");
     },
+    editPassword() {
+      this.updatePassword.userEmail = this.userInfo.userEmail;
+      this.$httpUtil('/account/edit/password', 'PATCH', this.updatePassword, (data) => {
+        console.log(data);
+        this.userInfo = data;
+        this.$successAlert("비밀번호가 변경되었습니다.");
+        this.modalCheck = !this.modalCheck;
+        this.load();
+      })
+    },
+    editMyInfo() {
+      if (this.nickname === this.userInfo.userNickname) {
+        this.updateMyInfoNoNickname.userEmail = this.userInfo.userEmail;
+        this.updateMyInfoNoNickname.userAffiliation = this.userInfo.userAffiliation;
+        this.updateMyInfoNoNickname.userAffiliationDetail = this.userInfo.userAffiliationDetail;
+
+        this.$httpUtil('/account/edit/myInfo', 'PATCH', this.updateMyInfoNoNickname, (data) => {
+          console.log(data);
+          this.$successAlert("수정되었습니다.");
+          this.$router.push('/mypage');
+        })
+
+      } else {
+        this.updateMyInfo.userEmail = this.userInfo.userEmail;
+        this.updateMyInfo.userNickname = this.userInfo.userNickname;
+        this.updateMyInfo.userAffiliation = this.userInfo.userAffiliation;
+        this.updateMyInfo.userAffiliationDetail = this.userInfo.userAffiliationDetail;
+
+        this.$httpUtil('/account/edit/myInfo', 'PATCH', this.updateMyInfo, (data) => {
+          console.log(data);
+          if (data.success) {
+            this.$successAlert("수정되었습니다.");
+            this.$router.push('/mypage');
+          } else if (data.fail) {
+            this.$errorAlert("이미 존재하는 닉네임 입니다.");
+          }
+        })
+      }
+    }
   }
 }
 </script>

@@ -162,7 +162,7 @@ export default {
     },
     checkId() {
       this.$httpUtil('/account/check/userId', 'POST', this.userInfo, (data) => {
-        console.log(data);
+        // console.log(data);
         if (data === 1) {
           this.idCheck = 1;
           this.$successAlert("사용 가능한 아이디 입니다.");
@@ -173,7 +173,7 @@ export default {
     },
     checkNickname() {
       this.$httpUtil('/account/check/userNickname', 'POST', this.userInfo, (data) => {
-        console.log(data);
+        // console.log(data);
         if (data === 1) {
           this.nicknameCheck = 1;
           this.$successAlert("사용 가능한 닉네임 입니다.");
