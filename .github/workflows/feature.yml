@@ -3,7 +3,7 @@ name: Frontend build and push to S3
 on:
   push:
     branches:
-      - feature
+      - deploy
 
 env:
   s3_bucket: bsdev16-codingground-frontend
