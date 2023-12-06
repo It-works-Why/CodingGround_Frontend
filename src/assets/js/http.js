@@ -7,7 +7,7 @@ import { errorMessageToast } from "@/assets/js/alert";
 // 기존에 설정한 axiosInstance에 토큰 추가하기
 const axiosInstance = axios.create({
     timeout: 10000, // 타임아웃 설정 (10초)
-    baseURL: "/api",
+    baseURL: "http://ace3c9fc9de9248f9adafd7fbf98953f-369489494.ca-central-1.elb.amazonaws.com:8090/api/",
     headers: {
         "Content-Type": "application/json",
         'X-RapidAPI-Key': '92645c8b10msh7f8b72338057770p1deaecjsn641c7097464c',
