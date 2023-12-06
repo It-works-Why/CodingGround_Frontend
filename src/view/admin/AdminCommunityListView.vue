@@ -83,6 +83,7 @@ export default {
         "내용",
       ],
       searchInput: "",
+      communitSelected: false,
 
 
     }
@@ -97,6 +98,10 @@ export default {
         this.$httpUtil('/admin/community/list?page=' + this.$route.params.pageNum,
             'GET', null, (communityList) => {
           console.log(communityList.content);
+              if (!this.communitSelected) {
+                this.search = "제목";
+                this.communitSelected = true;
+              }
 
           this.communityList = communityList.content;
           this.totalPage = communityList.totalPages;
