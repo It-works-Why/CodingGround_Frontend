@@ -142,6 +142,10 @@ const routes = [
       },
       {
         path: '/ranking',
+        redirect: '/ranking/list/0'
+      },
+      {
+        path: '/ranking/list/:pageNum',
         component: RankingListView
       },
       {
