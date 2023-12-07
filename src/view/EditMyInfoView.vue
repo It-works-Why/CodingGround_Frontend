@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-3 mt-5 background_box m-auto">
-    <div class="w-100 h-100 position-relative">
+    <form @submit.prevent="editMyInfo" enctype="multipart/form-data" class="w-100 h-100 position-relative">
       <div class="m-1 box_circle d-inline-block position-absolute top-0 start-0"></div>
       <div class="m-1 box_circle d-inline-block position-absolute top-0 end-0"></div>
       <div class="content text-nowrap">
@@ -9,10 +9,11 @@
         </div>
         <div class="px-5 d-flex input_box">
           <div class="w-25">
-            <div class="position-relative img_form">
-              <img class="img_view" :src="imgFile" @error="handleImageError">
-              <img class="camera bottom-0 end-0 position-absolute" src="../assets/img/Camera.png">
-            </div>
+            <label for="input-file" class="position-relative img_form">
+              <img class="img_view" :src="uploadImg" @error="handleImageError">
+              <img class="camera bottom-0 end-0 position-absolute" src="@/assets/img/Camera.png">
+            </label>
+            <input id="input-file" accept="image/*" type="file" ref="inputImg" @change="changeImg" multiple>
             <p class="text-white fw-bold fs-4">프로필 사진</p>
           </div>
           <div class="w-100 input_wrapper">
@@ -62,12 +63,12 @@
           회원 탈퇴를 원하실 경우 <p @click="deleteUser" style="cursor: pointer; text-decoration-line: underline" class="fw-bolder d-inline-block">여기</p>를 클릭해주세요.
         </div>
         <div class="px-5">
-          <input type="button" value="수정하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white" @click="editMyInfo()">
+          <input type="submit" value="수정하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white" @click="editMyInfo()">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 end-0"></div>
-    </div>
+    </form>
   </div>
 
   <!--  모달 -->
@@ -92,6 +93,7 @@
 <script>
 
 import WhiteButton from "@/components/WhiteButton.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -100,7 +102,8 @@ export default {
   data(){
     return {
       modalCheck: false,
-      imgFile: "",
+      imgFile: '',
+      uploadImg: '',
       userInfo: [],
       updatePassword: {
         userEmail: '',
@@ -130,6 +133,7 @@ export default {
         console.log(data);
         this.userInfo = data;
         this.nickname = data.userNickname;
+        this.uploadImg = data.userProfileImg;
       })
     },
     modalOpen() {
@@ -155,17 +159,19 @@ export default {
       })
     },
     editMyInfo() {
+      const formData = new FormData();
+      formData.append("profileImg", this.imgFile);
+      formData.append("userEmail", this.userInfo.userEmail);
+
       if (this.nickname === this.userInfo.userNickname) {
         this.updateMyInfoNoNickname.userEmail = this.userInfo.userEmail;
         this.updateMyInfoNoNickname.userAffiliation = this.userInfo.userAffiliation;
         this.updateMyInfoNoNickname.userAffiliationDetail = this.userInfo.userAffiliationDetail;
 
-        this.$httpUtil('/account/edit/myInfo', 'PATCH', this.updateMyInfoNoNickname, (data) => {
-          console.log(data);
+        this.$httpUtil('/account/edit/myInfo2', 'PATCH', this.updateMyInfoNoNickname, () => {
           this.$successAlert("수정되었습니다.");
           this.$router.push('/mypage');
         })
-
       } else {
         this.updateMyInfo.userEmail = this.userInfo.userEmail;
         this.updateMyInfo.userNickname = this.userInfo.userNickname;
@@ -173,15 +179,31 @@ export default {
         this.updateMyInfo.userAffiliationDetail = this.userInfo.userAffiliationDetail;
 
         this.$httpUtil('/account/edit/myInfo', 'PATCH', this.updateMyInfo, (data) => {
-          console.log(data);
-          if (data.success) {
+          if (data.fail) {
+            this.$errorAlert("이미 존재하는 닉네임 입니다.");
+            this.$router.push('/mypage/info/edit');
+          } else {
             this.$successAlert("수정되었습니다.");
             this.$router.push('/mypage');
-          } else if (data.fail) {
-            this.$errorAlert("이미 존재하는 닉네임 입니다.");
           }
         })
       }
+
+      axios.post('/api/account/upload/profile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(() => {}).catch(() => {})
+    },
+    changeImg(event) {
+      this.imgFile = this.$refs.inputImg.files[0];
+
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.uploadImg = e.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
 }
