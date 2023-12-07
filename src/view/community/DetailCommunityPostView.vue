@@ -8,7 +8,7 @@
       <div class="title">
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
           <div class="user_info_container">
-            <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35" @error="handleImageError">
+            <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35" height="35"  @error="handleImageError">
             <div class="user_info_box">
               <div>
                 {{getData.userNickname}}

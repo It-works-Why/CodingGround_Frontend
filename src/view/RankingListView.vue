@@ -21,7 +21,7 @@
     <table :key="i" :value="userRanking" v-for="(userRanking, i) in userRankingList" class="mt-1 text-white list_box m-auto">
       <tr class="cursor">
         <td class="ranking">{{userRanking.rankOrder}}</td>
-        <td class="profileimg px-2"><img style="border-radius: 50px;" :src="userRanking.userProfileImg" width="35" @error="handleImageError"></td>
+        <td class="profileimg px-2"><img style="border-radius: 50px;" :src="userRanking.userProfileImg" width="35" height="35" @error="handleImageError"></td>
         <td class="nickname">{{userRanking.userNickname}}</td>
         <td class="tier"><img :src="require(`@/assets/img/tier/${userRanking.rankNum}.png`)" width="35"></td>
         <td class="rankpoint">{{userRanking.rankScore}} RP</td>
