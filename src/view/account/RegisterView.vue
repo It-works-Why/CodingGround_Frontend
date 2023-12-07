@@ -136,7 +136,7 @@ export default {
       this.modalCheck = !this.modalCheck
     },
     handleImageError(e) {
-      e.target.src = require("../../assets/img/DefaultProfile.png");
+      e.target.src = require("@/assets/img/DefaultProfile.png");
     },
     register() {
       const formData = new FormData();

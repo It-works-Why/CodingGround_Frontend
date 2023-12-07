@@ -7,17 +7,14 @@
 
       <div class="title">
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
-          <div class="user_info_container">
-            <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35">
             <div class="user_info_box">
               <div>
                 {{getData.userNickname}}
               </div>
               <div>
-                {{getData.postTime}}
+                {{getData.noticeTime}}
               </div>
             </div>
-          </div>
         </div>
         <input :value="getData.noticeTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
       </div>
