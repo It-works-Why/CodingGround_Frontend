@@ -72,16 +72,10 @@ export default {
     load() {
       this.$httpUtil('/admin/notice/list?page='+ this.$route.params.pageNum, 'GET', null, (noticeList) => {
         console.log(noticeList.content);
-        // console.log("totalPages: " + noticeList.totalPages);
-        // console.log("totalElements: " + noticeList.totalElements);
-        // console.log("size: " + noticeList.size);
-        // console.log("number: " + noticeList.number);
-        // console.log("numberOfElements: " + noticeList.numberOfElements);
         this.noticeList = noticeList.content;
         this.totalPage = noticeList.totalPages;
 
         this.startBlock = parseInt(parseInt(noticeList.number / 10) * 10 + 1);
-        // console.log("startBlock : " + this.startBlock);
 
         const endBlock = this.startBlock + 9;
         if (endBlock > this.totalPage) {
@@ -89,7 +83,6 @@ export default {
         } else {
           this.endBlock = endBlock;
         }
-        // console.log("endBlock : " + this.endBlock);
       })
     },
     prevBtn() {
@@ -110,7 +103,6 @@ export default {
     },
   },
   watch: {
-    // watch for changes in route parameters
     '$route.params.pageNum': 'load'
   },
   beforeRouteUpdate(to, from, next) {

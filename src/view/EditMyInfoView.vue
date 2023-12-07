@@ -170,7 +170,7 @@ export default {
 
         this.$httpUtil('/account/edit/myInfo2', 'PATCH', this.updateMyInfoNoNickname, () => {
           this.$successAlert("수정되었습니다.");
-          this.$router.push('/mypage');
+          this.$router.push('/home');
         })
       } else {
         this.updateMyInfo.userEmail = this.userInfo.userEmail;
@@ -182,9 +182,9 @@ export default {
           if (data.fail) {
             this.$errorAlert("이미 존재하는 닉네임 입니다.");
             this.$router.push('/mypage/info/edit');
-          } else {
+          } else if (data.success) {
             this.$successAlert("수정되었습니다.");
-            this.$router.push('/mypage');
+            this.$router.push('/home');
           }
         })
       }
@@ -194,6 +194,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }).then(() => {}).catch(() => {})
+
     },
     changeImg(event) {
       this.imgFile = this.$refs.inputImg.files[0];
@@ -205,7 +206,7 @@ export default {
       }
       reader.readAsDataURL(event.target.files[0]);
     }
-  }
+  },
 }
 </script>
 
