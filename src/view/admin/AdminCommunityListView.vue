@@ -83,6 +83,7 @@ export default {
         "내용",
       ],
       searchInput: "",
+      communitSelected: false,
 
 
     }
@@ -97,11 +98,11 @@ export default {
         this.$httpUtil('/admin/community/list?page=' + this.$route.params.pageNum,
             'GET', null, (communityList) => {
           console.log(communityList.content);
-          // console.log("totalPages: " + noticeList.totalPages);
-          // console.log("totalElements: " + noticeList.totalElements);
-          // console.log("size: " + noticeList.size);
-          // console.log("number: " + noticeList.number);
-          // console.log("numberOfElements: " + noticeList.numberOfElements);
+              if (!this.communitSelected) {
+                this.search = "제목";
+                this.communitSelected = true;
+              }
+
           this.communityList = communityList.content;
           this.totalPage = communityList.totalPages;
 
