@@ -15,7 +15,7 @@
                   {{getData.userNickname}}
                 </div>
                 <div>
-                  {{getData.postTime}}
+                  {{dayjs(getData.postTime).format('YYYY-MM-DD HH:mm')}}
                 </div>
               </div>
             </div>
@@ -38,8 +38,14 @@
 <script>
 
 import WhiteButton from "@/components/WhiteButton.vue";
+import dayjs from "dayjs";
 
 export default {
+  computed: {
+    dayjs() {
+      return dayjs
+    }
+  },
   components: {WhiteButton},
   data() {
     return {

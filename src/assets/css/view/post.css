@@ -48,5 +48,6 @@
 .user_info_container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin-left: 5px;
+    /*justify-content: center;*/
 }
