@@ -109,6 +109,7 @@
 <script>
 
 import WhiteButton from "@/components/WhiteButton.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -150,18 +151,22 @@ export default {
       formData.append("profileImg", this.imgFile);
       formData.append("userEmail", this.userInfo.userEmail);
 
+      if (this.imgFile !== null || this.imgFile !== '' || this.imgFile !== ' ') {
+        axios.post('/api/account/upload/profile', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(() => {
+          this.$successAlert("프로필 업로드에 성공했습니다.");
+        }) .catch(() => {
+          this.$errorAlert("프로필 업로드에 실패했습니다.");
+        })
+
       if (this.emailCheck === 1 && this.idCheck === 1 && this.nicknameCheck ===1) {
-        this.$httpUtil('/account/register','POST',this.userInfo,() => {});
-        if (this.imgFile !== null || this.imgFile !== '' || this.imgFile !== ' ') {
-          this.$httpUtil('/account/upload/profile', 'POST', formData, () => {
-            console.log("여기 들어가는지?")
-            this.$successAlert("가입되었습니다.");
-            this.$router.push('/login');
-          })
-        } else {
+        this.$httpUtil('/account/register','POST',this.userInfo,() => {
           this.$successAlert("가입되었습니다.");
           this.$router.push('/login');
-        }
+      })
       } else if (this.idCheck === 0) {
         this.$errorAlert("아이디 중복 확인을 해주세요.");
       } else if (this.nicknameCheck === 0) {
@@ -169,7 +174,7 @@ export default {
       } else if (this.emailCheck === 0) {
         this.$errorAlert("이메일 인증을 해주세요.");
       }
-    },
+    }},
     checkId() {
       this.$httpUtil('/account/check/userId', 'POST', this.userInfo, (data) => {
         // console.log(data);

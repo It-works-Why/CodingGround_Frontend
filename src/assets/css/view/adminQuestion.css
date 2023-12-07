@@ -58,6 +58,10 @@
 
 /* 문제 추가 페이지 */
 
+textarea {
+    resize: none;
+}
+
 .background_box{
     background: #3D3D3D;
     height: auto;
@@ -191,6 +195,13 @@ h1 a {
 
 .bottom-register {
     justify-content: flex-end;
+}
+
+.no-select {
+    -o-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 /* 페이지네이션 속성 */
