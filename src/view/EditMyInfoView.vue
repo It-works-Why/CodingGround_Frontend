@@ -179,12 +179,12 @@ export default {
         this.updateMyInfo.userAffiliationDetail = this.userInfo.userAffiliationDetail;
 
         this.$httpUtil('/account/edit/myInfo', 'PATCH', this.updateMyInfo, (data) => {
-          if (data.fail) {
-            this.$errorAlert("이미 존재하는 닉네임 입니다.");
-            this.$router.push('/mypage/info/edit');
-          } else if (data.success) {
+          if (data.result === 0) {
             this.$successAlert("수정되었습니다.");
             this.$router.push('/home');
+          } else if (data.result === 1) {
+            this.$errorAlert("이미 존재하는 닉네임 입니다.");
+            this.$router.push('/mypage/info/edit');
           }
         })
       }
