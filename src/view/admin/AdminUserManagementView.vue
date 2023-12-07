@@ -19,7 +19,7 @@
     <table :key="i" :value="user" v-for="(user, i) in userList" class="mt-1 text-white list_box m-auto">
       <tr class="cursor">
         <td class="num">{{user.userNum}}</td>
-        <td class="profileimg px-2"><img :src="require(`@/assets/img/DefaultProfile.png`)" width="35"></td>
+        <td class="profileimg px-2"><img style="border-radius: 50px;" :src="user.userProfileImg" width="35"></td>
         <td class="nickname">{{user.userNickname}}</td>
         <td class="email">{{user.userEmail}}</td>
         <td class="id">{{user.userId}}</td>
@@ -127,10 +127,9 @@ export default {
       if (confirm("회원 상태를 정말로 변경하시겠습니까?")) {
         this.editUserStatusData.userNum = this.userList[i].userNum;
         this.editUserStatusData.userStatus = this.userStatus[i];
-        console.log(this.editUserStatusData);
         this.$httpUtil('/admin/user/changestatus', 'PATCH', this.editUserStatusData, (data) => {
           this.$router.go(0);
-          this.$successAlert(data.data.message);
+          this.$successAlert(data.data.message)
         })
       } else {
         this.$warningAlert("취소되었습니다.")
