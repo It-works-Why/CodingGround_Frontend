@@ -60,8 +60,8 @@ h5 {
 }
 
 .img_form_rank {
-    width: auto;
-    height: auto;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
 }
 
