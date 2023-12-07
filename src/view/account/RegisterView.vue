@@ -11,7 +11,7 @@
           <div class="w-25">
               <label for="input-file" class="position-relative img_form">
                 <img class="img_view" :src="uploadImg" @error="handleImageError">
-                <img class="camera bottom-0 end-0 position-absolute" src="../../assets/img/Camera.png">
+                <img class="camera bottom-0 end-0 position-absolute" src="@/assets/img/Camera.png">
               </label>
               <input id="input-file" accept="image/*" type="file" ref="inputImg" @change="changeImg" multiple>
             <p class="text-white fw-bold fs-4">프로필 사진</p>
@@ -20,11 +20,8 @@
             <div class="my-3 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">아이디</span>
               <span class="ps-5">
-                <input v-if="this.idCheck === 1" v-model="userInfo.userId" style="width: 70%" class="text-white fs-4 input_box" type="text" disabled/>
-                <input v-if="this.idCheck === 0" v-model="userInfo.userId" placeholder="아이디를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-model="userInfo.userId" placeholder="아이디를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
-              <WhiteButton v-if="this.idCheck === 1" class="ms-5" button-value="사용가능"></WhiteButton>
-              <WhiteButton v-if="this.idCheck === 0" class="ms-5" button-value="중복확인" @click="checkId"></WhiteButton>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
@@ -43,11 +40,8 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">닉네임</span>
               <span class="ps-5">
-                <input v-if="this.nicknameCheck === 1" v-model="userInfo.userNickname" style="width: 70%" class="text-white fs-4 input_box" type="text" disabled/>
-                <input v-if="this.nicknameCheck === 0" v-model="userInfo.userNickname" placeholder="닉네임을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-model="userInfo.userNickname" placeholder="닉네임을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
-              <WhiteButton v-if="this.nicknameCheck === 1" class="ms-5" button-value="사용가능"></WhiteButton>
-              <WhiteButton v-if="this.nicknameCheck === 0" class="ms-5" button-value="중복확인" @click="checkNickname"></WhiteButton>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
@@ -132,8 +126,6 @@ export default {
       certificationNumber : '',
       key : '',
       emailCheck : 0,
-      idCheck : 0,
-      nicknameCheck : 0,
     }
   },
   created(){
@@ -151,51 +143,22 @@ export default {
       formData.append("profileImg", this.imgFile);
       formData.append("userEmail", this.userInfo.userEmail);
 
-      if (this.emailCheck === 1 && this.idCheck === 1 && this.nicknameCheck ===1) {
+      if (this.emailCheck === 1) {
         this.$httpUtil('/account/register','POST',this.userInfo,() => {})
-        if (this.imgFile !== null || this.imgFile !== '' || this.imgFile !== ' ') {
-          axios.post('/api/account/upload/profile', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          }).then(() => {
-            this.$successAlert("프로필 업로드에 성공했습니다.");
-          }) .catch(() => {
-            this.$errorAlert("프로필 업로드에 실패했습니다.");
-          })
+        axios.post('/api/account/upload/profile', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(() => {
           this.$successAlert("가입되었습니다.");
           this.$router.push('/login');
-
-      } else if (this.idCheck === 0) {
-        this.$errorAlert("아이디 중복 확인을 해주세요.");
-      } else if (this.nicknameCheck === 0) {
-        this.$errorAlert("닉네임 중복 확인을 해주세요.");
+        }).catch(() => {
+          this.$successAlert("가입되었습니다.");
+          this.$router.push('/login');
+        })
       } else if (this.emailCheck === 0) {
         this.$errorAlert("이메일 인증을 해주세요.");
-      }
-    }},
-    checkId() {
-      this.$httpUtil('/account/check/userId', 'POST', this.userInfo, (data) => {
-        // console.log(data);
-        if (data === 1) {
-          this.idCheck = 1;
-          this.$successAlert("사용 가능한 아이디 입니다.");
-        } else {
-          this.$errorAlert("이미 사용 중인 아이디 입니다.");
-        }
-      })
-    },
-    checkNickname() {
-      this.$httpUtil('/account/check/userNickname', 'POST', this.userInfo, (data) => {
-        // console.log(data);
-        if (data === 1) {
-          this.nicknameCheck = 1;
-          this.$successAlert("사용 가능한 닉네임 입니다.");
-        } else {
-          this.$errorAlert("이미 사용 중인 닉네임 입니다.");
-        }
-      })
-    },
+      }},
     certificationEmail() {
       this.$httpUtil('/account/send/email', 'POST', this.userInfo, (data) => {
         this.key = data.key;
