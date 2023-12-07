@@ -19,7 +19,7 @@
       </tr>
     </table>
     <table :key="i" :value="userRanking" v-for="(userRanking, i) in userRankingList" class="mt-1 text-white list_box m-auto">
-      <tr>
+      <tr class="cursor">
         <td class="ranking">{{userRanking.rankOrder}}</td>
         <td class="profileimg px-2"><img :src="userRanking.userProfileImg" width="35"></td>
         <td class="nickname">{{userRanking.userNickname}}</td>

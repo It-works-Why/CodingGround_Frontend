@@ -40,7 +40,7 @@
           </tr>
         </table>
         <table :key="i" :value="userInquiry" v-for="(userInquiry, i) in userInquiryList" class="mt-1 text-white list_box m-auto" >
-          <tr @click="contactdetailPage(userInquiry.contactNum)">
+          <tr class="cursor" @click="contactdetailPage(userInquiry.contactNum)">
             <td class="ranking">{{userInquiry.number}}</td>
             <td class="title">{{userInquiry.title}}</td>
             <td class="date">{{userInquiry.date}}</td>

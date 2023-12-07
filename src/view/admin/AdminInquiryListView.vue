@@ -15,7 +15,7 @@
     </table>
     <table :key="i" :value="inquiry" v-for="(inquiry, i) in inquiryList" class="mt-1 text-white list_box m-auto"
             @click="this.$router.push('/admin/user/inquiry/detail/' + inquiry.contactNum)">
-      <tr>
+      <tr class="cursor">
         <td class="contactnum">{{inquiry.contactNum}}</td>
         <td class="title">{{inquiry.contactTitle}}</td>
         <td class="date">{{inquiry.contactTime}}</td>

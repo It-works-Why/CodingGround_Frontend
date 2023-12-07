@@ -16,7 +16,7 @@
     </table>
     <table :key="i" :value="question" v-for="(question, i) in questionList" class="mt-1 text-white list_box m-auto"
            @click="this.$router.push('/admin/question/detail/' + question.questionNum)">
-      <tr>
+      <tr class="cursor">
         <td class="num">{{question.questionNum}}</td>
         <td class="title">{{question.questionTitle}}</td>
         <td class="time">{{question.questionLimitTime}}분</td>

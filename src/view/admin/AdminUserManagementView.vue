@@ -17,7 +17,7 @@
       </tr>
     </table>
     <table :key="i" :value="user" v-for="(user, i) in userList" class="mt-1 text-white list_box m-auto">
-      <tr>
+      <tr class="cursor">
         <td class="num">{{user.userNum}}</td>
         <td class="profileimg px-2"><img :src="require(`@/assets/img/DefaultProfile.png`)" width="35"></td>
         <td class="nickname">{{user.userNickname}}</td>

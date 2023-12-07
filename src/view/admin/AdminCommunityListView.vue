@@ -18,7 +18,7 @@
     </table>
     <table :key="i" :value="community" v-for="(community, i) in communityList" class="mt-1 text-white list_box m-auto"
            @click="this.$router.push('/admin/community/detail/' + community.postNum)">
-      <tr>
+      <tr class="cursor">
         <td class="num">{{community.postNum}}</td>
         <td class="title">{{community.postTitle}}</td>
         <td class="writer">{{community.user.userNickname}}</td>

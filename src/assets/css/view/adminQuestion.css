@@ -204,6 +204,14 @@ h1 a {
     appearance: none;
 }
 
+.cursor{
+    cursor: pointer;
+}
+
+.cursor:hover {
+    transform: scale(1.01);
+}
+
 /* 페이지네이션 속성 */
 .pagination {
     padding-top: 10px;
