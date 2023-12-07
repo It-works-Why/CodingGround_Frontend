@@ -11,8 +11,7 @@
     <div class="box-userlists">
       <div :key="i" :value="userdata" v-for="(userdata, i) in gameRecord.gameusers" class="userlist" >
         <div class="img_form_rank">
-<!--          <img class="img_view_rank" :src="require(`@/assets/img/${gameRecord.gameusersprofile[i]}.png`)">-->
-          <img class="img_view_rank" :src="require(`@/assets/img/DefaultProfile.png`)">
+          <img class="img_view_rank" :src="gameRecord.gameusersprofile[i]">
         </div>
         <h5 class="card-title">{{userdata}}</h5>
       </div>
