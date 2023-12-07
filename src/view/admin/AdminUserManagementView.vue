@@ -19,7 +19,7 @@
     <table :key="i" :value="user" v-for="(user, i) in userList" class="mt-1 text-white list_box m-auto">
       <tr class="cursor">
         <td class="num">{{user.userNum}}</td>
-        <td class="profileimg px-2"><img style="border-radius: 50px;" :src="user.userProfileImg" width="35"></td>
+        <td class="profileimg px-2"><img style="border-radius: 50px;" :src="user.userProfileImg" width="35" @error="handleImageError"></td>
         <td class="nickname">{{user.userNickname}}</td>
         <td class="email">{{user.userEmail}}</td>
         <td class="id">{{user.userId}}</td>
@@ -81,6 +81,9 @@ export default {
     }
   },
   methods: {
+    handleImageError(e) {
+      e.target.src = require("@/assets/img/DefaultProfile.png");
+    },
     getUserList() {
       this.$httpUtil('/admin/user/list/'+ this.$route.params.pageNum +'?searchInput='+this.searchInput, 'GET', null, (data) => {
         this.userList = data.userManageListDtoList;

@@ -3,7 +3,7 @@
     <div class="top">
       <div class="top_box_left">
         <div class="position-relative img_form">
-          <img class="img_view" :src="userData.userInfo.userProfileImg">
+          <img class="img_view" :src="userData.userInfo.userProfileImg" @error="handleImageError">
           <img class="ranking_icon bottom-0 end-0 position-absolute" :src="require('@/assets/img/tier/' + userData.userInfo.rankNum + '.png')">
         </div>
         <div class="top_box_myinfo">
@@ -128,6 +128,9 @@ export default {
     };
   },
   methods: {
+    handleImageError(e) {
+      e.target.src = require("@/assets/img/DefaultProfile.png");
+    },
     mypageload() {
       this.$httpUtil('/mypage/myinfo', 'GET', null, (data) => {
         console.log(data.data);

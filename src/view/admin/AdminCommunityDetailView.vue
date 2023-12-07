@@ -9,7 +9,7 @@
 
           <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
             <div class="user_info_container">
-              <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35">
+              <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35" @error="handleImageError">
               <div class="user_info_box">
                 <div>
                   {{getData.userNickname}}
@@ -53,6 +53,9 @@ export default {
     }
   },
   methods: {
+    handleImageError(e) {
+      e.target.src = require("@/assets/img/DefaultProfile.png");
+    },
     load() {
       this.$httpUtil(`/admin/community/detail/` + this.$route.params.id, 'GET', null, (data) => {
         console.log(data);
