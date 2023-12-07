@@ -43,4 +43,10 @@
 
 .user_info_box {
     font-size: 13px;
+
+}
+.user_info_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

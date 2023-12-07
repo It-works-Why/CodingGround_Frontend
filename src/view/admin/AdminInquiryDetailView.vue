@@ -8,13 +8,15 @@
       <div class="title">
         <input :value="inquiryDetail.contactTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
-          {{inquiryDetail.userProfileImg}}
-          <div class="user_info_box">
-            <div>
-              {{inquiryDetail.userNickname}}
-            </div>
-            <div>
-              {{inquiryDetail.contactTime}}
+          <div class="user_info_container">
+            <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35">
+            <div class="user_info_box">
+              <div>
+                {{getData.userNickname}}
+              </div>
+              <div>
+                {{getData.postTime}}
+              </div>
             </div>
           </div>
         </div>
