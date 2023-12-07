@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-3 mt-5 background_box m-auto">
-    <div class="w-100 h-100 position-relative">
+    <form @submit.prevent="register" enctype="multipart/form-data" class="w-100 h-100 position-relative">
       <div class="m-1 box_circle d-inline-block position-absolute top-0 start-0"></div>
       <div class="m-1 box_circle d-inline-block position-absolute top-0 end-0"></div>
       <div class="content text-nowrap">
@@ -9,10 +9,11 @@
         </div>
         <div class="px-5 d-flex input_box">
           <div class="w-25">
-            <div class="position-relative img_form">
-              <img class="img_view" :src="imgFile" @error="handleImageError">
-              <img class="camera bottom-0 end-0 position-absolute" src="../../assets/img/Camera.png">
-            </div>
+              <label for="input-file" class="position-relative img_form">
+                <img class="img_view" :src="uploadImg" @error="handleImageError">
+                <img class="camera bottom-0 end-0 position-absolute" src="../../assets/img/Camera.png">
+              </label>
+              <input id="input-file" accept="image/*" type="file" ref="inputImg" @change="changeImg" multiple>
             <p class="text-white fw-bold fs-4">프로필 사진</p>
           </div>
           <div class="w-100 input_wrapper">
@@ -58,7 +59,7 @@
                 <input v-model="userInfo.userEmail" placeholder="이메일을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
               <WhiteButton v-if="this.emailCheck === 1" class="ms-5" button-value="인증완료" @click="certificationEmail"></WhiteButton>
-              <WhiteButton class="ms-5" button-value="인증하기" @click="certificationEmail"></WhiteButton>
+              <WhiteButton v-else class="ms-5" button-value="인증하기" @click="certificationEmail"></WhiteButton>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
@@ -78,12 +79,12 @@
           </div>
         </div>
         <div class="px-5">
-          <input type="button" value="가입하기" @click="register" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
+          <input type="submit" value="가입하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 end-0"></div>
-    </div>
+    </form>
   </div>
 
 <!--  모달 -->
@@ -116,8 +117,8 @@ export default {
   data(){
     return{
       modalCheck: false,
-      imgFile: "",
-      whiteButtonString : '중복확인',
+      imgFile: '',
+      uploadImg: '',
       userInfo:{
         userId : '',
         userPassword : '',
@@ -145,13 +146,22 @@ export default {
       e.target.src = require("../../assets/img/DefaultProfile.png");
     },
     register() {
+      const formData = new FormData();
+      formData.append("profileImg", this.imgFile);
+      formData.append("userEmail", this.userInfo.userEmail);
+
       if (this.emailCheck === 1 && this.idCheck === 1 && this.nicknameCheck ===1) {
-        this.$httpUtil('/account/register','POST',this.userInfo,(data) => {
-          if(data.data.success){
+        this.$httpUtil('/account/register','POST',this.userInfo,() => {});
+        if (this.imgFile !== null || this.imgFile !== '' || this.imgFile !== ' ') {
+          this.$httpUtil('/account/upload/profile', 'POST', formData, () => {
+            console.log("여기 들어가는지?")
             this.$successAlert("가입되었습니다.");
             this.$router.push('/login');
-          }
-        });
+          })
+        } else {
+          this.$successAlert("가입되었습니다.");
+          this.$router.push('/login');
+        }
       } else if (this.idCheck === 0) {
         this.$errorAlert("아이디 중복 확인을 해주세요.");
       } else if (this.nicknameCheck === 0) {
@@ -202,8 +212,18 @@ export default {
       } else {
         this.$errorAlert("인증번호를 다시 입력해주세요.");
       }
+    },
+    changeImg(event) {
+      this.imgFile = this.$refs.inputImg.files[0];
+
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.uploadImg = e.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
     }
-  }
+  },
 }
 </script>
 

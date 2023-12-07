@@ -46,6 +46,10 @@
     text-align: left;
 }
 
+#input-file {
+    display: none;
+}
+
 .title{
     width: 10%;
 }

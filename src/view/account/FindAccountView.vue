@@ -16,7 +16,7 @@
         <div class="my-3 w-100">
           <span class="d-inline-block text-white fw-bold fs-4">이메일</span>
           <span class="ps-5">
-            <input v-model="this.userEmail" placeholder="이메일 주소를 입력하세요." style="width: 50%" class="text-white fs-4 input_box" type="text" />
+            <input v-model="this.userInfo1.userEmail" placeholder="이메일 주소를 입력하세요." style="width: 50%" class="text-white fs-4 input_box" type="text" />
           </span>
           <WhiteButton class="ms-5" button-value="확인" @click="findId"></WhiteButton>
         </div>
@@ -42,7 +42,7 @@
         <span class="ps-5">
             <input v-model="this.userInfo.userEmail" placeholder="이메일 주소를 입력하세요." style="width: 50%" class="text-white fs-4 input_box" type="text" />
         </span>
-        <WhiteButton class="ms-5" button-value="이메일 인증" @click="certificationEmail"></WhiteButton>
+        <WhiteButton class="ms-5" button-value="이메일 전송" @click="certificationEmail"></WhiteButton>
       </div>
     </div>
   </div>
@@ -56,8 +56,10 @@ export default {
   data() {
     return {
       modalCheck: false,
-      userEmail: "",
       userId: "",
+      userInfo1: {
+        userEmail: "",
+      },
       userInfo: {
         userEmail: "",
         userId: ""
@@ -71,7 +73,7 @@ export default {
       this.modalCheck = !this.modalCheck
     },
     findId() {
-      this.$httpUtil('/account/check/userEmail', 'POST', this.userEmail, (data) => {
+      this.$httpUtil('/account/check/userEmail', 'POST', this.userInfo1, (data) => {
         console.log(data);
 
         if (data == null || data === "" || data === " ") {
