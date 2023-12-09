@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-3 mt-5 background_box m-auto">
-    <div class="w-100 h-100 position-relative">
+    <form @submit.prevent="register" enctype="multipart/form-data" class="w-100 h-100 position-relative">
       <div class="m-1 box_circle d-inline-block position-absolute top-0 start-0"></div>
       <div class="m-1 box_circle d-inline-block position-absolute top-0 end-0"></div>
       <div class="content text-nowrap">
@@ -9,10 +9,11 @@
         </div>
         <div class="px-5 d-flex input_box">
           <div class="w-25">
-            <div class="position-relative img_form">
-              <img class="img_view" :src="imgFile" @error="handleImageError">
-              <img class="camera bottom-0 end-0 position-absolute" src="../../assets/img/Camera.png">
-            </div>
+              <label for="input-file" class="position-relative img_form">
+                <img class="img_view" :src="uploadImg" @error="handleImageError">
+                <img class="camera bottom-0 end-0 position-absolute" src="@/assets/img/Camera.png">
+              </label>
+              <input id="input-file" accept="image/*" type="file" ref="inputImg" @change="changeImg" multiple>
             <p class="text-white fw-bold fs-4">프로필 사진</p>
           </div>
           <div class="w-100 input_wrapper">
@@ -21,7 +22,6 @@
               <span class="ps-5">
                 <input v-model="userInfo.userId" placeholder="아이디를 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
-              <WhiteButton class="ms-5" button-value="중복확인"></WhiteButton>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
@@ -52,7 +52,8 @@
               <span class="ps-5">
                 <input v-model="userInfo.userEmail" placeholder="이메일을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
-              <WhiteButton class="ms-5" button-value="인증하기"></WhiteButton>
+              <WhiteButton v-if="this.emailCheck === 1" class="ms-5" button-value="인증완료" @click="certificationEmail"></WhiteButton>
+              <WhiteButton v-else class="ms-5" button-value="인증하기" @click="certificationEmail"></WhiteButton>
             </div>
             <div class="w-100">
               <span class="title d-inline-block"></span>
@@ -72,11 +73,29 @@
           </div>
         </div>
         <div class="px-5">
-          <input type="button" value="가입하기" @click="register" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
+          <input type="submit" value="가입하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 end-0"></div>
+    </form>
+  </div>
+
+<!--  모달 -->
+  <div class="modal-wrap" v-show="modalCheck">
+    <div class="modal-container">
+      <div class="modal-content">
+        <div>
+          <p class="modal-title">이메일로 전송된 인증번호를 입력해주세요.</p>
+          <div class="modal-box">
+            <input class="input-number" v-model="certificationNumber" type="text" placeholder="인증번호를 입력해주세요."/>
+          </div>
+        </div>
+      </div>
+      <div class="modal-btn">
+        <button @click="modalOpen">취소</button>
+        <button @click="checkEmail()">인증</button>
+      </div>
     </div>
   </div>
 </template>
@@ -84,6 +103,7 @@
 <script>
 
 import WhiteButton from "@/components/WhiteButton.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -91,8 +111,9 @@ export default {
   },
   data(){
     return{
-      imgFile: "",
-      whiteButtonString : '중복확인',
+      modalCheck: false,
+      imgFile: '',
+      uploadImg: '',
       userInfo:{
         userId : '',
         userPassword : '',
@@ -102,21 +123,74 @@ export default {
         userAffiliationDetail : '',
         userProfileImg : '',
       },
+      certificationNumber : '',
+      key : '',
+      emailCheck : 0,
     }
   },
-  created(){},
+  created(){
+
+  },
   methods: {
+    modalOpen() {
+      this.modalCheck = !this.modalCheck
+    },
     handleImageError(e) {
-      e.target.src = require("../../assets/img/DefaultProfile.png");
+      e.target.src = require("@/assets/img/DefaultProfile.png");
     },
     register() {
-      this.$httpUtil('/account/register','POST',this.userInfo,(data) => {
-        if(data.data.success){
+      const formData = new FormData();
+      formData.append("profileImg", this.imgFile);
+      formData.append("userEmail", this.userInfo.userEmail);
+
+      if (this.emailCheck === 1) {
+        this.$httpUtil('/account/register','POST',this.userInfo,() => {})
+        axios.post('/api/account/upload/profile', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(() => {
+          this.$successAlert("가입되었습니다.");
           this.$router.push('/login');
+        }).catch(() => {
+          this.$successAlert("가입되었습니다.");
+          this.$router.push('/login');
+        })
+      } else if (this.emailCheck === 0) {
+        this.$errorAlert("이메일 인증을 해주세요.");
+      }},
+    certificationEmail() {
+      this.$httpUtil('/account/send/email', 'POST', this.userInfo, (data) => {
+        this.key = data.key;
+        // console.log(data.key);
+        if (data.exist) {
+          this.$errorAlert("이미 사용 중인 이메일 입니다.")
+        } else {
+          this.modalCheck = !this.modalCheck;
+          this.$successAlert("이메일이 전송되었습니다.");
         }
-      });
+      })
+    },
+    checkEmail() {
+      if (this.certificationNumber === this.key) {
+        this.emailCheck = 1;
+        this.modalCheck = !this.modalCheck
+        this.$successAlert("인증되었습니다.");
+      } else {
+        this.$errorAlert("인증번호를 다시 입력해주세요.");
+      }
+    },
+    changeImg(event) {
+      this.imgFile = this.$refs.inputImg.files[0];
+
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.uploadImg = e.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
     }
-  }
+  },
 }
 </script>
 

@@ -16,7 +16,7 @@
     </table>
     <table :key="i" :value="question" v-for="(question, i) in questionList" class="mt-1 text-white list_box m-auto"
            @click="this.$router.push('/admin/question/detail/' + question.questionNum)">
-      <tr>
+      <tr class="cursor">
         <td class="num">{{question.questionNum}}</td>
         <td class="title">{{question.questionTitle}}</td>
         <td class="time">{{question.questionLimitTime}}분</td>
@@ -90,10 +90,10 @@ export default {
               console.log("keyword : " + this.$route.params.keyword);
               console.log("page : " + this.$route.params.pageNum);
               // console.log(questionList.content);
-              // console.log("totalPages: " + questionList.totalPages);
-              // console.log("totalElements: " + questionList.totalElements);
-              // console.log("size: " + questionList.size);
-              // console.log("number: " + questionList.number);
+              console.log("totalPages: " + questionList.totalPages);
+              console.log("totalElements: " + questionList.totalElements);
+              console.log("size: " + questionList.size);
+              console.log("number: " + questionList.number);
               // console.log("numberOfElements: " + questionList.numberOfElements);
               this.questionList = questionList.content;
               this.totalPage = questionList.totalPages;

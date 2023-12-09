@@ -9,7 +9,7 @@
             <input :value="getData1.questionLimitTime" class="input-box input-time-out" type="text" disabled>
             <p>분</p>
           </div>
-          <select :value="getData1.questionDifficult" class="input-box input-level" disabled>
+          <select :value="getData1.questionDifficult" class="input-box input-level no-select" disabled>
             <option
               v-for="i in 5"
               :key="i"

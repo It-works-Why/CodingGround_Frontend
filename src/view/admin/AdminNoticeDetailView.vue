@@ -7,13 +7,12 @@
 
       <div class="title">
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
-          {{getData.userProfileImg}}
           <div class="user_info_box">
             <div>
               {{getData.userNickname}}
             </div>
             <div>
-              {{getData.noticeTime}}
+              {{dayjs(getData.noticeTime).format('YYYY-MM-DD HH:mm')}}
             </div>
           </div>
         </div>
@@ -35,6 +34,7 @@
 <script>
 
 import WhiteButton from "@/components/WhiteButton.vue";
+import dayjs from "dayjs";
 
 export default {
   components: {WhiteButton},
@@ -44,6 +44,7 @@ export default {
     }
   },
   methods: {
+    dayjs,
     load() {
       this.$httpUtil(`/admin/notice/detail/` + this.$route.params.id, 'GET', null, (data) => {
         console.log(data);

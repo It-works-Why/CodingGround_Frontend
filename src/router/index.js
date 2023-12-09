@@ -39,6 +39,7 @@ import AdminQuestionDetailView from "@/view/admin/AdminQuestionDetailView.vue";
 import AdminQuestionEditView from "@/view/admin/AdminQuestionEditView.vue";
 import BattleIngameView from "@/view/battle/BattleIngameView.vue";
 import BattleView from "@/view/battle/BattleView.vue";
+import AdminCommunityDetailView from "@/view/admin/AdminCommunityDetailView.vue";
 
 
 const routes = [
@@ -140,6 +141,10 @@ const routes = [
       },
       {
         path: '/ranking',
+        redirect: '/ranking/list/0'
+      },
+      {
+        path: '/ranking/list/:pageNum',
         component: RankingListView
       },
       {
@@ -218,12 +223,20 @@ const routes = [
         component: AdminNoticeEditPostView
       },
       {
-        path: '/admin/user/list',
+        path: '/admin/user/list/:pageNum',
         component: AdminUserManagementView
       },
       {
-        path: '/admin/user/inquiry/list',
+        path: '/admin/user/list',
+        redirect: '/admin/user/list/1'
+      },
+      {
+        path: '/admin/user/inquiry/list/:pageNum',
         component: AdminInquiryListView
+      },
+      {
+        path: '/admin/user/inquiry/list',
+        redirect: '/admin/user/inquiry/list/1'
       },
       {
         path: '/admin/user/inquiry/detail/:id',
@@ -236,6 +249,14 @@ const routes = [
       {
         path: '/admin/community/list/:pageNum',
         component: AdminCommunityListView
+      },
+      {
+        path: '/admin/community/list/:pageNum/:keyword/:type',
+        component: AdminCommunityListView
+      },
+      {
+        path: '/admin/community/detail/:id',
+        component: AdminCommunityDetailView
       },
     ]
   }

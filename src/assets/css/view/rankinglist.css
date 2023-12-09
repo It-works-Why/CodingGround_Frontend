@@ -42,6 +42,7 @@
     width: 5%;
 }
 .profileimg{
+    border-radius: 50px;
     width: 15%;
     text-align: right;
 }
@@ -57,4 +58,51 @@
 }
 .winrate {
     width: 15%;
+}
+
+/* 페이지네이션 속성 */
+.pagination {
+    padding-top: 10px;
+}
+
+.page-link {
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #3D3D3D;
+    border: none;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: black;
+    font-weight: 600;
+    background-color: white;
+}
+
+.pagination a {
+    text-decoration: none;
+}
+
+.ranking{
+    width: 5%;
+}
+
+.title{
+    width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.writer{
+    width: 30%;
+}
+.write_date{
+    width: 15%;
+}
+.cursor{
+    cursor: pointer;
+}
+
+.cursor:hover {
+    transform: scale(1.01);
 }

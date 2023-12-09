@@ -3,7 +3,7 @@
     <div class="top">
       <div class="top_box_left">
         <div class="position-relative img_form">
-          <img class="img_view" src="../assets/img/DefaultProfile.png">
+          <img class="img_view" :src="userData.userInfo.userProfileImg" @error="handleImageError">
           <img class="ranking_icon bottom-0 end-0 position-absolute" :src="require('@/assets/img/tier/' + userData.userInfo.rankNum + '.png')">
         </div>
         <div class="top_box_myinfo">
@@ -128,27 +128,32 @@ export default {
     };
   },
   methods: {
-    mypageload(){
-      this.$httpUtil('/mypage/myinfo','GET', null,(data) => {
+    handleImageError(e) {
+      e.target.src = require("@/assets/img/DefaultProfile.png");
+    },
+    mypageload() {
+      this.$httpUtil('/mypage/myinfo', 'GET', null, (data) => {
         console.log(data.data);
-        this.userData = data.data;
 
-        this.gameRecordData = this.userData.gameInfoData.map(gameInfo => {
-          return{
+        // Optional chaining을 사용하여 안전하게 속성에 접근합니다.
+        this.userData = data.data || {};
+
+        // 일부 속성이 없는 경우를 대비해 기본값이나 빈 배열을 제공합니다.
+        this.gameRecordData = (this.userData.gameInfoData || []).map((gameInfo) => {
+          return {
             gamenum: gameInfo.gameNum,
             gametype: gameInfo.gameType,
             gameDate: gameInfo.timeDifference,
             gamelanguage: gameInfo.languageName,
             gameusersprofile: gameInfo.userProfileImgList,
-            gameusers: gameInfo.userNicknamesList
-          }
-        } )
-
+            gameusers: gameInfo.userNicknamesList,
+          };
+        });
 
         const colors = [];
         const dataValues = [];
         const labels = [];
-        for (let languageInfo of this.userData.gameLanguage) {
+        for (let languageInfo of this.userData.gameLanguage || []) {
           colors.push('#' + Math.round(Math.random() * 0xffffff).toString(16));
           labels.push(languageInfo.languageName);
           dataValues.push(parseInt(languageInfo.languageCount));
@@ -156,35 +161,38 @@ export default {
 
         this.donutChartData = {
           labels: labels,
-          datasets: [{
-            data: dataValues,
-            backgroundColor: colors,
-          }],
+          datasets: [
+            {
+              data: dataValues,
+              backgroundColor: colors,
+            },
+          ],
         };
 
-
-        const rankingData = data.data.ranking[0];
+        // Optional chaining을 사용하여 ranking 데이터에 안전하게 접근합니다.
+        const rankingData = data.data?.ranking?.[0] || {};
 
         const dataArray = [
           rankingData.count1 || 0,
           rankingData.count2 || 0,
           rankingData.count3 || 0,
           rankingData.count4 || 0,
-          rankingData.count5 || 0
+          rankingData.count5 || 0,
         ];
 
         // 전체 객체를 갱신
         this.donutChartData2 = {
           labels: ['1', '2', '3', '4', '5~8'],
-          datasets: [{
-            data: dataArray,
-            backgroundColor: ['#EB9C00', '#758592', '#907659', '#676678', '#515163'],
-          }],
+          datasets: [
+            {
+              data: dataArray,
+              backgroundColor: ['#EB9C00', '#758592', '#907659', '#676678', '#515163'],
+            },
+          ],
         };
-
-
       });
     },
+
 
     redirectToRecordPage(gamenum) {
       this.$router.push('/mypage/record/' + gamenum);

@@ -10,7 +10,7 @@
     </table>
     <table :key="i" :value="notice" v-for="(notice, i) in noticeList" class="mt-1 text-white list_box m-auto"
            @click="this.$router.push('/notice/detail/' + notice.noticeNum)">
-      <tr>
+      <tr class="cursor">
         <td class="num">{{notice.noticeNum}}</td>
         <td class="title">{{notice.noticeTitle}}</td>
         <td class="nickname">{{notice.user.userNickname}}</td>

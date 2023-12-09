@@ -7,7 +7,8 @@
 
       <div class="title">
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
-          {{getData.userProfileImg}}
+          <div class="user_info_container">
+            <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35" height="35"  @error="handleImageError">
             <div class="user_info_box">
               <div>
                 {{getData.userNickname}}
@@ -16,6 +17,7 @@
                 {{getData.postTime}}
               </div>
             </div>
+          </div>
         </div>
         <input :value="getData.postTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
       </div>
@@ -52,6 +54,9 @@ export default {
     }
   },
   methods: {
+    handleImageError(e) {
+      e.target.src = require("@/assets/img/DefaultProfile.png");
+    },
     load() {
       this.$httpUtil('/community/detail/' + this.$route.params.id, 'GET', null, (data) => {
         console.log(data);

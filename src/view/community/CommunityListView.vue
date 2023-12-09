@@ -38,18 +38,14 @@
               :to="'/community/list/' + (i - 1)  + '/' + this.searchInput"
               class="page-item"
               :class="{ active: $route.params.pageNum == (i - 1) }">
-            <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
-              {{i}}
-            </a>
+            <a class="page-link">{{i}}</a>
           </router-link>
           <router-link
               v-else
               :to="'/community/list/' + (i - 1)"
               class="page-item"
               :class="{ active: $route.params.pageNum == (i - 1) }">
-            <a class="page-link" v-if="startBlock <= i && endBlock >= i" @click="pageBtn(i-1)">
-              {{i}}
-            </a>
+            <a class="page-link">{{i}}</a>
           </router-link>
         </li>
         <li class="page-item">
@@ -75,11 +71,6 @@ export default {
   components: {WhiteButton},
   data() {
     return {
-      communitySelectData: [
-        "제목",
-        "작성자",
-        "글 내용",
-      ],
       communityList: [],
       searchInput: "",
       totalPage: 0,
@@ -128,36 +119,35 @@ export default {
         })
       }
     },
-    search() {
-      this.$router.push('/community/list/0/' + this.searchInput)
-          .then(() => {
-            this.load();
-          })
-    },
-    pageBtn(page) {
-      this.$router.push('/community/list/' + page)
-          .then(() => {
-            this.load();
-          })
+    nextBtn() {
+      if (this.endBlock < this.totalPage - 1) {
+        this.$router.push('/community/list/' + parseInt(parseInt(this.startBlock) + parseInt(9)))
+            .then(() => {
+              this.load();
+            })
+      }
     },
     prevBtn() {
-      if (this.$router.params.pageNum > 0) {
+      if (this.endBlock > 10) {
         this.$router.push('/community/list/' + parseInt(parseInt(this.startBlock) - parseInt(9)))
             .then(() => {
               this.load();
             })
       }
     },
-    nextBtn() {
-      if (this.$router.params.pageNum < this.totalPage - 1) {
-        this.$router.push('/community/list/' + parseInt(parseInt(this.startBlock) + parseInt(9)))
-            .then(() => {
-              this.load();
-            })
-      }
-    }
+    search() {
+      this.$router.push('/community/list/0/' + this.searchInput)
+          .then(() => {
+            this.load();
+          })
+    },
+  },
+  watch: {
+    '$route.params.pageNum': 'load'
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
   }
-
 }
 </script>
 
