@@ -3,7 +3,7 @@
     <div class="top">
       <div class="top_box_left">
         <div class="position-relative img_form">
-          <img class="img_view" src="../assets/img/DefaultProfile.png">
+          <img class="img_view" :src="userData.userInfo.userProfileImg">
           <img class="ranking_icon bottom-0 end-0 position-absolute" :src="require('@/assets/img/tier/' + userData.userInfo.rankNum + '.png')">
         </div>
         <div class="top_box_myinfo">
@@ -40,7 +40,7 @@
           </tr>
         </table>
         <table :key="i" :value="userInquiry" v-for="(userInquiry, i) in userInquiryList" class="mt-1 text-white list_box m-auto" >
-          <tr @click="contactdetailPage(userInquiry.contactNum)">
+          <tr class="cursor" @click="contactdetailPage(userInquiry.contactNum)">
             <td class="ranking">{{userInquiry.number}}</td>
             <td class="title">{{userInquiry.title}}</td>
             <td class="date">{{userInquiry.date}}</td>
@@ -174,7 +174,6 @@ export default {
           this.endBlock = endBlock;
         }
 
-        const rankingData = data.data.ranking[0];
 
 
         this.userInquiryList = this.userData.contactList.map(contact =>{
@@ -186,7 +185,9 @@ export default {
             nickname: contact.userNickname,
             answer: contact.answerStatus
           }
-        })
+        });
+
+        const rankingData = data.data?.ranking?.[0] || {};
 
         const dataArray = [
           rankingData.count1 || 0,

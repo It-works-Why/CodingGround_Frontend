@@ -112,7 +112,7 @@ export default {
       })
     },
     check() {
-      this.$httpUtil(`https://airspirk.asuscomm.com:42361/submissions/${this.resultToken}`, 'GET', this.body, (data) => {
+      this.$httpUtil(`https://airspirk.asuscomm.com:42361/submissions/a5d7a81b-22e9-4707-987f-3ffd9aac16a2`, 'GET', null, (data) => {
         console.log(data);
         if (data.stdout == null) {
           this.result = data.compile_output;
@@ -124,70 +124,8 @@ export default {
     getUserInfo() {
       console.log(this.userInfo);
     },
-    connect(event) {
-      // eslint-disable-next-line no-undef
-      let socket = new SockJS('http://localhost:8090/ws');
-      // eslint-disable-next-line no-undef
-      this.stompClient = Stomp.over(socket);
-
-      this.stompClient.connect({}, this.onConnected, this.onError);
-      event.preventDefault();
-    },
-    onConnected() {
-      // Subscribe to the Public Topic
-      this.stompClient.subscribe('/topic/public', this.onMessageReceived);
-
-      // Tell your username to the server
-      this.stompClient.send("/app/chat.addUser",
-          {},
-          JSON.stringify({sender: this.userInfo.userId, type: 'JOIN'})
-      )
-    },
     onError(error) {
       console.log(error);
-    },
-    send(event) {
-        let chatMessage = {};
-        chatMessage.sender = this.userInfo.userNickname;
-        chatMessage.content = this.sendMessageData;
-        chatMessage.type = 'CHAT';
-
-        this.stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-        event.preventDefault();
-    },
-    onMessageReceived(payload) {
-      let messageArea = document.getElementById("message_area")
-      var message = JSON.parse(payload.body);
-
-      let messageElement = document.createElement('li');
-
-      if(message.type === 'JOIN') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
-      } else if (message.type === 'LEAVE') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' left!';
-      } else {
-        messageElement.classList.add('chat-message');
-
-        let avatarElement = document.createElement('div');
-        console.log(message)
-        messageElement.appendChild(avatarElement);
-
-        var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(message.sender);
-        usernameElement.appendChild(usernameText);
-        messageElement.appendChild(usernameElement);
-      }
-
-      var textElement = document.createElement('p');
-      var messageText = document.createTextNode(message.content);
-      textElement.appendChild(messageText);
-
-      messageElement.appendChild(textElement);
-
-      messageArea.appendChild(messageElement);
-      messageArea.scrollTop = messageArea.scrollHeight;
     },
   },
   mounted() {

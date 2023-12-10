@@ -71,6 +71,7 @@
 export default {
   data() {
     return {
+      userData : {},
       modalCheck: false,
       inputTitle: "",
       languages: [],
@@ -82,6 +83,8 @@ export default {
     }
   },
   created() {
+    this.userData = this.$store.getters.getUser;
+
     this.$httpUtil('/battle/get/language', 'GET', null, (data) => {
       this.languages = data;
       console.log(this.languages)
@@ -97,6 +100,12 @@ export default {
       this.modalCheck = !this.modalCheck
       return this.inputTitle = gameTitle;
     },
+    onError(){
+
+    },
+    onConnected() {
+
+    },
     gameStart() {
       let connectGameInfo = {};
       connectGameInfo.gameLanguage = this.gameLanguage;
@@ -107,6 +116,16 @@ export default {
           const isReconnect = confirm("진행중인 게임이 있습니다. 재접속 하시겠습니까?");
           if(isReconnect){
             this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
+              console.log(data);
+              // eslint-disable-next-line no-undef
+              const socket = new SockJS('http://localhost:8090/ws');
+              const data1 = {};
+              data1.gameId = data.data.gameId
+              // eslint-disable-next-line no-undef
+              const stompClient = Stomp.over(socket);
+              stompClient.connect(data1, this.onConnected, this.onError);
+              this.$store.commit('setConnection', stompClient);
+
               this.$router.push('/battle/ingame/'+this.gameKey);
               this.$successAlert(data.data.message);
               return;
@@ -121,10 +140,11 @@ export default {
         }
         if(data.data.connectType == "failed"){
           this.$errorAlert("이미 대기방에 접속중입니다. 잠시후 다시시도 해주십시오.");
+          location.reload();
           return;
         }
         if(data.data.connectType == "succeed"){
-          this.$router.push('/battle/ingame/'+this.gameKey);
+          this.$router.push('/battle/waiting/'+this.gameKey);
           return;
         }
 

@@ -1,9 +1,10 @@
 <template>
   <div class="rounded-3 mt-3 px-2 py-2 top_background_box m-auto">
-    <select class="season_select form-select">
+    <select class="season_select form-select" v-model="search">
       <option :key="i" :value="search" v-for="(search,i) in communitySelectData">{{search}}</option>
     </select>
-    <input class="search_box text-white" v-model="searchInput" placeholder="검색할 내용을 입력해주세요.">
+
+    <input @keyup.enter="enterKeyword" class="search_box text-white" v-model="keyword" placeholder="검색하실 내용을 입력해주세요.">
   </div>
 
   <div class="rounded-3 mt-2 py-2 px-2 rank_background_box m-auto">
@@ -15,50 +16,168 @@
         <td class="date">작성 일시</td>
       </tr>
     </table>
-    <table :key="i" :value="community" v-for="(community, i) in communityList" class="mt-1 text-white list_box m-auto">
-      <tr>
-        <td class="num">{{community.num}}</td>
-        <td class="title">{{community.title}}</td>
-        <td class="writer">{{community.writer}}</td>
-        <td class="date">{{community.date}}</td>
+    <table :key="i" :value="community" v-for="(community, i) in communityList" class="mt-1 text-white list_box m-auto"
+           @click="this.$router.push('/admin/community/detail/' + community.postNum)">
+      <tr class="cursor">
+        <td class="num">{{community.postNum}}</td>
+        <td class="title">{{community.postTitle}}</td>
+        <td class="writer">{{community.user.userNickname}}</td>
+        <td class="date">{{dayjs(community.postTime).format('YYYY-MM-DD HH:mm')}}</td>
       </tr>
     </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center" >
+        <li class="page-item">
+          <a class="page-link" @click="prevBtn" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li :key="i" v-for="i in endBlock">
+          <router-link
+              v-if="this.$route.params.keyword && startBlock <= i && endBlock >= i"
+              :to="'/admin/community/list/' + (i - 1) + '/' + this.keyword+ '/' + this.type "
+              class="page-item"
+              :class="{ active: $route.params.pageNum == (i - 1) }">
+            <a class="page-link">{{i}}</a>
+          </router-link>
+          <router-link
+              v-else-if="!this.$route.params.keyword && startBlock <= i && endBlock >= i"
+              :to="'/admin/community/list/' + (i - 1)"
+              class="page-item"
+              :class="{ active: $route.params.pageNum == (i - 1) }">
+            <a class="page-link">{{i}}</a>
+          </router-link>
+
+        </li>
+        <li class="page-item">
+          <a class="page-link" @click="nextBtn" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
+import dayjs from "dayjs";
+
 export default {
+  computed: {
+    dayjs() {
+      return dayjs
+    }
+  },
   data() {
     return {
+      communityList: [],
+      totalPage : 0,
+      totalBlocks : 0,
+      currentBlock : 0,
+      startBlock : 0,
+      endBlock : 0,
+
       communitySelectData: [
         "제목",
         "작성자",
-        "작성 일시",
+        "내용",
       ],
       searchInput: "",
-      communityList: [
-        {
-          num: '9',
-          title: '나 GPT 유전데..',
-          writer: '치치치치',
-          date: '2023.11.22 12:00'
-        },
-        {
-          num: '8',
-          title: '내 점수 이거 맞냐?',
-          writer: '경운기',
-          date: '2023.11.22 11:57'
-        },
-        {
-          num: '7',
-          title: '단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또단또',
-          writer: '키위새',
-          date: '2023.11.22 11:23'
-        },
-      ],
+      communitSelected: false,
+
 
     }
-  }
+  },
+  mounted() {
+    this.load();
+  },
+
+  methods: {
+    load() {
+      if (!this.$route.params.keyword || this.$route.params.keyword == "undefined") {
+        this.$httpUtil('/admin/community/list?page=' + this.$route.params.pageNum,
+            'GET', null, (communityList) => {
+          console.log(communityList.content);
+              if (!this.communitSelected) {
+                this.search = "제목";
+                this.communitSelected = true;
+              }
+
+          this.communityList = communityList.content;
+          this.totalPage = communityList.totalPages;
+
+          this.startBlock = parseInt(parseInt(communityList.number / 10) * 10 + 1);
+          // console.log("startBlock : " + this.startBlock);
+
+          const endBlock = this.startBlock + 9;
+          if (endBlock > this.totalPage) {
+            this.endBlock = this.totalPage;
+          } else {
+            this.endBlock = endBlock;
+          }
+          // console.log("endBlock : " + this.endBlock);
+        })
+      }
+      else {
+        this.$httpUtil('/admin/community/list?keyword='+ this.$route.params.keyword + '&type=' + this.$route.params.type + '&page=' + this.$route.params.pageNum,
+            'GET', null, (communityList) => {
+      /*        console.log("type : " + this.$route.params.search);*/
+              // console.log(questionList.content);
+              // console.log("totalPages: " + questionList.totalPages);
+              // console.log("totalElements: " + questionList.totalElements);
+              // console.log("size: " + questionList.size);
+              // console.log("number: " + questionList.number);
+              // console.log("numberOfElements: " + questionList.numberOfElements);
+              this.communityList = communityList.content;
+              this.totalPage = communityList.totalPages;
+              console.log(communityList.content);
+
+              this.startBlock = parseInt(parseInt(communityList.number / 10) * 10 + 1);
+              // console.log("startBlock : " + this.startBlock);
+
+              const endBlock = this.startBlock + 9;
+              if (endBlock > this.totalPage) {
+                this.endBlock = this.totalPage;
+              } else {
+                this.endBlock = endBlock;
+              }
+              // console.log("endBlock : " + this.endBlock);
+            })
+      }
+    },
+    prevBtn() {
+      if (this.endBlock > 10) {
+        this.$router.push('/admin/community/list/' + parseInt(parseInt(this.startBlock) - parseInt(9)))
+            .then(() => {
+              this.load();
+            })
+      }
+    },
+    nextBtn() {
+      if (this.endBlock < this.totalPage - 1) {
+        this.$router.push('/admin/community/list/' + parseInt(parseInt(this.startBlock) + parseInt(9)))
+            .then(() => {
+              this.load();
+            })
+      }
+    },
+    enterKeyword() {
+      this.type = this.search;
+      this.$router.push('/admin/community/list/0/' + this.keyword +"/"+ this.type)
+          .then(() => {
+            this.load();
+          })
+    }
+  },
+  watch: {
+    // watch for changes in route parameters
+    '$route.params.pageNum': 'load'
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
+  },
+
+
 
 }
 </script>

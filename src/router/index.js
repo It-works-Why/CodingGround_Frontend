@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import store from '@/store';
 // import axios from 'axios';
-import { httpRequest } from '@/assets/js/http'
+import {httpRequest} from '@/assets/js/http'
 import LoginView from '@/view/account/LoginView.vue';
 import RegisterView from '@/view/account/RegisterView.vue';
 import HomeView from "@/view/HomeView.vue";
@@ -22,7 +22,7 @@ import MyInquiryView from "@/view/MyInquiryView.vue";
 import RankingListView from "@/view/RankingListView.vue";
 import ShowGameRecordView from "@/view/ShowGameRecordView.vue";
 import CommunityPostView from "@/view/community/CommunityListView.vue";
-import BattleInGameView from "@/view/battle/BattleInGameView.vue";
+import BattleWaitingRoomView from "@/view/battle/BattleWaitingRoomView.vue";
 import AdminUserManagementView from "@/view/admin/AdminUserManagementView.vue"
 import AdminCommunityListView from "@/view/admin/AdminCommunityListView.vue"
 import AdminInquiryListView from "@/view/admin/AdminInquiryListView.vue";
@@ -37,7 +37,9 @@ import SocketTest from "@/view/battle/SocketTest.vue";
 import AdminQuestionListView from "@/view/admin/AdminQuestionListView.vue";
 import AdminQuestionDetailView from "@/view/admin/AdminQuestionDetailView.vue";
 import AdminQuestionEditView from "@/view/admin/AdminQuestionEditView.vue";
+import BattleIngameView from "@/view/battle/BattleIngameView.vue";
 import BattleView from "@/view/battle/BattleView.vue";
+import AdminCommunityDetailView from "@/view/admin/AdminCommunityDetailView.vue";
 
 
 const routes = [
@@ -139,6 +141,10 @@ const routes = [
       },
       {
         path: '/ranking',
+        redirect: '/ranking/list/0'
+      },
+      {
+        path: '/ranking/list/:pageNum',
         component: RankingListView
       },
       {
@@ -146,12 +152,12 @@ const routes = [
         component: SocketTest
       },
       {
-        path: '/battle/ingame',
-        component: BattleInGameView
+        path: '/battle/waiting/:gameId',
+        component: BattleWaitingRoomView
       },
       {
         path: '/battle/ingame/:gameId',
-        component: BattleInGameView
+        component: BattleIngameView
       },
       {
         path: '/battle',
@@ -217,20 +223,40 @@ const routes = [
         component: AdminNoticeEditPostView
       },
       {
-        path: '/admin/user/list',
+        path: '/admin/user/list/:pageNum',
         component: AdminUserManagementView
       },
       {
-        path: '/admin/user/inquiry/list',
+        path: '/admin/user/list',
+        redirect: '/admin/user/list/1'
+      },
+      {
+        path: '/admin/user/inquiry/list/:pageNum',
         component: AdminInquiryListView
+      },
+      {
+        path: '/admin/user/inquiry/list',
+        redirect: '/admin/user/inquiry/list/1'
       },
       {
         path: '/admin/user/inquiry/detail/:id',
         component: AdminInquiryDetailView
       },
       {
-        path: '/admin/community/list',
+        path: '/admin/community/list/',
+        redirect: '/admin/community/list/0'
+      },
+      {
+        path: '/admin/community/list/:pageNum',
         component: AdminCommunityListView
+      },
+      {
+        path: '/admin/community/list/:pageNum/:keyword/:type',
+        component: AdminCommunityListView
+      },
+      {
+        path: '/admin/community/detail/:id',
+        component: AdminCommunityDetailView
       },
     ]
   }
@@ -252,7 +278,6 @@ router.beforeEach(async (to, from, next) => {
   try {
     if (localStorage.getItem("accessToken") != null) {
       await httpRequest("/account/userInfo", "GET", null, (data) => {
-        console.log(data);
         let userInfo = data.data;
         store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
       })

@@ -10,8 +10,8 @@ const axiosInstance = axios.create({
     baseURL: "/api",
     headers: {
         "Content-Type": "application/json",
-        'X-RapidAPI-Key': '92645c8b10msh7f8b72338057770p1deaecjsn641c7097464c',
-        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
+/*        'X-RapidAPI-Key': '92645c8b10msh7f8b72338057770p1deaecjsn641c7097464c',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'*/
     },
     params: {
         base64_encoded: 'false',
@@ -44,6 +44,7 @@ const methods = {
             const response = await axiosInstance(config);
             successFunction(response.data);
         } catch (error) {
+            console.log(error);
             if(error.response.data){
                 if(error.response.data.message){
                     if(error.response.data.message == "로그인 재시도." && localStorage.getItem("refreshToken") !== null){

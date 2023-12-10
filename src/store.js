@@ -5,6 +5,7 @@ import { createStore } from 'vuex';
 const store = createStore({
     state() {
         return {
+            stompClient: '',
             userInfo: {
                 userId: '',
                 userRole: '',
@@ -24,6 +25,9 @@ const store = createStore({
             state.userInfo.userId = '';
             state.userInfo.userRole = '';
             state.userInfo.userNickname = '';
+        },
+        setConnection(state, stomp) {
+            state.stompClient = stomp;
         }
     },
     actions: {
@@ -61,6 +65,9 @@ const store = createStore({
         },
         getCurrentPath(state) {
             return state.currentPath;
+        },
+        getStompClient(state){
+            return state.stompClient;
         }
     }
 });

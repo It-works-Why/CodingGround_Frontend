@@ -266,7 +266,6 @@ export default {
       ],
     };
   },
-  inject: ['$http'],
   created(){
     this.updateData();
     this.counter(150,200,300,400);

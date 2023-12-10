@@ -17,7 +17,10 @@
           </GrayBox>
           <GrayBox class="rounded-3 content-box">
             <textarea :value="getData.questionContent" class="input-box input-content" disabled></textarea>
-            <ConsoleBox class="console">{{getData.testCaseOutput1}}</ConsoleBox>
+            <div class="fw-bolder fs-4">입력1</div>
+            <ConsoleBox class="console">{{getData.testCaseInput1}}</ConsoleBox>
+            <div class="fw-bolder fs-4">입력2</div>
+            <ConsoleBox class="console">{{getData.testCaseInput2}}</ConsoleBox>
           </GrayBox>
         </div>
       </BlackBox>
@@ -82,8 +85,8 @@
         </div>
         <div class="position-relative img_form status" :key="i" v-for="i in participantList">
           <img class="img_view" src="@/assets/img/DefaultProfile.png">
-          <img class="ranking_icon bottom-0 end-0 position-absolute" :src="require('@/assets/img/tier/1.png')">
-          <p>{{i.userNickname}}</p>
+          <img class="ranking_icon bottom-0 position-absolute" :src="require('@/assets/img/tier/1.png')">
+          <p class="ms-2 text-nowrap">{{i.userNickname}}</p>
         </div>
       </BlackBox>
     </div>
@@ -103,8 +106,11 @@ export default {
         questionTitle: "치치의 지각 횟수를 맞춰보자!",
         questionLimitTime: 16,
         questionDifficult: 1,
-        questionContent: "콘솔창에 Hello World! 를 출력하는 코드를 작성하세요.",
-        testCaseOutput1: "Hello World!",
+        questionContent: "콘솔창에 Hello World! 를 출력하는 코드를 작성하세요.dkawopdkawopkdawokdoawpkdawopdkaw\n\n\n\n\n\ndrndrndrndnn\n\n\n\ndrnrdndnrdndr\n\n\ndrndrndrn\n",
+        testCaseInput1: "Hello World!",
+        testCaseInput2: "Hello World!",
+        testCaseOutput1: 'Hello World!',
+        testCaseOutput2: 'Hello World!',
         result: "¡Hola mundo!",
         time: "08:36",
         round: 1,
