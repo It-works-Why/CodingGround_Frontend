@@ -38,7 +38,6 @@ import AdminQuestionListView from "@/view/admin/AdminQuestionListView.vue";
 import AdminQuestionDetailView from "@/view/admin/AdminQuestionDetailView.vue";
 import AdminQuestionEditView from "@/view/admin/AdminQuestionEditView.vue";
 import BattleIngameView from "@/view/battle/BattleIngameView.vue";
-import BattleIngameReconnectView from "@/view/battle/BattleIngameReconnectView.vue";
 import BattleView from "@/view/battle/BattleView.vue";
 import AdminCommunityDetailView from "@/view/admin/AdminCommunityDetailView.vue";
 
@@ -159,10 +158,6 @@ const routes = [
       {
         path: '/battle/ingame/:gameId',
         component: BattleIngameView
-      },
-      {
-        path: '/battle/ingame/:gameId/reconnect',
-        component: BattleIngameReconnectView
       },
       {
         path: '/battle',
