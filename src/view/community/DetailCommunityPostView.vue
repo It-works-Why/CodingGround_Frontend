@@ -31,6 +31,36 @@
           <WhiteButton class="edit ms-2" button-value="수정" @click="this.$router.push(`/community/edit/${getData.postNum}`)"></WhiteButton>
         </span>
       </div>
+
+      <div class="comment-area">
+        <div class="text-white comment-detail">
+          <div class="comment-title">
+            <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35" height="35"  @error="handleImageError">
+            <span class="comment-title-nickname">관대하지않은사람</span>
+            <span>2023/12/10 15:30</span>
+            <button class="comment-btn" type="button">삭제</button>
+            <button class="comment-btn" type="button">수정</button>
+          </div>
+          <textarea class="comment-content" disabled>그님티?</textarea>
+        </div>
+
+        <div class="text-white comment-detail">
+          <div class="comment-title">
+            <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35" height="35"  @error="handleImageError">
+            <span class="comment-title-nickname">관대하지않은사람</span>
+            <span>2023/12/10 15:30</span>
+            <button class="comment-btn" type="button">완료</button>
+            <button class="comment-btn" type="button">취소</button>
+          </div>
+          <textarea class="comment-content" placeholder="댓글을 입력해주세요.">수정중이거덩요</textarea>
+        </div>
+
+        <div class="text-white comment-detail">
+          <textarea class="comment-register" placeholder="댓글을 입력해주세요."></textarea>
+        </div>
+        <white-button class="comment-register-btn" button-value="등록"></white-button>
+      </div>
+
     </div>
   </div>
 </template>
@@ -38,7 +68,6 @@
 <script>
 
 import WhiteButton from "@/components/WhiteButton.vue";
-
 
 export default {
   components: {
