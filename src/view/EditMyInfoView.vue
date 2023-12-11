@@ -130,7 +130,6 @@ export default {
   methods: {
     load() {
       this.$httpUtil('/account/get/userInfoDetail', 'GET', null, (data) => {
-        console.log(data);
         this.userInfo = data;
         this.nickname = data.userNickname;
         this.uploadImg = data.userProfileImg;
@@ -151,7 +150,6 @@ export default {
     editPassword() {
       this.updatePassword.userEmail = this.userInfo.userEmail;
       this.$httpUtil('/account/edit/password', 'PATCH', this.updatePassword, (data) => {
-        console.log(data);
         this.userInfo = data;
         this.$successAlert("비밀번호가 변경되었습니다.");
         this.modalCheck = !this.modalCheck;

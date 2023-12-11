@@ -72,7 +72,6 @@ export default {
   methods: {
     load() {
       this.$httpUtil('/admin/question/detail/' + this.$route.params.id,'GET', null, (data) => {
-        console.log(data);
         this.getData1 = data[0];
         this.getData2 = data[1];
         this.getData3 = data[2];
