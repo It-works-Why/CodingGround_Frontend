@@ -100,6 +100,7 @@
                v-for="i in participantList">
             <img class="img_view" @error="handleImageError" :src="i.profileImg">
             <p v-if="i.userGameResult == 'DEFEAT'" class="defeat ms-2 text-nowrap">{{ i.userNickname }} 탈락</p>
+            <p v-if="i.userGameResult == 'DISCONNECT'" class="defeat ms-2 text-nowrap">{{ i.userNickname }} 탈주</p>
             <p v-if="i.userGameResult == 'DEFAULT'"  class="ms-2 text-nowrap">{{ i.userNickname }}</p>
             <p v-if="i.userGameResult == ''"  class="ms-2 text-nowrap">{{ i.userNickname }}</p>
             <p v-if="i.userGameResult == '1'"  class="first ms-2 text-nowrap">{{ i.userNickname }} 1위</p>
