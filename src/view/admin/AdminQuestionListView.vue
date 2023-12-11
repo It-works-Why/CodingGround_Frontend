@@ -87,19 +87,10 @@ export default {
       if (!this.$route.params.keyword || this.$route.params.keyword == "undefined") {
         this.$httpUtil('/admin/question/list?page='+ this.$route.params.pageNum,
             'GET', null, (questionList) => {
-              console.log("keyword : " + this.$route.params.keyword);
-              console.log("page : " + this.$route.params.pageNum);
-              // console.log(questionList.content);
-              console.log("totalPages: " + questionList.totalPages);
-              console.log("totalElements: " + questionList.totalElements);
-              console.log("size: " + questionList.size);
-              console.log("number: " + questionList.number);
-              // console.log("numberOfElements: " + questionList.numberOfElements);
               this.questionList = questionList.content;
               this.totalPage = questionList.totalPages;
 
               this.startBlock = parseInt(parseInt(questionList.number / 10) * 10 + 1);
-              // console.log("startBlock : " + this.startBlock);
 
               const endBlock = this.startBlock + 9;
               if (endBlock > this.totalPage) {
@@ -107,24 +98,14 @@ export default {
               } else {
                 this.endBlock = endBlock;
               }
-              // console.log("endBlock : " + this.endBlock);
             })
       } else {
         this.$httpUtil('/admin/question/list?keyword='+ this.$route.params.keyword + '&page=' + this.$route.params.pageNum,
             'GET', null, (questionList) => {
-              console.log("keyword : " + this.$route.params.keyword);
-              console.log("page : " + this.$route.params.pageNum);
-              // console.log(questionList.content);
-              // console.log("totalPages: " + questionList.totalPages);
-              // console.log("totalElements: " + questionList.totalElements);
-              // console.log("size: " + questionList.size);
-              // console.log("number: " + questionList.number);
-              // console.log("numberOfElements: " + questionList.numberOfElements);
               this.questionList = questionList.content;
               this.totalPage = questionList.totalPages;
 
               this.startBlock = parseInt(parseInt(questionList.number / 10) * 10 + 1);
-              // console.log("startBlock : " + this.startBlock);
 
               const endBlock = this.startBlock + 9;
               if (endBlock > this.totalPage) {
@@ -132,7 +113,6 @@ export default {
               } else {
                 this.endBlock = endBlock;
               }
-              // console.log("endBlock : " + this.endBlock);
             })
       }
     },

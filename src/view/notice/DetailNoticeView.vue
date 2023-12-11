@@ -41,7 +41,6 @@ export default {
   methods: {
     load() {
       this.$httpUtil(`/notice/detail/` + this.$route.params.id, 'GET', null, (data) => {
-        console.log(data);
         this.getData = data;
       });
     },

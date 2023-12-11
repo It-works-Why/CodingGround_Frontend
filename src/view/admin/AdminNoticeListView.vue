@@ -71,7 +71,6 @@ export default {
   methods: {
     load() {
       this.$httpUtil('/admin/notice/list?page='+ this.$route.params.pageNum, 'GET', null, (noticeList) => {
-        console.log(noticeList.content);
         this.noticeList = noticeList.content;
         this.totalPage = noticeList.totalPages;
 

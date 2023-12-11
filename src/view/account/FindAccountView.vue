@@ -64,8 +64,6 @@ export default {
         userEmail: "",
         userId: ""
       },
-      // certificationNumber : '',
-      // key : '',
     }
   },
   methods: {
@@ -74,7 +72,6 @@ export default {
     },
     findId() {
       this.$httpUtil('/account/check/userEmail', 'POST', this.userInfo1, (data) => {
-        console.log(data);
 
         if (data == null || data === "" || data === " ") {
           this.$errorAlert("이메일이 존재하지 않습니다.");
