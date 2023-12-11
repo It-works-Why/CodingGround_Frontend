@@ -146,49 +146,6 @@ export default {
     onError(error) {
       console.log(error);
     },
-    send(event) {
-        let chatMessage = {};
-        chatMessage.sender = this.userInfo.userNickname;
-        chatMessage.content = this.sendMessageData;
-        chatMessage.type = 'CHAT';
-
-        this.stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-        event.preventDefault();
-    },
-    onMessageReceived(payload) {
-      let messageArea = document.getElementById("message_area")
-      var message = JSON.parse(payload.body);
-
-      let messageElement = document.createElement('li');
-
-      if(message.type === 'JOIN') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
-      } else if (message.type === 'LEAVE') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' left!';
-      } else {
-        messageElement.classList.add('chat-message');
-
-        let avatarElement = document.createElement('div');
-        console.log(message)
-        messageElement.appendChild(avatarElement);
-
-        var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(message.sender);
-        usernameElement.appendChild(usernameText);
-        messageElement.appendChild(usernameElement);
-      }
-
-      var textElement = document.createElement('p');
-      var messageText = document.createTextNode(message.content);
-      textElement.appendChild(messageText);
-
-      messageElement.appendChild(textElement);
-
-      messageArea.appendChild(messageElement);
-      messageArea.scrollTop = messageArea.scrollHeight;
-    },
   },
   mounted() {
   },

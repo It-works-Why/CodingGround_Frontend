@@ -21,8 +21,13 @@
               <a class="nav_button text-nowrap fw-bold fs-3 nav-link" href="/admin/notice/list">공지사항 관리</a>
             </li>
           </ul>
-          <span class="navbar-text">
-            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="this.$router.push('/login')">로그인/회원가입</button>
+          <span v-if="!loginCheck" class="navbar-text">
+            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="clickNav('/login')">로그인/회원가입</button>
+          </span>
+          <span v-if="loginCheck" class="navbar-text">
+            <a class="fw-bold mypage_btn text-white" @click="clickNav('/mypage')">{{userInfo.userNickname}}님</a>
+            <br>
+            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="logout()">로그아웃</button>
           </span>
         </div>
       </div>
@@ -34,6 +39,23 @@
 import Logo from "@/components/Logo.vue";
 
 export default{
+  data(){
+    return{
+      loginCheck : false,
+    }
+  },
+  created() {
+    this.userInfo = this.$store.getters.getUser;
+    if(localStorage.getItem('accessToken') != null && localStorage.getItem('refreshToken') != null){
+      this.loginCheck = true;
+      if(this.userInfo.userRole != 'ADMIN'){
+        this.$router.push("/home");
+        this.$warningAlert("접근 권한이 없습니다.");
+      }
+    }else{
+      this.loginCheck = false;
+    }
+  },
   name:"AdminHeaderVue",
   components: { Logo },
   methods: {

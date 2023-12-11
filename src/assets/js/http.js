@@ -7,12 +7,12 @@ import { errorMessageToast } from "@/assets/js/alert";
 // 기존에 설정한 axiosInstance에 토큰 추가하기
 const axiosInstance = axios.create({
     timeout: 10000, // 타임아웃 설정 (10초)
+    // baseURL: "http://k8s-backendgroup-faceca018f-1950602437.ca-central-1.elb.amazonaws.com",
     baseURL: "https://api.mzc-codingground.click/api",
     headers: {
         "Content-Type": "application/json",
-        'X-RapidAPI-Key': '92645c8b10msh7f8b72338057770p1deaecjsn641c7097464c',
-        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com',
-        'Access-Control-Allow-Origin': '*',
+/*        'X-RapidAPI-Key': '92645c8b10msh7f8b72338057770p1deaecjsn641c7097464c',
+        'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'*/
     },
     params: {
         base64_encoded: 'false',
@@ -45,6 +45,7 @@ const methods = {
             const response = await axiosInstance(config);
             successFunction(response.data);
         } catch (error) {
+            console.log(error);
             if(error.response.data){
                 if(error.response.data.message){
                     if(error.response.data.message == "로그인 재시도." && localStorage.getItem("refreshToken") !== null){

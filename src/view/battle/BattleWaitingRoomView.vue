@@ -67,7 +67,6 @@ export default {
       this.stompClient.subscribe('/topic/public/getGameUsersData/failed/'+this.gameData.gameInfo.gameId + "/" + this.userData.userId, this.connectError);
       this.stompClient.subscribe('/topic/public/getGameUsersData/succeed/'+this.gameData.gameInfo.gameId, this.getGameUsersData);
       this.stompClient.subscribe('/topic/public/gameStart/'+this.gameData.gameInfo.gameId, this.gameStarting);
-
     },
     onError(error) {
       this.$router.push("/home");
@@ -76,9 +75,6 @@ export default {
     connectError() {
       this.$errorAlert("비정상적인 접근이 감지 되었습니다.");
       this.$router.push("/home")
-    },
-    send() {
-      this.stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(this.gameData));
     },
     onMessageReceived(payload) {
       console.log(payload)

@@ -51,3 +51,63 @@
     margin-left: 5px;
     /*justify-content: center;*/
 }
+
+
+/* 댓글 */
+
+.comment-area {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.comment-detail {
+    width: 100%;
+    background: #565656;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.comment-title {
+    display: flow;
+}
+
+.comment-title .comment-title-nickname {
+    font-weight: 550;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.comment-content {
+    font-size: 12px;
+    color: white;
+    margin-top: 5px;
+    margin-left: 55px;
+    width: 95%;
+    background: none;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+.comment-btn {
+    float: right;
+    color: white;
+    width: 30px;
+    background: none;
+    border: none;
+}
+
+.comment-register-btn {
+    float: right;
+}
+
+.comment-register {
+    overflow-y: hidden;
+    color: white;
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    resize: none;
+}
