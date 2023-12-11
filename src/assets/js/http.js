@@ -18,11 +18,11 @@ const axiosInstance = axios.create({
         base64_encoded: 'false',
         fields: '*'
     },
+    withCredentials: true
 });
 
 // 토큰을 가지고 있는 경우, 헤더에 토큰 추가
-const token = localStorage.getItem("accessToken"); // 로컬 스토리지에서 토큰 가져오기
-
+const token = localStorage.getItem("accessToken");
 if (token) {
     axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
