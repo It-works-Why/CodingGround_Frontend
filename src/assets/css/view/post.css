@@ -74,12 +74,12 @@
 
 .comment-title .comment-title-nickname {
     font-weight: 550;
-    font-size: 12px;
+    font-size: 14px;
     margin-right: 10px;
 }
 
 .comment-content {
-    font-size: 12px;
+    font-size: 14px;
     color: white;
     margin-top: 5px;
     margin-left: 55px;
@@ -93,7 +93,7 @@
 .comment-btn {
     float: right;
     color: white;
-    width: 30px;
+    width: 50px;
     background: none;
     border: none;
 }
