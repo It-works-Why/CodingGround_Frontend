@@ -24,10 +24,10 @@
           <span v-if="!loginCheck" class="navbar-text">
             <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="clickNav('/login')">로그인/회원가입</button>
           </span>
-          <span v-if="loginCheck" class="navbar-text">
+          <span v-if="loginCheck" class="login-box navbar-text">
             <a class="fw-bold mypage_btn text-white" @click="clickNav('/mypage')">{{userInfo.userNickname}}님</a>
             <br>
-            <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="logout()">로그아웃</button>
+            <button type="button" class="logout-btn text-nowrap fw-bolder btn btn-light" @click="logout()">로그아웃</button>
           </span>
         </div>
       </div>
@@ -59,6 +59,13 @@ export default{
   name:"AdminHeaderVue",
   components: { Logo },
   methods: {
+
+    logout() {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      this.$store.commit('logout');
+      location.href="/home";
+    }
   }
 }
 </script>
