@@ -124,7 +124,7 @@ export default {
         userProfileImg : '',
       },
       certificationNumber : '',
-      key : '',
+      // key : '',
       emailCheck : 0,
     }
   },
@@ -159,7 +159,7 @@ export default {
       }},
     certificationEmail() {
       this.$httpUtil('/account/send/email', 'POST', this.userInfo, (data) => {
-        this.key = data.key;
+        // this.key = data.key;
 
         if (data.exist) {
           this.$errorAlert("이미 사용 중인 이메일 입니다.")
@@ -170,13 +170,26 @@ export default {
       })
     },
     checkEmail() {
-      if (this.certificationNumber === this.key) {
-        this.emailCheck = 1;
-        this.modalCheck = !this.modalCheck
-        this.$successAlert("인증되었습니다.");
-      } else {
-        this.$errorAlert("인증번호를 다시 입력해주세요.");
-      }
+
+      this.$httpUtil('/account/certification/email', 'POST', this.certificationNumber, (data) => {
+        if (data.success) {
+          this.emailCheck = 1;
+          this.modalCheck = !this.modalCheck
+          this.$successAlert("인증되었습니다.");
+        }
+
+        if (data.fail) {
+          this.$errorAlert("인증번호를 다시 입력해주세요.");
+        }
+      })
+
+      // if (this.certificationNumber === this.key) {
+      //   this.emailCheck = 1;
+      //   this.modalCheck = !this.modalCheck
+      //   this.$successAlert("인증되었습니다.");
+      // } else {
+      //   this.$errorAlert("인증번호를 다시 입력해주세요.");
+      // }
     },
     changeImg(event) {
       this.imgFile = this.$refs.inputImg.files[0];
