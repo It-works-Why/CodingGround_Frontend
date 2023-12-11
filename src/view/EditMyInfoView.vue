@@ -195,7 +195,9 @@ export default {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      }).then(() => {}).catch(() => {})
+      }).then(() => {}).catch(() => {
+        this.$errorAlert("프로필 업로드에 실패했습니다.");
+      })
 
     },
     changeImg(event) {
