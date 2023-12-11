@@ -133,7 +133,6 @@ export default {
     },
     mypageload() {
       this.$httpUtil('/mypage/myinfo', 'GET', null, (data) => {
-        console.log(data.data);
 
         // Optional chaining을 사용하여 안전하게 속성에 접근합니다.
         this.userData = data.data || {};
