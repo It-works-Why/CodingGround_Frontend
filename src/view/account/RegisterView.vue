@@ -144,25 +144,23 @@ export default {
       formData.append("userEmail", this.userInfo.userEmail);
 
       if (this.emailCheck === 1) {
-        this.$httpUtil('/account/register','POST',this.userInfo,() => {})
+        this.$httpUtil('/account/register','POST',this.userInfo,() => {
+          this.$successAlert("가입되었습니다.");
+          this.$router.push('/login');
+        })
         axios.post('/api/account/upload/profile', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        }).then(() => {
-          this.$successAlert("가입되었습니다.");
-          this.$router.push('/login');
-        }).catch(() => {
-          this.$successAlert("가입되었습니다.");
-          this.$router.push('/login');
-        })
+        }).then(() => {})
+            .catch(() => {})
       } else if (this.emailCheck === 0) {
         this.$errorAlert("이메일 인증을 해주세요.");
       }},
     certificationEmail() {
       this.$httpUtil('/account/send/email', 'POST', this.userInfo, (data) => {
         this.key = data.key;
-        // console.log(data.key);
+
         if (data.exist) {
           this.$errorAlert("이미 사용 중인 이메일 입니다.")
         } else {

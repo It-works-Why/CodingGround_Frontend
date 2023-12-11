@@ -182,7 +182,9 @@ export default {
           if (data.result === 0) {
             this.$successAlert("수정되었습니다.");
             this.$router.push('/home');
-          } else if (data.result === 1) {
+          }
+
+          if (data.result === 1) {
             this.$errorAlert("이미 존재하는 닉네임 입니다.");
             this.$router.push('/mypage/info/edit');
           }
