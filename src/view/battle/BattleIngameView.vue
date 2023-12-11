@@ -287,8 +287,21 @@ export default {
     },
     getQuestionData(payload) {
       let data = JSON.parse(payload.body);
-      console.log(data)
-      this.cmOptions.mode = data.questionDto.languageName;
+      if(data.questionDto.languageCode == '62'){
+        this.cmOptions.mode = 'text/x-java'
+      }
+      if(data.questionDto.languageCode == '54'){
+        this.cmOptions.mode = 'text/x-c++src'
+      }
+      if(data.questionDto.languageCode == '71'){
+        this.cmOptions.mode = 'text/x-python'
+      }
+      if(data.questionDto.languageCode == '51'){
+        this.cmOptions.mode = 'text/x-csharp'
+      }
+      if(data.questionDto.languageCode == '63'){
+        this.cmOptions.mode = 'text/javascript'
+      }
       this.testCase = data.testCase;
       this.getData = data.questionDto;
       this.timer = setInterval(() => {
