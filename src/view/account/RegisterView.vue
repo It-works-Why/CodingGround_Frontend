@@ -153,8 +153,7 @@ export default {
           this.$successAlert("가입되었습니다.");
           this.$router.push('/login');
         }).catch(() => {
-          this.$successAlert("가입되었습니다.");
-          this.$router.push('/login');
+          this.$errorAlert("오류가 발생했습니다.");
         })
       } else if (this.emailCheck === 0) {
         this.$errorAlert("이메일 인증을 해주세요.");
