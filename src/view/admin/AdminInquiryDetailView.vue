@@ -9,13 +9,13 @@
         <input :value="inquiryDetail.contactTitle" class="w-75 text-white px-4 py-2 fs-4 mb-4 title_box" type="text" disabled/>
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
           <div class="user_info_container">
-            <img style="margin-right: 20px; border-radius: 30px" :src="getData.userProfileImg" width="35">
+            <img style="margin-right: 20px; border-radius: 30px" :src="inquiryDetail.userProfileImg" width="35">
             <div class="user_info_box">
               <div>
-                {{getData.userNickname}}
+                {{inquiryDetail.userNickname}}
               </div>
               <div>
-                {{getData.postTime}}
+                {{inquiryDetail.contactTime}}
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@
         <WhiteButton class="list" button-value="목록"></WhiteButton>
         <span class="action_button">
           <!--    postData.answer이 null이면 button-value = 답변등록, null이 아니면 답변수정으로 변경되게 구현      -->
-          <WhiteButton @click=editInquiryAnswer v-if="inquiryDetail.contactAnswer == null" class="edit ms-2" button-value="답변등록"></WhiteButton>
+         <WhiteButton @click=editInquiryAnswer v-if="inquiryDetail.contactAnswer == null" class="edit ms-2" button-value="답변등록"></WhiteButton>
           <WhiteButton @click=editInquiryAnswer v-if="inquiryDetail.contactAnswer !== null" class="edit ms-2" button-value="답변수정"></WhiteButton>
         </span>
       </div>

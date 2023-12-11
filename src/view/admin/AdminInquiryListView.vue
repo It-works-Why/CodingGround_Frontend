@@ -64,10 +64,13 @@ export default {
   },
   methods: {
     getInquiryList() {
-      this.$httpUtil('/admin/user/inquiry/list/'+ this.$route.params.pageNum +'?searchInput='+this.searchInput, 'GET', null, (data) => {
+
+      const pageNum = parseInt(this.$route.params.pageNum) || 1;
+
+      this.$httpUtil(`/admin/user/inquiry/list/${pageNum}?searchInput=${this.searchInput}`, 'GET', null, (data) => {
         this.inquiryList = data.contactListDtoList;
         this.totalPage = Math.ceil(data.totalPage / 10);
-        this.startBlock = parseInt(parseInt(this.$route.params.pageNum / 10) * 10 + 1);
+        this.startBlock = parseInt(parseInt(pageNum / 10) * 10 + 1);
 
         const endBlock = this.startBlock + 9;
         if (endBlock > this.totalPage) {
@@ -102,11 +105,10 @@ export default {
       }
     },
   },
-  mounted() {
+  created() {
     this.getInquiryList();
   },
   watch: {
-    // watch for changes in route parameters
     '$route.params.pageNum': 'getInquiryList'
   },
   beforeRouteUpdate(to, from, next) {

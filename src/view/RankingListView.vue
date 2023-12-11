@@ -61,19 +61,21 @@
 export default {
   data() {
     return {
+      selectedSeason:"",
+      endBlock:"",
       seasonSelectData: [{
         seasonName: "",
       }],
       seasonSelected: false,
       keyword: "",
       userRankingList: [],
+
     }
   },
-  mounted() {
+  created() {
     this.load();
   },
   watch: {
-    // watch for changes in route parameters
     '$route.params.pageNum': 'load'
   },
   beforeRouteUpdate(to, from, next) {
@@ -84,13 +86,15 @@ export default {
       e.target.src = require("@/assets/img/DefaultProfile.png");
     },
     load() {
-      this.$httpUtil('/ranking/list/' + this.$route.params.pageNum + "/" + '?season=' + this.season + '&keyword=' + this.keyword, 'GET', null, (data) => {
+      const pageNum = this.$route.params.pageNum || 0;
+      this.$httpUtil(`/ranking/list/${pageNum}/?season=${this.season}&keyword=${this.keyword}`, 'GET', null, (data) => {
         console.log("여기여기");
         console.log(data.data);
 
         if (!this.seasonSelected) {
           this.selectedSeason = data.data.seasonListDto[0].seasonName;
           this.seasonSelected = true;
+          this.season = data.data.seasonListDto[0].seasonName;
         }
 
         this.userRankingList = data.data.rankListDto;
