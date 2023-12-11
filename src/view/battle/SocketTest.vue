@@ -37,7 +37,7 @@ export default {
   methods: {
     connect(event) {
       // eslint-disable-next-line no-undef
-      let socket = new SockJS('http://localhost:8090/ws');
+      let socket = new SockJS('https://api.mzc-codingground.click/ws');
       // eslint-disable-next-line no-undef
       this.stompClient = Stomp.over(socket);
 

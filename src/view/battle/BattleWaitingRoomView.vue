@@ -52,7 +52,7 @@ export default {
     // 처음 들어올때 created() 문에 들어갈 소켓연결
     connect() {
       // eslint-disable-next-line no-undef
-      const socket = new SockJS('http://localhost:8090/ws');
+      const socket = new SockJS('https://api.mzc-codingground.click/ws');
       const data = {};
       data.gameId = this.gameData.gameInfo.gameId;
       // eslint-disable-next-line no-undef
