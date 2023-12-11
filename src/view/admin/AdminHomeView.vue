@@ -18,27 +18,27 @@
     </div>
     <div class="col-md-3">
       <div class="box rounded-2">
-        <dt>아무거나</dt>
+        <dt>이용 회원</dt>
         <dd>
-          <span id="examTotalCount">{{ totalRecipe }}</span>
-          건
-        </dd>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="box rounded-2">
-        <dt>뭐가될까</dt>
-        <dd>
-          <span id="questionTotalCount"> {{ newUser }} </span>
+          <span id="examTotalCount">{{ totalUser }}</span>
           명
         </dd>
       </div>
     </div>
     <div class="col-md-3">
       <div class="box rounded-2">
-        <dt>IDK</dt>
+        <dt>누적 매칭 게임</dt>
         <dd>
-          <span id="resultTotalCount">{{ newRecipe }}</span>
+          <span id="questionTotalCount"> {{ matchingGameCount }} </span>
+          건
+        </dd>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="box rounded-2">
+        <dt>누적 랭크 게임</dt>
+        <dd>
+          <span id="resultTotalCount">{{ rankGameCount }}</span>
           건
         </dd>
       </div>
@@ -54,48 +54,17 @@
               <th class="text-center w-25">날짜</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody :key="i" :value="inquiry" v-for="(inquiry, i) in inquiryList"  @click="this.$router.push('/admin/user/inquiry/detail/' + inquiry.contactNum)">
             <tr>
-              <td class="overflow-hidden text-center">문희는 포도가 먹고시푼뎅</td>
-              <td class="overflow-hidden text-center">나문희</td>
-              <td class="overflow-hidden text-center">2023-11-21</td>
-            </tr>
-            <tr>
-              <td class="overflow-hidden text-center">왜 내가 신입 랭크임</td>
-              <td class="overflow-hidden text-center">이한형</td>
-              <td class="overflow-hidden text-center">2023-11-21</td>
-            </tr>
-            <tr>
-              <td class="overflow-hidden text-center">윗글 GPT쓰는듯 ㅇㅇ</td>
-              <td class="overflow-hidden text-center">LHH</td>
-              <td class="overflow-hidden text-center">2023-11-21</td>
-            </tr>
-            <tr>
-              <td class="overflow-hidden text-center">내는 딸기 스무디가 먹고싶은데</td>
-              <td class="overflow-hidden text-center">치치</td>
-              <td class="overflow-hidden text-center">2023-11-21</td>
-            </tr>
-            <tr>
-              <td class="overflow-hidden text-center">히터좀 끄면 안댈까 엉엉</td>
-              <td class="overflow-hidden text-center">나죽어</td>
-              <td class="overflow-hidden text-center">2023-11-21</td>
+              <td class="overflow-hidden text-center">{{inquiry.contactTitle}}</td>
+              <td class="overflow-hidden text-center">{{inquiry.userNickname}}</td>
+              <td class="overflow-hidden text-center">{{inquiry.contactTime}}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="chart_wrapper">
-      <div class="chart_child">
-        <div class="chart rounded-3">
-          <VueApexCharts :options="chartOptions1" :series="formattedChartSeries1" type="line" height="300"></VueApexCharts>
-        </div>
-      </div>
-      <div class="chart_child">
-        <div class="chart rounded-3">
-          <VueApexCharts :options="chartOptions2" :series="formattedChartSeries2" type="bar" height="300"></VueApexCharts>
-        </div>
-      </div>
-    </div>
+
   </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 end-0"></div>
@@ -104,12 +73,11 @@
 </template>
 
 <script>
-import VueApexCharts from 'vue3-apexcharts';
 import WhiteButton from "@/components/WhiteButton.vue";
 
 export default {
   name: "AdminDashboard",
-  components: {WhiteButton, VueApexCharts},
+  components: {WhiteButton},
   computed: {
     formattedChartSeries1() {
       return this.chartSeries1.map((series) => ({
@@ -132,11 +100,12 @@ export default {
   },
   data() {
     return {
+      inquiryList: [],
       buttonValue : "새로고침",
-      waitingInquiry : 0,
-      totalRecipe : 0,
-      newUser : 0,
-      newRecipe : 0,
+      waitingInquiry : "",
+      totalUser : "",
+      matchingGameCount : "",
+      rankGameCount : "",
       chartOptions1: {
         chart: {
           id: 'chart1',
@@ -268,7 +237,6 @@ export default {
   },
   created(){
     this.updateData();
-    this.counter(150,200,300,400);
   },
   methods: {
     counter(waitingInquiry, totalRecipe, newRecipe, newUser) {
@@ -288,20 +256,37 @@ export default {
         currentNewRecipe += step3;
         currentNewUser += step4;
 
-        this.waitingInquiry = Math.ceil(currentwaitingInquiry).toLocaleString();
-        this.totalRecipe = Math.ceil(currentTotalRecipe).toLocaleString();
-        this.newRecipe = Math.ceil(currentNewRecipe).toLocaleString();
-        this.newUser = Math.ceil(currentNewUser).toLocaleString();
+        this.waitingInquiry = currentwaitingInquiry.toFixed(0).toLocaleString();
+        this.totalUser = currentTotalRecipe.toFixed(0).toLocaleString();
+        this.rankGameCount = currentNewRecipe.toFixed(0).toLocaleString();
+        this.matchingGameCount = currentNewUser.toFixed(0).toLocaleString();
 
-        if (currentwaitingInquiry >= waitingInquiry &&
+        if (
+            currentwaitingInquiry >= waitingInquiry &&
             currentTotalRecipe >= totalRecipe &&
             currentNewRecipe >= newRecipe &&
-            currentNewUser >= newUser) {
+            currentNewUser >= newUser
+        ) {
           clearInterval(handle);
         }
       }, 80);
     },
     async updateData() {
+      this.$httpUtil('/admin/home', 'GET', null, (data) => {
+        console.log(data.data)
+        this.userData = data.data;
+        this.waitingInquiry = this.userData.noAnswerCount;
+        this.totalUser = this.userData.signUpCount;
+        this.matchingGameCount =this.userData.matchingGameCount
+        this.rankGameCount = this.userData.rankGameCount
+        this.inquiryList = this.userData.adminInquiryDtos
+
+
+        this.counter(this.waitingInquiry,this.totalUser,this.rankGameCount,this.matchingGameCount);
+
+      })
+
+
       const data = [Math.random() * 100, Math.random() * 100,Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100];
       this.chartSeries1[0].data = data;
       this.chartSeries2[0].data = data;
