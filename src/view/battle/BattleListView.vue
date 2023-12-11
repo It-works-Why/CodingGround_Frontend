@@ -118,7 +118,7 @@ export default {
             this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
               console.log(data);
               // eslint-disable-next-line no-undef
-              const socket = new SockJS('http://localhost:8090/ws');
+              const socket = new SockJS('https://api.mzc-codingground.click/ws');
               const data1 = {};
               data1.gameId = data.data.gameId
               // eslint-disable-next-line no-undef
