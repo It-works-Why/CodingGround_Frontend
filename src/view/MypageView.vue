@@ -78,6 +78,7 @@ export default {
           gametype: '',
           gameDate: '',
           gamelanguage: '',
+          languageImg: "",
           gameusersprofile: [],
           gameusers:[]
         },
@@ -136,6 +137,7 @@ export default {
 
         // Optional chaining을 사용하여 안전하게 속성에 접근합니다.
         this.userData = data.data || {};
+        console.log(this.userData);
 
         // 일부 속성이 없는 경우를 대비해 기본값이나 빈 배열을 제공합니다.
         this.gameRecordData = (this.userData.gameInfoData || []).map((gameInfo) => {
@@ -144,6 +146,7 @@ export default {
             gametype: gameInfo.gameType,
             gameDate: gameInfo.timeDifference,
             gamelanguage: gameInfo.languageName,
+            languageImg: gameInfo.languageImg,
             gameusersprofile: gameInfo.userProfileImgList,
             gameusers: gameInfo.userNicknamesList,
           };
