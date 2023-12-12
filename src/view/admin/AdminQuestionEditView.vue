@@ -89,27 +89,16 @@ export default {
       });
     },
     edit() {
-      const questionTitle = this.getData1.questionTitle;
-      const questionLimitTime = this.getData1.questionLimitTime;
-      const questionDifficult = this.getData1.questionDifficult;
-      const questionContent = this.getData1.questionContent;
-      const testCaseInput1 = this.getData1.testCaseInput;
-      const testCaseInput2 = this.getData2.testCaseInput;
-      const testCaseInput3 = this.getData3.testCaseInput;
-      const testCaseOutput1 = this.getData1.testCaseOutput;
-      const testCaseOutput2 = this.getData2.testCaseOutput;
-      const testCaseOutput3 = this.getData3.testCaseOutput;
-
-      this.editData.questionTitle = questionTitle;
-      this.editData.questionLimitTime = questionLimitTime;
-      this.editData.questionDifficult = questionDifficult;
-      this.editData.questionContent = questionContent;
-      this.editData.testCaseInput1 = testCaseInput1;
-      this.editData.testCaseInput2 = testCaseInput2;
-      this.editData.testCaseInput3 = testCaseInput3;
-      this.editData.testCaseOutput1 = testCaseOutput1;
-      this.editData.testCaseOutput2 = testCaseOutput2;
-      this.editData.testCaseOutput3 = testCaseOutput3;
+      this.editData.questionTitle = this.getData1.questionTitle;
+      this.editData.questionLimitTime = this.getData1.questionLimitTime;
+      this.editData.questionDifficult = this.getData1.questionDifficult;
+      this.editData.questionContent = this.getData1.questionContent;
+      this.editData.testCaseInput1 = this.getData1.testCaseInput;
+      this.editData.testCaseInput2 = this.getData2.testCaseInput;
+      this.editData.testCaseInput3 = this.getData3.testCaseInput;
+      this.editData.testCaseOutput1 = this.getData1.testCaseOutput;
+      this.editData.testCaseOutput2 = this.getData2.testCaseOutput;
+      this.editData.testCaseOutput3 = this.getData3.testCaseOutput;
 
       this.$httpUtil(`/admin/question/edit/` + this.$route.params.id, 'PATCH', this.editData, (data) => {
         this.$router.push('/admin/question/detail/' + this.$route.params.id)
