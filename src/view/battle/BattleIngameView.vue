@@ -68,6 +68,8 @@
         <p class="text-white">제한 시간이 지나면 자동으로 제출됩니다.</p>
         <button @click="send('submit', getData.round)" class="btn red-btn">제출</button>
         <button @click="send('run', getData.round)" class="btn blue-btn">실행</button>
+        <button @click="send('submit', getData.round)" class="btn red-btn">제출</button>
+        <button @click="send('run', getData.round)" class="btn blue-btn">실행</button>
       </BlackBox>
 
     </div>
@@ -192,20 +194,13 @@ export default {
     },
 
     send(type, round) {
-      let data = {};
-      data.userId = this.userData.userId;
-      data.code = this.sendCode
-      data.type = type;
-      data.languageCode = this.getData.languageCode;
-      if (data.code == '' || data.code == null) {
-        data.code = 'empty!';
-      }
-      this.stompClient.send("/app/send/" + this.$route.params.gameId, {}, JSON.stringify(data));
-      if (type == 'submit' && round == 1) {
+      if (round == 1) {
         this.round1Send = true;
+        this.send1(type);
       }
-      if (type == 'submit' && round == 2) {
+      if (round == 2) {
         this.round2Send = true;
+        this.send2(type);
       }
     },
     send1(type) {
