@@ -149,6 +149,7 @@ export default {
           this.$successAlert("가입되었습니다.");
           this.$router.push('/login');
         })
+
         if (this.changeImgFile) {
           axios.post('/api/account/upload/profile', formData, {
             headers: {
@@ -156,6 +157,7 @@ export default {
             }
           }).then(() => {
           }).catch(() => {
+            this.$errorAlert("프로필 업로드에 실패했습니다.");
           })
         }
       } else if (this.emailCheck === 0) {

@@ -206,6 +206,7 @@ export default {
           }
         }).then(() => {
         }).catch(() => {
+          this.$errorAlert("프로필 업로드에 실패했습니다.");
         })
       }
     },
