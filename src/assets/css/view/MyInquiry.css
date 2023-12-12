@@ -113,6 +113,16 @@ h5 {
 .mp_container .top_box_title {
     color: white;
 }
+.mp_container .top_box_name {
+    color: white;
+    font-size: 35pt;
+    min-width: 384px;
+}
+
+.mp_container .top_box_company {
+    color: white;
+    font-size: 20pt;
+}
 
 .mp_container .top_box_content {
     color: white;

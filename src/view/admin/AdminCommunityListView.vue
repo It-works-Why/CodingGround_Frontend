@@ -76,6 +76,8 @@ export default {
       currentBlock : 0,
       startBlock : 0,
       endBlock : 0,
+      keyword:"",
+      search:"",
 
       communitySelectData: [
         "제목",
