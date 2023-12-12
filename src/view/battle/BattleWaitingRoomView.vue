@@ -84,12 +84,11 @@ export default {
       this.playUserTotalCount = gameUsersData.userTotalCount;
       this.playUsersData = gameUsersData.playUsers;
     },
-    gameStarting(payload) {
-      console.log(payload);
+    gameStarting() {
       this.counter();
     },
     counter() {
-      let currentCountDown = 11;
+      let currentCountDown = 6;
 
       const handle = setInterval(() => {
         currentCountDown -= 1;
