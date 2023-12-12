@@ -274,43 +274,26 @@ router.afterEach((to) => {
   if(title) document.title = title
 
 })
-router.beforeEach(async (to, from, next) => {
-  try {
-    if (localStorage.getItem("accessToken") != null) {
-      await httpRequest("/account/userInfo", "GET", null, (data) => {
-        let userInfo = data.data;
-        store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
-      })
-    }
-  } catch (e) {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-  }
 
-  // if(localStorage.getItem('refreshToken')){
-  //   if (!store.state.userInfo.userId) {
-  //     try {
-  //       const accessToken = localStorage.getItem('refreshToken');
-  //       const response = await axios.get('/api/account/userInfo', {
-  //         headers: {
-  //           'Authorization': `Bearer ${accessToken}`
-  //         }
-  //       });
-  //
-  //       const userInfo = {
-  //         userId: response.data.data.userId,
-  //         userRole: response.data.data.userRole,
-  //         userNickname: response.data.data.userNickname
-  //       };
-  //       store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
-  //     } catch (error) {
-  //       localStorage.removeItem("refreshToken");
-  //       localStorage.removeItem("accessToken");
-  //     }
-  //   }
-  // }
+router.beforeEach(async (to, from, next) => {
+  let userData = store.getters.getUser
+  if(userData.userId == null || userData.userId == '') {
+    try {
+      console.log("여기야")
+      if (localStorage.getItem("accessToken") != null) {
+        await httpRequest("/account/userInfo", "GET", null, (data) => {
+          let userInfo = data.data;
+          store.commit('addUserInfo', userInfo); // Vuex 상태 업데이트
+        })
+      }
+    } catch (e) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    }
+  }
   next(); // 다음 단계로 진행
 });
+
 
 
 
