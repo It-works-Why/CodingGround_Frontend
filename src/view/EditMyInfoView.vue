@@ -20,13 +20,15 @@
             <div class="my-3 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">아이디</span>
               <span class="ps-5">
-                <input disabled v-model="userInfo.userId" style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input disabled v-model="userInfo.userId" style="width: 70%" class="text-white fs-4 input_box"
+                       type="text"/>
               </span>
             </div>
             <div class="my-3 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">이메일</span>
               <span class="ps-5">
-                <input disabled v-model="userInfo.userEmail" style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input disabled v-model="userInfo.userEmail" style="width: 70%" class="text-white fs-4 input_box"
+                       type="text"/>
               </span>
             </div>
             <div class="my-4 w-100">
@@ -39,7 +41,8 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">닉네임</span>
               <span class="ps-5">
-                <input v-model="userInfo.userNickname" placeholder="닉네임을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-model="userInfo.userNickname" placeholder="닉네임을 입력해주세요." style="width: 70%"
+                       class="text-white fs-4 input_box" type="text"/>
               </span>
             </div>
             <div class="w-100">
@@ -49,21 +52,26 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">소속</span>
               <span class="ps-5">
-                <select v-model="userInfo.userAffiliation" class="options rounded-3 select_box text-center text-white fs-5 p-1 input_box">
+                <select v-model="userInfo.userAffiliation"
+                        class="options rounded-3 select_box text-center text-white fs-5 p-1 input_box">
                   <option selected value="학생" class="options">학생</option>
                   <option value="직장인" class="options">직장인</option>
                   <option value="무직" class="options">무직</option>
                 </select>
-                <input v-model="userInfo.userAffiliationDetail" class="text-center w-50 fs-5 text-white options ms-2 p-1 rounded-3" type="text" placeholder="소속을 입력해주세요.">
+                <input v-model="userInfo.userAffiliationDetail"
+                       class="text-center w-50 fs-5 text-white options ms-2 p-1 rounded-3" type="text"
+                       placeholder="소속을 입력해주세요.">
               </span>
             </div>
           </div>
         </div>
         <div class="text-white">
-          회원 탈퇴를 원하실 경우 <p @click="deleteUser" style="cursor: pointer; text-decoration-line: underline" class="fw-bolder d-inline-block">여기</p>를 클릭해주세요.
+          회원 탈퇴를 원하실 경우 <p @click="deleteUser" style="cursor: pointer; text-decoration-line: underline"
+                           class="fw-bolder d-inline-block">여기</p>를 클릭해주세요.
         </div>
         <div class="px-5">
-          <input type="submit" value="수정하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white" @click="editMyInfo()">
+          <input type="submit" value="수정하기" class="mb-4 py-1 rounded-3 red_button w-100 text-white"
+                 @click="editMyInfo()">
         </div>
       </div>
       <div class="m-1 box_circle d-inline-block position-absolute bottom-0 start-0"></div>
@@ -79,7 +87,8 @@
           <p class="modal-title">비밀번호를 변경해주세요.</p>
           <p class="modal-p">비밀번호는 알파벳 대/소문자, 숫자, 특수문자(~ ! @ # $ % ^ & *)를 포함하여 8자리 이상으로 작성해주세요.</p>
           <div class="modal-box">
-            <input class="input-number" v-model="updatePassword.userPassword" type="password" placeholder="비밀번호를 입력해주세요."/>
+            <input class="input-number" v-model="updatePassword.userPassword" type="password"
+                   placeholder="비밀번호를 입력해주세요."/>
           </div>
         </div>
       </div>
@@ -99,10 +108,11 @@ export default {
   components: {
     WhiteButton
   },
-  data(){
+  data() {
     return {
       modalCheck: false,
       imgFile: '',
+      changeImgFile: false,
       uploadImg: '',
       userInfo: [],
       updatePassword: {
@@ -120,11 +130,11 @@ export default {
         userAffiliation: '',
         userAffiliationDetail: ''
       },
-      nicknameCheck : 0,
+      nicknameCheck: 0,
       nickname: '',
     }
   },
-  mounted(){
+  mounted() {
     this.load();
   },
   methods: {
@@ -140,7 +150,7 @@ export default {
     },
     deleteUser() {
       let isDelete = confirm("탈퇴하시겠습니까?");
-      if(isDelete){
+      if (isDelete) {
         this.$successAlert("탈퇴 처리 되었습니다.")
       }
     },
@@ -177,9 +187,10 @@ export default {
         this.updateMyInfo.userAffiliationDetail = this.userInfo.userAffiliationDetail;
 
         this.$httpUtil('/account/edit/myInfo', 'PATCH', this.updateMyInfo, (data) => {
+          console.log(data);
           if (data.result === 0) {
             this.$successAlert("수정되었습니다.");
-            this.$router.push('/home');
+            location.href="/home";
           }
 
           if (data.result === 1) {
@@ -188,14 +199,18 @@ export default {
           }
         })
       }
-
-      axios.post('/api/account/upload/profile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(() => {}).catch(() => {})
+      if (this.changeImgFile) {
+        axios.post('/api/account/upload/profile', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(() => {
+        }).catch(() => {
+        })
+      }
     },
     changeImg(event) {
+      this.changeImgFile = true;
       this.imgFile = this.$refs.inputImg.files[0];
 
       let reader = new FileReader();
@@ -209,4 +224,4 @@ export default {
 }
 </script>
 
-<style src="@/assets/css/view/register.css" scoped />
+<style src="@/assets/css/view/register.css" scoped/>

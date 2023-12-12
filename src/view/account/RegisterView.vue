@@ -114,6 +114,7 @@ export default {
       modalCheck: false,
       imgFile: '',
       uploadImg: '',
+      changeImgFile: false,
       userInfo:{
         userId : '',
         userPassword : '',
@@ -148,12 +149,15 @@ export default {
           this.$successAlert("가입되었습니다.");
           this.$router.push('/login');
         })
-        axios.post('/api/account/upload/profile', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(() => {})
-            .catch(() => {})
+        if (this.changeImgFile) {
+          axios.post('/api/account/upload/profile', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(() => {
+          }).catch(() => {
+          })
+        }
       } else if (this.emailCheck === 0) {
         this.$errorAlert("이메일 인증을 해주세요.");
       }},
@@ -183,15 +187,9 @@ export default {
         }
       })
 
-      // if (this.certificationNumber === this.key) {
-      //   this.emailCheck = 1;
-      //   this.modalCheck = !this.modalCheck
-      //   this.$successAlert("인증되었습니다.");
-      // } else {
-      //   this.$errorAlert("인증번호를 다시 입력해주세요.");
-      // }
     },
     changeImg(event) {
+      this.changeImgFile = true;
       this.imgFile = this.$refs.inputImg.files[0];
 
       let reader = new FileReader();
