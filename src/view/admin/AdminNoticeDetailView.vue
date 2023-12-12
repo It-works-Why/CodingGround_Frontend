@@ -47,7 +47,6 @@ export default {
     dayjs,
     load() {
       this.$httpUtil(`/admin/notice/detail/` + this.$route.params.id, 'GET', null, (data) => {
-        console.log(data);
         this.getData = data;
       });
     },
