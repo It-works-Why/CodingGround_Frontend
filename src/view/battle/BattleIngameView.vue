@@ -68,8 +68,6 @@
         <p class="text-white">제한 시간이 지나면 자동으로 제출됩니다.</p>
         <button @click="send('submit', getData.round)" class="btn red-btn">제출</button>
         <button @click="send('run', getData.round)" class="btn blue-btn">실행</button>
-        <button @click="send('submit', getData.round)" class="btn red-btn">제출</button>
-        <button @click="send('run', getData.round)" class="btn blue-btn">실행</button>
       </BlackBox>
 
     </div>
