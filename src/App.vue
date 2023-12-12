@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-5" id="app">
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
@@ -19,13 +19,14 @@ export default{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 #app {
+  height: 100%;
   width: 100%;
   min-width: 1200px;
   margin: auto;
-  background: #f5f5f5;
 }
 
 body::-webkit-scrollbar {
