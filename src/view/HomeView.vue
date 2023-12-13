@@ -17,6 +17,9 @@ export default {
   },
   methods: {
   },
+  created() {
+    this.$store.commit('unSubcribe');
+  }
 
 };
 </script>

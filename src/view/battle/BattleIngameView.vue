@@ -69,7 +69,7 @@
         <p class="text-white">제한 시간이 지나면 자동으로 제출됩니다.</p>
         <div class="btns">
           <img class="loading-img" v-if="disableBtn" src="@/assets/img/whiteLoading.gif">
-          <button :disabled="disableBtn" @click="send('run', getData.round)" class="btn blue-btn">실행</button>
+          <button :disabled="disableBtn" @click="send('run', getData.round)" class="btn blue-btn mx-2">실행</button>
           <button :disabled="disableBtn" @click="send('submit', getData.round)" class="btn red-btn mx-2">제출</button>
         </div>
       </BlackBox>

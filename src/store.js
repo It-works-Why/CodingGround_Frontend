@@ -28,6 +28,11 @@ const store = createStore({
         },
         setConnection(state, stomp) {
             state.stompClient = stomp;
+        },
+        unSubcribe(state){
+            if(state.stompClient != null || state.stompClient !== ''){
+                state.stompClient.unSubcribe();
+            }
         }
     },
     actions: {
