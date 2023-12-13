@@ -1,6 +1,6 @@
 <template>
   <div class="text-center mt-5">
-    <img src="@/assets/img/mainbanner.svg" alt>
+    <img src="@/assets/img/mainbanner.png" alt>
   </div>
   <div class="text-center my-5">
     <img src="@/assets/img/main.svg">
