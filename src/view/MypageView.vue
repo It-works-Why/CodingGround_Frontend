@@ -26,11 +26,14 @@
       </div>
     </div>
     <div class="center">
-      <div  class="ranking_lists">
+      <div v-if="userData.gameBadge && userData.gameBadge.length > 0" class="ranking_lists">
         <div :key="i" :value="userBadges" v-for="(userBadges, i) in userData.gameBadge" class="ranking_list">
           <img class="ranking_icon" :src="require('@/assets/img/tier/' + userBadges.num + '.png')">
           <h6>{{userBadges.name}}</h6>
         </div>
+      </div>
+      <div class="badges-text" v-else>
+        보유한 랭크나 뱃지가 없습니다.
       </div>
     </div>
     <div class="bottom">
@@ -44,8 +47,12 @@
       </div>
       <div class="bottom_right">
         <div class="box-top">최근전적</div>
-        <div class="box-main">
+        <div v-if="gameRecordData && gameRecordData.length > 0"  class="box-main">
           <GameRecordBox :key="i" :gameRecord="gameRecord" v-for="(gameRecord, i) in gameRecordData"   @record-click="redirectToRecordPage"></GameRecordBox>
+        </div>
+        <div class="record-text" style="justify-items: center" v-else>
+          게임을 플레이 해주세요.
+          <img style="width: 3%" :src="require('@/assets/img/fire.png')">
         </div>
       </div>
     </div>
