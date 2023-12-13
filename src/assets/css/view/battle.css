@@ -162,6 +162,7 @@ h1 {
 }
 .btn:disabled{
     background: yellow;
+    color: black;
 }
 
 .blue-btn {

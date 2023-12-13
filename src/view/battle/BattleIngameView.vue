@@ -69,8 +69,8 @@
         <p class="text-white">제한 시간이 지나면 자동으로 제출됩니다.</p>
         <div class="btns">
           <img class="loading-img" v-if="disableBtn" src="@/assets/img/whiteLoading.gif">
-          <button :disabled="disableBtn" @click="send('submit', getData.round)" class="btn red-btn mx-2">제출</button>
           <button :disabled="disableBtn" @click="send('run', getData.round)" class="btn blue-btn">실행</button>
+          <button :disabled="disableBtn" @click="send('submit', getData.round)" class="btn red-btn mx-2">제출</button>
         </div>
       </BlackBox>
 
@@ -320,8 +320,6 @@ export default {
       return;
     }
     this.userData = this.$store.getters.getUser;
-    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-    this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
     this.onConnected();
   },
   mounted() {
@@ -331,9 +329,15 @@ export default {
     }
     this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
     this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
+    setTimeout(() => {
+      if(this.getData.questionTitle === '치치의 지각 횟수를 맞춰보자!'){
+        this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
+      }
+    }, 3000);
   },
-
 }
+
+
 </script>
 
 <style src="@/assets/css/view/battle.css" scoped/>
