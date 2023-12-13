@@ -20,10 +20,19 @@
     display: inline-block;
     margin-right: 20px;
     margin-top: 6px;
-    text-align: right;
 
 }
 .logout-btn{
     float: right;
     margin-top: 6px;
+}
+.login-box .user_info_box{
+   display: inline-block;
+    float: right;
+    text-align: right;
+    width: 100%;
+}
+.header-rankImg{
+    width: 22px;
+    float: right;
 }
