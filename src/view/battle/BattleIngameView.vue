@@ -329,7 +329,8 @@ export default {
       this.wrongConnect();
       return;
     }
-
+    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+    this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
   },
 
 }
