@@ -63,7 +63,7 @@ export default {
     },
     onConnected() {
       this.stompClient.send("/app/join/queue/"+this.gameData.gameInfo.gameId, {}, this.userData.userId);
-
+      this.stompClient.subscribe('/topic/public/disconnect/user/' + this.$route.params.gameId + "/" + this.userData.userId, this.failedUser);
       this.stompClient.subscribe('/topic/public/getGameUsersData/failed/'+this.gameData.gameInfo.gameId + "/" + this.userData.userId, this.connectError);
       this.stompClient.subscribe('/topic/public/getGameUsersData/succeed/'+this.gameData.gameInfo.gameId, this.getGameUsersData);
       this.stompClient.subscribe('/topic/public/gameStart/'+this.gameData.gameInfo.gameId, this.gameStarting);
@@ -71,6 +71,10 @@ export default {
     onError(error) {
       this.$router.push("/home");
       this.$errorAlert(error);
+    },
+    failedUser(){
+      this.stompClient.disconnect();
+      this.$router.push("/home")
     },
     connectError() {
       this.$errorAlert("비정상적인 접근이 감지 되었습니다.");

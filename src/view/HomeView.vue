@@ -1,53 +1,9 @@
 <template>
-  <div>
+  <div class="text-center mt-5">
     <img src="@/assets/img/mainbanner.svg" alt>
   </div>
-  <div>
+  <div class="text-center my-5">
     <img src="@/assets/img/main.svg">
-  </div>
-  <br>
-  <button @click="alertBtn('success/test')">성공</button>
-  <button @click="alertBtn('fail/test')">실패</button>
-  <br>
-  <input type="button" @click="tokenCheck()" value="로그인 체크">
-  <input type="button" @click="tokenAdminCheck()" value="관리자 로그인 체크">
-  <br>
-  <button @click="mybatisTest('mybatis/test')">MyBatis 테스트</button>
-  <br>
-  <button @click="getUserInfo">vuex테스트</button>
-  <br>
-  <h3>api 테스트, 테스트</h3>
-  <input type="text" placeholder="System.in">
-  <br>
-  <textarea style="height: 300px" v-model="body.source_code" class="code_mirror w-75">
-
-  </textarea>
-  <input @click="run" type="button" value="실행">
-  <input @click="check" type="button" value="확인">
-  <div>console</div>
-  <div>{{ result }}</div>
-  <br>
-
-  <button @click="connect">WebSocket 연결</button>
-  <br>
-
-  <div id="chat-page" class="hidden">
-    <div class="chat-container">
-      <div class="chat-header">
-        <h2>Spring WebSocket Chat Demo</h2>
-      </div>
-      <ul id="message_area">
-
-      </ul>
-      <form id="messageForm" name="messageForm" nameForm="messageForm">
-        <div class="form-group">
-          <div class="input-group clearfix">
-            <input v-model="sendMessageData" type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-            <button @click="send" type="button" class="primary">Send</button>
-          </div>
-        </div>
-      </form>
-    </div>
   </div>
 </template>
 
@@ -156,11 +112,6 @@ export default {
 </script>
 
 <style scoped>
-div {
-  text-align: center;
-  margin-top: 50px;
-  margin-bottom: 150px;
-}
 
 </style>
 
