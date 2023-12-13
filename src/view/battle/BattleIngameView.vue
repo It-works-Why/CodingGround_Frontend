@@ -1,5 +1,5 @@
 <template>
-  <div class="content mt-5 background_box m-auto">
+  <div class="mb-5 content mt-5 background_box m-auto">
 
     <div class="section-left">
       <BlackBox class="rounded-3 question">
@@ -44,7 +44,7 @@
       <Console-box class="rounded-2 console console-box">
         <Codemirror
             v-model:value="sendCode"
-            class="h-100 rounded-2"
+            class="fs-6 h-100 rounded-2"
             :options="cmOptions"
             placeholder="test placeholder"
         />
@@ -55,6 +55,7 @@
           테스트
         </div>
         <ConsoleBox class="console result-console">
+          <p v-if="disableBtn" class="fs-4">컴파일 중 입니다...</p>
           <div class="result">
             <div class="d-inline" :key="a" v-for="(i,a) in result">
               <div class="d-inline-block">
@@ -66,8 +67,11 @@
           </div>
         </ConsoleBox>
         <p class="text-white">제한 시간이 지나면 자동으로 제출됩니다.</p>
-        <button @click="send('submit', getData.round)" class="btn red-btn">제출</button>
-        <button @click="send('run', getData.round)" class="btn blue-btn">실행</button>
+        <div class="btns">
+          <img class="loading-img" v-if="disableBtn" src="@/assets/img/whiteLoading.gif">
+          <button :disabled="disableBtn" @click="send('submit', getData.round)" class="btn red-btn mx-2">제출</button>
+          <button :disabled="disableBtn" @click="send('run', getData.round)" class="btn blue-btn">실행</button>
+        </div>
       </BlackBox>
 
     </div>
@@ -138,6 +142,7 @@ export default {
   components: {ConsoleBox, GrayBox, BlackBox},
   data() {
     return {
+      disableBtn : false,
       round2Send : false,
       round1Send: false,
       timer: '',
@@ -175,7 +180,6 @@ export default {
       this.sendCode = '';
       this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
     },
-    /////////////////////////////////////////// 위부턴 2라운드 ///////////////////////////////////////////////
     round1End() {
       clearInterval(this.timer);
       if (!this.round1Send) {
@@ -188,8 +192,9 @@ export default {
         this.send2("submit");
       }
     },
-
     send(type, round) {
+      this.result = [];
+      this.disableBtn = true;
       if (round == 1) {
         this.round1Send = true;
         this.send1(type);
@@ -302,10 +307,10 @@ export default {
     },
     getResultData(payload) {
       let data = JSON.parse(payload.body);
-      this.result = [];
       for (let i of data) {
         this.result.push(i.isCorrect);
       }
+      this.disableBtn = false;
     }
   },
   created() {
@@ -315,6 +320,8 @@ export default {
       return;
     }
     this.userData = this.$store.getters.getUser;
+    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+    this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
     this.onConnected();
   },
   mounted() {
@@ -322,8 +329,7 @@ export default {
       this.wrongConnect();
       return;
     }
-    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-    this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
+
   },
 
 }

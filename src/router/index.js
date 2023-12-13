@@ -279,7 +279,6 @@ router.beforeEach(async (to, from, next) => {
   let userData = store.getters.getUser
   if(userData.userId == null || userData.userId == '') {
     try {
-      console.log("여기야")
       if (localStorage.getItem("accessToken") != null) {
         await httpRequest("/account/userInfo", "GET", null, (data) => {
           let userInfo = data.data;
