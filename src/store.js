@@ -27,6 +27,7 @@ const store = createStore({
             state.userInfo.userNickname = '';
         },
         setConnection(state, stomp) {
+            stomp.unsubscribe();
             state.stompClient = stomp;
         }
     },
