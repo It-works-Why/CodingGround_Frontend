@@ -181,14 +181,12 @@ export default {
       if (!this.round1Send) {
         this.send1("submit");
       }
-      this.stompClient.send("/app/round1/end/" + this.$route.params.gameId, {}, this.userData.userId);
     },
     round2End() {
       clearInterval(this.timer);
       if (!this.round2Send) {
         this.send2("submit");
       }
-      this.stompClient.send("/app/round2/end/" + this.$route.params.gameId, {}, this.userData.userId);
     },
 
     send(type, round) {
