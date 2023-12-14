@@ -10,7 +10,10 @@
     background-color: white;
     border-radius: 50px;
 }
-
+.start-buttons:disabled{
+    background: yellow;
+    color: black;
+}
 .row {
     display: flex;
     justify-content: space-evenly;

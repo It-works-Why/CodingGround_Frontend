@@ -178,13 +178,13 @@ export default {
       this.timeLeft = {minutes: 0, seconds: 0};
       this.result = [];
       this.sendCode = '';
-      this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
     },
     round1End() {
       clearInterval(this.timer);
       if (!this.round1Send) {
         this.send1("submit");
       }
+      this.getQuestion();
     },
     round2End() {
       clearInterval(this.timer);
@@ -203,6 +203,11 @@ export default {
         this.round2Send = true;
         this.send2(type);
       }
+    },
+    getQuestion() {
+      this.$httpUtil('/battle/get/question/'+this.$route.prams.gameId, 'GET', null, (data) => {
+          this.getQuestionData(data.data);
+      });
     },
     send1(type) {
       let data = {};
@@ -258,7 +263,6 @@ export default {
     onConnected() {
       this.stompClient.subscribe('/topic/public/check/failed/' + this.$route.params.gameId + "/" + this.userData.userId, this.wrongConnect);
       this.stompClient.subscribe('/topic/public/refresh/user/' + this.$route.params.gameId, this.refreshUser);
-      this.stompClient.subscribe('/topic/public/get/question/' + this.$route.params.gameId + "/" + this.userData.userId, this.getQuestionData);
       this.stompClient.subscribe('/topic/public/get/result/' + this.$route.params.gameId + "/" + this.userData.userId, this.getResultData);
       this.stompClient.subscribe('/topic/public/round1/end/front/' + this.$route.params.gameId, this.round1End);
       this.stompClient.subscribe('/topic/public/round2/end/front/' + this.$route.params.gameId, this.round2End);
@@ -282,8 +286,7 @@ export default {
       alert(data + "등!")
       location.href="/home";
     },
-    getQuestionData(payload) {
-      let data = JSON.parse(payload.body);
+    getQuestionData(data) {
       if(data.questionDto.languageCode == '62'){
         this.cmOptions.mode = 'text/x-java'
       }
@@ -328,12 +331,7 @@ export default {
       return;
     }
     this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-    this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
-    setTimeout(() => {
-      if(this.getData.questionTitle === '치치의 지각 횟수를 맞춰보자!'){
-        this.stompClient.send("/app/get/question/" + this.$route.params.gameId, {}, this.userData.userId);
-      }
-    }, 3000);
+    this.getQuestion();
   },
 }
 

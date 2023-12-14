@@ -59,8 +59,8 @@
         </div>
       </div>
       <div class="modal-btn">
-        <button @click="modalOpen">CANCEL</button>
-        <button @click="gameStart">GAME START!</button>
+        <button :disabled="gameStartStatus" class="start-buttons" @click="modalOpen">CANCEL</button>
+        <button :disabled="gameStartStatus" class="start-buttons" @click="gameStart">GAME START!</button>
       </div>
     </div>
   </div>
@@ -76,10 +76,11 @@ export default {
       inputTitle: "",
       languages: [],
       gameLanguage: "",
-      stompClient: "",
+      stompClient: null,
       gameType: "",
       gameKey: "",
       language: "",
+      gameStartStatus: false,
     }
   },
   created() {
@@ -109,6 +110,11 @@ export default {
 
     },
     gameStart() {
+      const stomp = this.$store.getters.getStompClient
+      if(stomp !== null){
+        location.reload();
+      }
+      this.gameStartStatus = true;
       let connectGameInfo = {};
       connectGameInfo.gameLanguage = this.gameLanguage;
       connectGameInfo.gameType = this.gameType;
@@ -142,14 +148,12 @@ export default {
         }
         if(data.data.connectType == "failed"){
           this.$errorAlert("이미 대기방에 접속중입니다. 잠시후 다시시도 해주십시오.");
-          location.reload();
           return;
         }
         if(data.data.connectType == "succeed"){
           this.$router.push('/battle/waiting/'+this.gameKey);
           return;
         }
-
       })
     }
   }

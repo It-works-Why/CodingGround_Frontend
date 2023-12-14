@@ -5,7 +5,7 @@ import { createStore } from 'vuex';
 const store = createStore({
     state() {
         return {
-            stompClient: '',
+            stompClient: null,
             userInfo: {
                 userId: '',
                 userRole: '',
@@ -30,7 +30,7 @@ const store = createStore({
             state.stompClient = stomp;
         },
         unsubscribe(state) {
-            if (state.stompClient !== null && state.stompClient !== '') {
+            if (state.stompClient !== null) {
                 state.stompClient.unsubscribe();
             }
         },

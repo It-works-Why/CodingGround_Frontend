@@ -25,8 +25,8 @@
             <button type="button" class="text-nowrap fw-bolder btn btn-light" @click="clickNav('/login')">로그인/회원가입</button>
           </span>
           <span v-if="loginCheck" class="login-box navbar-text">
-            <a class="fw-bold mypage_btn text-white" @click="clickNav('/mypage')">{{userInfo.userNickname}}님</a>
-             <img class="header-rankImg" @click="clickNav('/mypage')" :src="require('@/assets/img/tier/Admin.png')">
+            <a class="fw-bold mypage_btn text-white">{{userInfo.userNickname}}님</a>
+             <img class="header-rankImg" :src="require('@/assets/img/tier/Admin.png')">
             <br>
             <button type="button" class="logout-btn text-nowrap fw-bolder btn btn-light" @click="logout()">로그아웃</button>
           </span>
