@@ -204,9 +204,9 @@ export default {
         this.send2(type);
       }
     },
-    getQuestion() {
-      this.$httpUtil('/battle/get/question/'+this.$route.prams.gameId, 'GET', null, (data) => {
-          this.getQuestionData(data.data);
+    async getQuestion() {
+      await this.$httpUtil('/battle/get/question/' + this.$route.prams.gameId, 'GET', null, (data) => {
+        this.getQuestionData(data.data);
       });
     },
     send1(type) {
@@ -324,6 +324,7 @@ export default {
     }
     this.userData = this.$store.getters.getUser;
     this.onConnected();
+    this.getQuestion();
   },
   mounted() {
     if (this.stompClient == null || this.stompClient === '') {
@@ -331,7 +332,6 @@ export default {
       return;
     }
     this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-    this.getQuestion();
   },
 }
 
