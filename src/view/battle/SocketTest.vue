@@ -47,7 +47,7 @@ export default {
       event.preventDefault();
     },
     onConnected2() {
-
+      this.stompClient.subscribe('/topic/gang', this.onMessageReceived);
     },
     connect(event) {
       // eslint-disable-next-line no-undef
