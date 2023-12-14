@@ -1,5 +1,7 @@
 <template>
   <button @click="connect">WebSocket 연결</button>
+  <button @click="connect2">구독안하는 webSocket연결</button>
+
   <br>
 
   <div id="chat-page" class="hidden">
@@ -35,6 +37,18 @@ export default {
     };
   },
   methods: {
+    connect2(event){
+      // eslint-disable-next-line no-undef
+      let socket = new SockJS('https://api.mzc-codingground.click/ws');
+      // eslint-disable-next-line no-undef
+      this.stompClient = Stomp.over(socket);
+
+      this.stompClient.connect({}, this.onConnected2, this.onError);
+      event.preventDefault();
+    },
+    onConnected2() {
+
+    },
     connect(event) {
       // eslint-disable-next-line no-undef
       let socket = new SockJS('https://api.mzc-codingground.click/ws');

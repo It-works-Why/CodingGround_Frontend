@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     disconnect() {
-      this.$store.commit('unSubcribe');
+      this.$store.commit('unsubscribe');
       location.href = "/home";
     },
     // 처음 들어올때 created() 문에 들어갈 소켓연결
@@ -61,7 +61,7 @@ export default {
       stompClient.connect(data, this.onConnected, this.onError);
       this.$store.commit('setConnection', stompClient);
       this.stompClient = this.$store.getters.getStompClient;
-      this.stompClient.unSubcribe();
+      this.stompClient.unsubscribe();
     },
     onConnected() {
       this.stompClient.send("/app/join/queue/"+this.gameData.gameInfo.gameId, {}, this.userData.userId);

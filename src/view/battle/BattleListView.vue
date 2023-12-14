@@ -84,7 +84,7 @@ export default {
   },
   created() {
     this.userData = this.$store.getters.getUser;
-    this.$store.commit('unSubcribe');
+    this.$store.commit('unsubscribe');
   },
   mounted() {
     this.$httpUtil('/battle/get/language', 'GET', null, (data) => {

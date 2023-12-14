@@ -18,7 +18,8 @@ export default {
   methods: {
   },
   created() {
-    this.$store.commit('unSubcribe');
+    this.$store.commit('unsubscribe');
+
   }
 
 };
