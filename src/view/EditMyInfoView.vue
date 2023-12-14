@@ -187,7 +187,6 @@ export default {
         this.updateMyInfo.userAffiliationDetail = this.userInfo.userAffiliationDetail;
 
         this.$httpUtil('/account/edit/myInfo', 'PATCH', this.updateMyInfo, (data) => {
-          console.log(data);
           if (data.result === 0) {
             this.$successAlert("수정되었습니다.");
             location.href="/home";
@@ -200,7 +199,7 @@ export default {
         })
       }
       if (this.changeImgFile) {
-        axios.post('/api/account/upload/profile', formData, {
+        axios.post('https://api.mzc-codingground.click/api/account/upload/profile', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
