@@ -88,7 +88,7 @@
         <div>
           <p class="modal-title">이메일로 전송된 인증번호를 입력해주세요.</p>
           <div class="modal-box">
-            <input class="input-number" v-model="certificationNumber" type="text" placeholder="인증번호를 입력해주세요."/>
+            <input class="input-number" v-model="checkEmailInfo.certificationNumber" type="text" placeholder="인증번호를 입력해주세요."/>
           </div>
         </div>
       </div>
@@ -124,8 +124,10 @@ export default {
         userAffiliationDetail : '',
         userProfileImg : '',
       },
-      certificationNumber : '',
-      // key : '',
+      checkEmailInfo: {
+        certificationNumber: '',
+        userEmail : '',
+      },
       emailCheck : 0,
     }
   },
@@ -176,8 +178,9 @@ export default {
       })
     },
     checkEmail() {
+      this.checkEmailInfo.userEmail = this.userInfo.userEmail;
 
-      this.$httpUtil('/account/certification/email', 'POST', this.certificationNumber, (data) => {
+      this.$httpUtil('/account/certification/email', 'POST', this.checkEmailInfo, (data) => {
         if (data.success) {
           this.emailCheck = 1;
           this.modalCheck = !this.modalCheck
@@ -185,8 +188,10 @@ export default {
         }
 
         if (data.fail) {
-          this.$errorAlert("인증번호를 다시 입력해주세요.");
+          this.$errorAlert("인증 시간이 만료되었습니다.");
         }
+      }).catch(() => {
+        this.$errorAlert("인증을 다시 해주세요.");
       })
 
     },
