@@ -121,7 +121,7 @@
             </div>
             <div v-if="i.userGameResult == '1'" class="user_content text-nowrap">{{ i.userNickname }}</div>
             <div v-if="i.userGameResult == '1'" class="user-status first">
-              <div class="un-light">1위</div>
+              <div class="light">1위</div>
             </div>
             <div v-if="i.userGameResult == '2'" class="user_content text-nowrap">{{ i.userNickname }}</div>
             <div v-if="i.userGameResult == '2'" class="user-status second">
