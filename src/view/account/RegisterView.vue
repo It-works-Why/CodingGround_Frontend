@@ -155,7 +155,7 @@ export default {
         })
 
         if (this.changeImgFile) {
-          axios.post('/api/account/upload/profile', formData, {
+          axios.post('https://api.mzc-codingground.click/api/account/upload/profile', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
