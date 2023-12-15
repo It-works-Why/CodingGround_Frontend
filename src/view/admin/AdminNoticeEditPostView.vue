@@ -7,7 +7,6 @@
 
       <div class="title">
         <div class="text-white px-3 py-2 fs-4 mb-4 info_box">
-          {{getData.userProfileImg}}
           <div class="user_info_box">
             <div>
               {{getData.userNickname}}
