@@ -106,7 +106,7 @@ export default {
       this.$router.push("/home");
       this.$errorAlert(error);
     },
-    onConnected(data) {
+    onConnected() {
       this.$router.push('/battle/ingame/'+this.gameKey);
       this.$successAlert("재접속 성공");
     },
