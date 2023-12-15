@@ -132,7 +132,6 @@ export default {
               // eslint-disable-next-line no-undef
               const socket = new SockJS('https://api.mzc-codingground.click/ws');
               const data1 = {};
-              data.gameId = this.gameData.gameInfo.gameId;
               // eslint-disable-next-line no-undef
               const stompClient = Stomp.over(socket);
               stompClient.connect(data1, this.onConnected, this.onError);
