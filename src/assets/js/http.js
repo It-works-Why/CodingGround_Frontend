@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
     timeout: 10000, // 타임아웃 설정 (10초)
     // baseURL: "http://k8s-backendgroup-faceca018f-1950602437.ca-central-1.elb.amazonaws.com",
     baseURL: "https://api.mzc-codingground.click/api",
+    // baseURL: "http://localhost:8090/api",
     headers: {
         "Content-Type": "application/json",
 /*        'X-RapidAPI-Key': '92645c8b10msh7f8b72338057770p1deaecjsn641c7097464c',

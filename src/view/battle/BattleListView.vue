@@ -103,11 +103,16 @@ export default {
       this.modalCheck = !this.modalCheck
       return this.inputTitle = gameTitle;
     },
-    onError(){
-
+    onError(error) {
+      this.$router.push("/home");
+      this.$errorAlert(error);
     },
     onConnected() {
-
+      this.stompClient.send("/app/join/queue/"+this.gameData.gameInfo.gameId, {}, this.userData.userId);
+      this.stompClient.subscribe('/topic/public/disconnect/user/' + this.$route.params.gameId + "/" + this.userData.userId, this.failedUser);
+      this.stompClient.subscribe('/topic/public/getGameUsersData/failed/'+this.gameData.gameInfo.gameId + "/" + this.userData.userId, this.connectError);
+      this.stompClient.subscribe('/topic/public/getGameUsersData/succeed/'+this.gameData.gameInfo.gameId, this.getGameUsersData);
+      this.stompClient.subscribe('/topic/public/gameStart/'+this.gameData.gameInfo.gameId, this.gameStarting);
     },
     gameStart() {
       const stomp = this.$store.getters.getStompClient
@@ -124,15 +129,16 @@ export default {
           const isReconnect = confirm("진행중인 게임이 있습니다. 재접속 하시겠습니까?");
           if(isReconnect){
             this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
-              console.log(data);
+
               // eslint-disable-next-line no-undef
               const socket = new SockJS('https://api.mzc-codingground.click/ws');
               const data1 = {};
-              data1.gameId = data.data.gameId
+              data.gameId = this.gameData.gameInfo.gameId;
               // eslint-disable-next-line no-undef
               const stompClient = Stomp.over(socket);
               stompClient.connect(data1, this.onConnected, this.onError);
               this.$store.commit('setConnection', stompClient);
+              this.stompClient = this.$store.getters.getStompClient;
 
               this.$router.push('/battle/ingame/'+this.gameKey);
               this.$successAlert(data.data.message);

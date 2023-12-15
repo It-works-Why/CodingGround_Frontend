@@ -180,6 +180,9 @@ export default {
       this.sendCode = '';
     },
     round1End() {
+      this.getData.questionTitle = '문제 꺼내는중...';
+      this.getData.questionContent = '문제 만드는중...';
+      this.getData.round = 2;
       clearInterval(this.timer);
       if (!this.round1Send) {
         this.send1("submit");
@@ -205,7 +208,7 @@ export default {
       }
     },
     async getQuestion() {
-      await this.$httpUtil('/battle/get/question/' + this.$route.prams.gameId, 'GET', null, (data) => {
+      await this.$httpUtil('/battle/get/question/' + this.$route.params.gameId, 'GET', null, (data) => {
         this.getQuestionData(data.data);
       });
     },
@@ -261,6 +264,7 @@ export default {
       this.participantList = users;
     },
     onConnected() {
+      console.log("여기서오류남")
       this.stompClient.subscribe('/topic/public/check/failed/' + this.$route.params.gameId + "/" + this.userData.userId, this.wrongConnect);
       this.stompClient.subscribe('/topic/public/refresh/user/' + this.$route.params.gameId, this.refreshUser);
       this.stompClient.subscribe('/topic/public/get/result/' + this.$route.params.gameId + "/" + this.userData.userId, this.getResultData);
@@ -269,7 +273,7 @@ export default {
       this.stompClient.subscribe('/topic/public/disconnect/user/' + this.$route.params.gameId + "/" + this.userData.userId, this.failedUser);
       this.stompClient.subscribe('/topic/public/round1/url/' + this.$route.params.gameId + "/" + this.userData.userId, this.winUser);
       this.stompClient.subscribe('/topic/public/round2/url/' + this.$route.params.gameId + "/" + this.userData.userId, this.endGame);
-
+      console.log("여ㄱㅇ여여")
     },
     userInfo(){
 
@@ -328,6 +332,7 @@ export default {
   },
   mounted() {
     if (this.stompClient == null || this.stompClient === '') {
+      console.log("if문들어옴")
       this.wrongConnect();
       return;
     }

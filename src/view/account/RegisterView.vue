@@ -166,7 +166,6 @@ export default {
     certificationEmail() {
       this.$httpUtil('/account/send/email', 'POST', this.userInfo, (data) => {
         // this.key = data.key;
-
         if (data.exist) {
           this.$errorAlert("이미 사용 중인 이메일 입니다.")
         } else {

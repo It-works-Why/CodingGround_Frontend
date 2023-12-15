@@ -43,7 +43,6 @@ export default {
     this.gameData.gameInfo.gameId = this.$route.params.gameId;
     this.gameData.gameInfo.userId = this.userData.userId;
     this.connect();
-
   },
   methods: {
     disconnect() {
@@ -54,6 +53,8 @@ export default {
     connect() {
       // eslint-disable-next-line no-undef
       const socket = new SockJS('https://api.mzc-codingground.click/ws');
+      // eslint-disable-next-line no-undef
+      // const socket = new SockJS('http://localhost:8090/ws');
       const data = {};
       data.gameId = this.gameData.gameInfo.gameId;
       // eslint-disable-next-line no-undef
@@ -61,7 +62,6 @@ export default {
       stompClient.connect(data, this.onConnected, this.onError);
       this.$store.commit('setConnection', stompClient);
       this.stompClient = this.$store.getters.getStompClient;
-      this.stompClient.unsubscribe();
     },
     onConnected() {
       this.stompClient.send("/app/join/queue/"+this.gameData.gameInfo.gameId, {}, this.userData.userId);
