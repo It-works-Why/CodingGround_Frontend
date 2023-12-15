@@ -50,9 +50,10 @@
             <div class="my-4 w-100">
               <span class="title d-inline-block text-white fw-bold fs-4">이메일</span>
               <span class="ps-5">
-                <input v-model="userInfo.userEmail" placeholder="이메일을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
+                <input v-if="this.emailCheck === 1" v-model="userInfo.userEmail" style="width: 70%" class="text-white fs-4 input_box" type="text" disabled />
+                <input v-else v-model="userInfo.userEmail" placeholder="이메일을 입력해주세요." style="width: 70%" class="text-white fs-4 input_box" type="text" />
               </span>
-              <WhiteButton v-if="this.emailCheck === 1" class="ms-5" button-value="인증완료" @click="certificationEmail"></WhiteButton>
+              <WhiteButton v-if="this.emailCheck === 1" class="ms-5" button-value="인증완료"></WhiteButton>
               <WhiteButton v-else class="ms-5" button-value="인증하기" @click="certificationEmail"></WhiteButton>
             </div>
             <div class="w-100">
@@ -87,8 +88,9 @@
       <div class="modal-content">
         <div>
           <p class="modal-title">이메일로 전송된 인증번호를 입력해주세요.</p>
+          <p>     *  인증 번호는 3분 후 만료됩니다.</p>
           <div class="modal-box">
-            <input class="input-number" v-model="certificationNumber" type="text" placeholder="인증번호를 입력해주세요."/>
+            <input class="input-number" v-model="checkEmailInfo.certificationNumber" type="text" placeholder="인증번호를 입력해주세요."/>
           </div>
         </div>
       </div>
@@ -124,8 +126,10 @@ export default {
         userAffiliationDetail : '',
         userProfileImg : '',
       },
-      certificationNumber : '',
-      // key : '',
+      checkEmailInfo: {
+        certificationNumber: '',
+        userEmail : '',
+      },
       emailCheck : 0,
     }
   },
@@ -151,7 +155,7 @@ export default {
         })
 
         if (this.changeImgFile) {
-          axios.post('https://api.mzc-codingground.click/api/account/upload/profile', formData, {
+          axios.post('/api/account/upload/profile', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
@@ -165,7 +169,7 @@ export default {
       }},
     certificationEmail() {
       this.$httpUtil('/account/send/email', 'POST', this.userInfo, (data) => {
-        // this.key = data.key;
+
         if (data.exist) {
           this.$errorAlert("이미 사용 중인 이메일 입니다.")
         } else {
@@ -175,16 +179,21 @@ export default {
       })
     },
     checkEmail() {
+      this.checkEmailInfo.userEmail = this.userInfo.userEmail;
 
-      this.$httpUtil('/account/certification/email', 'POST', this.certificationNumber, (data) => {
+      this.$httpUtil('/account/certification/email', 'POST', this.checkEmailInfo, (data) => {
         if (data.success) {
           this.emailCheck = 1;
           this.modalCheck = !this.modalCheck
           this.$successAlert("인증되었습니다.");
         }
 
+        if (data.expire) {
+          this.$errorAlert("인증 시간이 만료되었습니다.");
+        }
+
         if (data.fail) {
-          this.$errorAlert("인증번호를 다시 입력해주세요.");
+          this.$errorAlert("인증 번호를 다시 입력해주세요.");
         }
       })
 
