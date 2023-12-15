@@ -3,11 +3,6 @@
     height: 1000px;
 }
 
-p {
-    margin-top: 10px;
-    font-size: 13px;
-}
-
 h1 {
     font-weight: 800;
 }
@@ -94,25 +89,83 @@ h1 {
     padding:10px 30px;
     border-radius: 20px;
 }
+.content-box {
+    height: 480px;
+}
+
+.img_form {
+    margin: 30px;
+    align-items: center;
+}
+
+.img_form > .img_view {
+    float: left;
+    border-radius: 80px;
+    width: 50px;
+    object-fit: cover;
+}
+.user_content{
+    display: block;
+    padding-left: 60px;
+    font-size: 20px;
+    padding-bottom: 3px;
+}
+
+.user-status{
+    border-radius: 10px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 8px;
+}
+.gold-light {
+    padding: 2px 10px;
+    display: inline-block;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #e1c56a,
+    0 0 0px #e1c56a,
+    0 0 1px #e1c56a,
+    0 0 1px #e1c56a,
+    0 0 2px #e1c56a,
+    0 0 5px #e1c56a,
+    0 0 7px #e1c56a,
+    0 0 8px #e1c56a,
+    0 0 10px #e1c56a,
+    0 0 13px #e1c56a;
+}
+
+.un-light {
+    padding: 2px 10px;
+    display: inline-block;
+    border-radius: 10px;
+}
+
 .defeat{
-    color: red;
+    background: red;
+    color: white;
+    font-weight: bolder;
+}
+.run{
+    color: black;
+    font-weight: bolder;
 }
 .first{
-    color: goldenrod;
+    background: goldenrod;
 }
 .second{
-    color: silver;
+    background: silver;
 }
 .third{
-    color: sandybrown;
+    background: sandybrown;
 }
 .fourth{
-    color: white;
+    background: skyblue;
 }
 
 .fifth{
     color: white;
 }
+
+
 
 .loading-img{
 
@@ -125,9 +178,6 @@ h1 {
     background: red;
 }
 
-.content-box {
-    height: 480px;
-}
 
 .input-title {
     font-weight: 550;
@@ -174,10 +224,7 @@ h1 {
     background-color: #A60000;
 }
 
-.status {
-    margin-top: 20px;
-    display: flex;
-}
+
 
 .top_box_left {
     display: flex;
@@ -188,26 +235,4 @@ h1 {
     line-height: 25px;
 }
 
-.img_form {
-    height: 50px;
-    margin: 30px;
-}
 
-.img_form > .img_view {
-    border-radius: 80px;
-    width: 50px;
-    height: 100%;
-    object-fit: cover;
-}
-
-.img_form > .ranking_icon {
-    width: 20px;
-    height: 20px;
-    z-index: 100;
-    object-fit: cover;
-}
-
-.ranking_icon {
-    width: 50px;
-    height: 50px;
-}

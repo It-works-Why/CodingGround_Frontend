@@ -100,19 +100,47 @@
         <div class="text-white fw-bold fs-3">
           진행 상황
         </div>
-          <div style="background: darkgray" class="position-relative img_form status" :key="i"
-               v-for="i in participantList">
+        <div :key="i" v-for="i in participantList">
+          <div class="img_form">
             <img class="img_view" @error="handleImageError" :src="i.profileImg">
-            <p v-if="i.userGameResult == 'DEFEAT'" class="defeat ms-2 text-nowrap">{{ i.userNickname }} 탈락</p>
-            <p v-if="i.userGameResult == 'DISCONNECT'" class="defeat ms-2 text-nowrap">{{ i.userNickname }} 탈주</p>
-            <p v-if="i.userGameResult == 'DEFAULT'"  class="ms-2 text-nowrap">{{ i.userNickname }}</p>
-            <p v-if="i.userGameResult == ''"  class="ms-2 text-nowrap">{{ i.userNickname }}</p>
-            <p v-if="i.userGameResult == '1'"  class="first ms-2 text-nowrap">{{ i.userNickname }} 1위</p>
-            <p v-if="i.userGameResult == '2'"  class="second ms-2 text-nowrap">{{ i.userNickname }} 2위</p>
-            <p v-if="i.userGameResult == '3'"  class="third ms-2 text-nowrap">{{ i.userNickname }} 3위</p>
-            <p v-if="i.userGameResult == '4'"  class="fourth ms-2 text-nowrap">{{ i.userNickname }} 4위</p>
-            <p v-if="i.userGameResult == '5'"  class="fifth ms-2 text-nowrap">{{ i.userNickname }}</p>
+            <div v-if="i.userGameResult == 'DEFEAT'" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == 'DEFEAT'" class="user-status defeat">
+              <div class="un-light">탈락</div>
+            </div>
+            <div v-if="i.userGameResult == 'DISCONNECT'" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == 'DISCONNECT'" class="user-status run">
+              <div class="un-light">탈주</div>
+            </div>
+            <div v-if="i.userGameResult == 'DEFAULT'" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == 'DEFAULT'" class="user-status">
+              <div class="un-light"></div>
+            </div>
+            <div v-if="i.userGameResult == ''" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == ''" class="user-status">
+              <div class="un-light"></div>
+            </div>
+            <div v-if="i.userGameResult == '1'" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == '1'" class="user-status first">
+              <div class="un-light">1위</div>
+            </div>
+            <div v-if="i.userGameResult == '2'" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == '2'" class="user-status second">
+              <div class="un-light">2위</div>
+            </div>
+            <div v-if="i.userGameResult == '3'" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == '3'" class="user-status third">
+              <div class="un-light">3위</div>
+            </div>
+            <div v-if="i.userGameResult == '4'" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == '4'" class="user-status fourth">
+              <div class="un-light">4위</div>
+            </div>
+            <div v-if="i.userGameResult == '5'" class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div v-if="i.userGameResult == '5'" class="user-status">
+              <div class="un-light"></div>
+            </div>
           </div>
+        </div>
       </BlackBox>
     </div>
   </div>
@@ -142,8 +170,8 @@ export default {
   components: {ConsoleBox, GrayBox, BlackBox},
   data() {
     return {
-      disableBtn : false,
-      round2Send : false,
+      disableBtn: false,
+      round2Send: false,
       round1Send: false,
       timer: '',
       timeLeft: {minutes: 0, seconds: 0},
@@ -275,7 +303,7 @@ export default {
       this.stompClient.subscribe('/topic/public/round2/url/' + this.$route.params.gameId + "/" + this.userData.userId, this.endGame);
       console.log("여ㄱㅇ여여")
     },
-    userInfo(){
+    userInfo() {
 
     },
     failedUser() {
@@ -288,22 +316,22 @@ export default {
       console.log(data)
 
       alert(data + "등!")
-      location.href="/home";
+      location.href = "/home";
     },
     getQuestionData(data) {
-      if(data.questionDto.languageCode == '62'){
+      if (data.questionDto.languageCode == '62') {
         this.cmOptions.mode = 'text/x-java'
       }
-      if(data.questionDto.languageCode == '54'){
+      if (data.questionDto.languageCode == '54') {
         this.cmOptions.mode = 'text/x-c++src'
       }
-      if(data.questionDto.languageCode == '71'){
+      if (data.questionDto.languageCode == '71') {
         this.cmOptions.mode = 'text/x-python'
       }
-      if(data.questionDto.languageCode == '51'){
+      if (data.questionDto.languageCode == '51') {
         this.cmOptions.mode = 'text/x-csharp'
       }
-      if(data.questionDto.languageCode == '63'){
+      if (data.questionDto.languageCode == '63') {
         this.cmOptions.mode = 'text/javascript'
       }
       this.testCase = data.testCase;
@@ -320,24 +348,24 @@ export default {
       this.disableBtn = false;
     }
   },
-  created() {
-    this.stompClient = this.$store.getters.getStompClient;
-    if (this.stompClient == null || this.stompClient === '') {
-      this.wrongConnect();
-      return;
-    }
-    this.userData = this.$store.getters.getUser;
-    this.onConnected();
-    this.getQuestion();
-  },
-  mounted() {
-    if (this.stompClient == null || this.stompClient === '') {
-      console.log("if문들어옴")
-      this.wrongConnect();
-      return;
-    }
-    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-  },
+  // created() {
+  //   this.stompClient = this.$store.getters.getStompClient;
+  //   if (this.stompClient == null || this.stompClient === '') {
+  //     this.wrongConnect();
+  //     return;
+  //   }
+  //   this.userData = this.$store.getters.getUser;
+  //   this.onConnected();
+  //   this.getQuestion();
+  // },
+  // mounted() {
+  //   if (this.stompClient == null || this.stompClient === '') {
+  //     console.log("if문들어옴")
+  //     this.wrongConnect();
+  //     return;
+  //   }
+  //   this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+  // },
 }
 
 
