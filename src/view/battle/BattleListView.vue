@@ -107,7 +107,8 @@ export default {
       this.$errorAlert(error);
     },
     onConnected() {
-
+      this.$router.push('/battle/ingame/'+this.gameKey);
+      this.$successAlert(data.data.message);
     },
     connect() {
       // eslint-disable-next-line no-undef
@@ -138,10 +139,6 @@ export default {
           if(isReconnect){
             this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
               this.connect();
-              setTimeout(() => {
-                this.$router.push('/battle/ingame/'+this.gameKey);
-                this.$successAlert(data.data.message);
-              }, 3000);
               return;
             })
           }else{
