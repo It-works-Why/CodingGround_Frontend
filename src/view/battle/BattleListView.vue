@@ -109,6 +109,19 @@ export default {
     onConnected() {
 
     },
+    connect() {
+      // eslint-disable-next-line no-undef
+      const socket = new SockJS('https://api.mzc-codingground.click/ws');
+      // eslint-disable-next-line no-undef
+      // const socket = new SockJS('http://localhost:8090/ws');
+      const data = {};
+      data.gameId = this.gameKey;
+      // eslint-disable-next-line no-undef
+      const stompClient = Stomp.over(socket);
+      stompClient.connect(data, this.onConnected, this.onError);
+      this.$store.commit('setConnection', stompClient);
+      this.stompClient = this.$store.getters.getStompClient;
+    },
     gameStart() {
       const stomp = this.$store.getters.getStompClient
       if(stomp !== null){
@@ -124,15 +137,7 @@ export default {
           const isReconnect = confirm("진행중인 게임이 있습니다. 재접속 하시겠습니까?");
           if(isReconnect){
             this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
-
-              // eslint-disable-next-line no-undef
-              const socket = new SockJS('https://api.mzc-codingground.click/ws');
-              const data1 = {};
-              // eslint-disable-next-line no-undef
-              const stompClient = Stomp.over(socket);
-              stompClient.connect(data1, this.onConnected, this.onError);
-              this.$store.commit('setConnection', stompClient);
-              this.stompClient = this.$store.getters.getStompClient;
+              this.connect();
 
               this.$router.push('/battle/ingame/'+this.gameKey);
               this.$successAlert(data.data.message);
