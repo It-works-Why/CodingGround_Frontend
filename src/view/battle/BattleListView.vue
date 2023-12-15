@@ -107,6 +107,7 @@ export default {
       this.$errorAlert(error);
     },
     onConnected() {
+      this.stompClient.send("/app/reconnect/", {}, this.userData.userId);
       this.$router.push('/battle/ingame/'+this.gameKey);
       this.$successAlert("재접속 성공");
     },
