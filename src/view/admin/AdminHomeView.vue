@@ -273,7 +273,6 @@ export default {
     },
     async updateData() {
       this.$httpUtil('/admin/home', 'GET', null, (data) => {
-        console.log(data.data)
         this.userData = data.data;
         this.waitingInquiry = this.userData.noAnswerCount;
         this.totalUser = this.userData.signUpCount;
@@ -291,7 +290,6 @@ export default {
       this.chartSeries1[0].data = data;
       this.chartSeries2[0].data = data;
       this.chartSeries3[0].data = data;
-      console.log();
       // this.chartSeries1[0].data = response.data.body.monthlyUser;
       // this.chartSeries2[0].data = response.data.body.monthlyRecipe;
       // this.chartSeries3[0].data = response.data.body.monthlyMaterial;

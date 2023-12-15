@@ -39,7 +39,6 @@ export default {
       this.$httpUtil('/community/write','POST',this.postData,(data) => {
         if(data.data.success){
           this.$router.push('/community/list');
-          console.log(this.postData)
           this.$successAlert(data.data.message);
         }
       });

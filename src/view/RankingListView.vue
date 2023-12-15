@@ -88,8 +88,6 @@ export default {
     load() {
       const pageNum = this.$route.params.pageNum || 0;
       this.$httpUtil(`/ranking/list/${pageNum}/?season=${this.season}&keyword=${this.keyword}`, 'GET', null, (data) => {
-        console.log("여기여기");
-        console.log(data.data);
 
         if (!this.seasonSelected) {
           this.selectedSeason = data.data.seasonListDto[0].seasonName;

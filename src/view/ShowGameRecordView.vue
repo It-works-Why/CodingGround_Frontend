@@ -119,7 +119,6 @@ export default {
   methods: {
     load() {
       this.$httpUtil('/mypage/gamerecord/' + this.$route.params.gamenum, 'GET', null, (data) => {
-        console.log(data.data);
         this.userData = data.data;
 
         if (this.userData.gameRecordRoundOne && this.userData.gameRecordRoundOne.length > 0) {

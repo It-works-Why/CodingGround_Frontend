@@ -99,7 +99,6 @@ export default {
       if (!this.$route.params.keyword || this.$route.params.keyword == "undefined") {
         this.$httpUtil('/admin/community/list?page=' + this.$route.params.pageNum,
             'GET', null, (communityList) => {
-          console.log(communityList.content);
               if (!this.communitSelected) {
                 this.search = "제목";
                 this.communitSelected = true;
@@ -109,7 +108,6 @@ export default {
           this.totalPage = communityList.totalPages;
 
           this.startBlock = parseInt(parseInt(communityList.number / 10) * 10 + 1);
-          // console.log("startBlock : " + this.startBlock);
 
           const endBlock = this.startBlock + 9;
           if (endBlock > this.totalPage) {
@@ -117,25 +115,15 @@ export default {
           } else {
             this.endBlock = endBlock;
           }
-          // console.log("endBlock : " + this.endBlock);
         })
       }
       else {
         this.$httpUtil('/admin/community/list?keyword='+ this.$route.params.keyword + '&type=' + this.$route.params.type + '&page=' + this.$route.params.pageNum,
             'GET', null, (communityList) => {
-      /*        console.log("type : " + this.$route.params.search);*/
-              // console.log(questionList.content);
-              // console.log("totalPages: " + questionList.totalPages);
-              // console.log("totalElements: " + questionList.totalElements);
-              // console.log("size: " + questionList.size);
-              // console.log("number: " + questionList.number);
-              // console.log("numberOfElements: " + questionList.numberOfElements);
               this.communityList = communityList.content;
               this.totalPage = communityList.totalPages;
-              console.log(communityList.content);
 
               this.startBlock = parseInt(parseInt(communityList.number / 10) * 10 + 1);
-              // console.log("startBlock : " + this.startBlock);
 
               const endBlock = this.startBlock + 9;
               if (endBlock > this.totalPage) {
@@ -143,7 +131,6 @@ export default {
               } else {
                 this.endBlock = endBlock;
               }
-              // console.log("endBlock : " + this.endBlock);
             })
       }
     },

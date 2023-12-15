@@ -82,9 +82,6 @@ export default {
       this.$errorAlert("비정상적인 접근이 감지 되었습니다.");
       this.$router.push("/home")
     },
-    onMessageReceived(payload) {
-      console.log(payload)
-    },
     getGameUsersData(payload) {
       const gameUsersData = JSON.parse(payload.body)
       this.playUserTotalCount = gameUsersData.userTotalCount;

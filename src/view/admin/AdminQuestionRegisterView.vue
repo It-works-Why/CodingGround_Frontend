@@ -80,7 +80,6 @@ export default {
   methods: {
     register() {
       this.$httpUtil('/admin/question/register','POST',this.postData,(data) => {
-        console.log(this.postData);
         if(data.data.success){
           this.$router.push('/admin/question/list');
           this.$successAlert(data.data.message);

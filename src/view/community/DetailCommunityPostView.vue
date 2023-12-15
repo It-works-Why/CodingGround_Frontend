@@ -88,10 +88,7 @@ export default {
     },
     load() {
       this.$httpUtil('/community/detail/' + this.$route.params.id, 'GET', null, (data) => {
-        console.log(data);
         this.getData = data;
-        console.log(this.getData.userId)
-        console.log(this.userData.userId)
       })
     },
     deleteCommunity() {

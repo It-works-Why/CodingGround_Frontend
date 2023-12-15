@@ -90,7 +90,6 @@ export default {
   mounted() {
     this.$httpUtil('/battle/get/language', 'GET', null, (data) => {
       this.languages = data;
-      console.log(this.languages)
     })
   },
   methods: {

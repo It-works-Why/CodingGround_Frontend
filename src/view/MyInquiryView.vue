@@ -157,15 +157,11 @@ export default {
 
     myinquryload() {
       this.$httpUtil('/mypage/myinquiry/' + this.$route.params.pageNum , 'GET', null, (data) => {
-        console.log(data.data);
         this.userData = data.data;
-        // console.log(this.userData.totalPageNum.totalPages)
-        // console.log(this.userData.pageNum)
 
         this.totalPage = this.userData.totalPageNum.totalPages
 
         this.startBlock = parseInt(parseInt(this.userData.pageNum / 10) * 10 + 1);
-        // console.log("startBlock : " + this.startBlock);
 
         const endBlock = this.startBlock + 9;
         if (endBlock > this.totalPage) {

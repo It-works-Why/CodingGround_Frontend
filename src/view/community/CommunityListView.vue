@@ -88,7 +88,6 @@ export default {
       if (!this.$route.params.searchInput || this.$route.params.searchInput == "undefined") {
         this.$httpUtil('/community/list?page=' + this.$route.params.pageNum,
         'GET', null, (communityList) => {
-          console.log(communityList.content)
           this.communityList = communityList.content;
           this.totalPage = communityList.totalPages;
 
@@ -104,7 +103,6 @@ export default {
       } else {
         this.$httpUtil('/community/list?searchInput=' + this.$route.params.searchInput + '&page=' + this.$route.params.pageNum,
         'GET', null, (communityList) => {
-          console.log("searchInput : " +this.$route.params.searchInput)
           this.communityList = communityList.content;
           this.totalPage = communityList.totalPages;
 

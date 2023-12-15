@@ -58,7 +58,6 @@ export default {
     },
     load() {
       this.$httpUtil(`/admin/community/detail/` + this.$route.params.id, 'GET', null, (data) => {
-        console.log(data);
         this.getData = data;
       });
     },

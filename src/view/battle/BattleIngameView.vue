@@ -288,11 +288,9 @@ export default {
     },
     refreshUser(payload) {
       let users = JSON.parse(payload.body)
-      console.log(users);
       this.participantList = users;
     },
     onConnected() {
-      console.log("여기서오류남")
       this.stompClient.subscribe('/topic/public/check/failed/' + this.$route.params.gameId + "/" + this.userData.userId, this.wrongConnect);
       this.stompClient.subscribe('/topic/public/refresh/user/' + this.$route.params.gameId, this.refreshUser);
       this.stompClient.subscribe('/topic/public/get/result/' + this.$route.params.gameId + "/" + this.userData.userId, this.getResultData);
@@ -301,7 +299,6 @@ export default {
       this.stompClient.subscribe('/topic/public/disconnect/user/' + this.$route.params.gameId + "/" + this.userData.userId, this.failedUser);
       this.stompClient.subscribe('/topic/public/round1/url/' + this.$route.params.gameId + "/" + this.userData.userId, this.winUser);
       this.stompClient.subscribe('/topic/public/round2/url/' + this.$route.params.gameId + "/" + this.userData.userId, this.endGame);
-      console.log("여ㄱㅇ여여")
     },
     userInfo() {
 
@@ -313,7 +310,6 @@ export default {
     },
     endGame(payload) {
       let data = JSON.parse(payload.body);
-      console.log(data)
 
       alert(data + "등!")
       location.href = "/home";
@@ -348,24 +344,23 @@ export default {
       this.disableBtn = false;
     }
   },
-  // created() {
-  //   this.stompClient = this.$store.getters.getStompClient;
-  //   if (this.stompClient == null || this.stompClient === '') {
-  //     this.wrongConnect();
-  //     return;
-  //   }
-  //   this.userData = this.$store.getters.getUser;
-  //   this.onConnected();
-  //   this.getQuestion();
-  // },
-  // mounted() {
-  //   if (this.stompClient == null || this.stompClient === '') {
-  //     console.log("if문들어옴")
-  //     this.wrongConnect();
-  //     return;
-  //   }
-  //   this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-  // },
+  created() {
+    this.stompClient = this.$store.getters.getStompClient;
+    if (this.stompClient == null || this.stompClient === '') {
+      this.wrongConnect();
+      return;
+    }
+    this.userData = this.$store.getters.getUser;
+    this.onConnected();
+    this.getQuestion();
+  },
+  mounted() {
+    if (this.stompClient == null || this.stompClient === '') {
+      this.wrongConnect();
+      return;
+    }
+    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+  },
 }
 
 

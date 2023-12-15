@@ -98,7 +98,6 @@ export default {
         messageElement.classList.add('chat-message');
 
         let avatarElement = document.createElement('div');
-        console.log(message)
         messageElement.appendChild(avatarElement);
 
         var usernameElement = document.createElement('span');
