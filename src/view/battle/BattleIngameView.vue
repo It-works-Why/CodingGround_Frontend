@@ -100,43 +100,76 @@
         <div class="text-white fw-bold fs-3">
           진행 상황
         </div>
+
         <div :key="i" v-for="i in participantList">
-          <div class="img_form">
+          <div v-if="i.userGameResult == 'DEFEAT'" class="img_form">
             <img class="img_view" @error="handleImageError" :src="i.profileImg">
-            <div v-if="i.userGameResult == 'DEFEAT'" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == 'DEFEAT'" class="user-status defeat">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status defeat">
               <div class="un-light">탈락</div>
             </div>
-            <div v-if="i.userGameResult == 'DISCONNECT'" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == 'DISCONNECT'" class="user-status run">
+          </div>
+
+          <div v-if="i.userGameResult == 'DISCONNECT'" class="img_form">
+            <img class="img_view" @error="handleImageError" :src="i.profileImg">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status run">
               <div class="un-light">탈주</div>
             </div>
-            <div v-if="i.userGameResult == 'DEFAULT'" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == 'DEFAULT'" class="user-status">
+          </div>
+
+          <div v-if="i.userGameResult == 'DEFAULT'" class="img_form">
+            <img class="img_view" @error="handleImageError" :src="i.profileImg">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status">
               <div class="un-light"></div>
             </div>
-            <div v-if="i.userGameResult == ''" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == ''" class="user-status">
+          </div>
+
+          <div v-if="i.userGameResult == ''" class="img_form">
+            <img class="img_view" @error="handleImageError" :src="i.profileImg">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status">
               <div class="un-light"></div>
             </div>
-            <div v-if="i.userGameResult == '1'" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == '1'" class="user-status first">
-              <div class="light">1위</div>
+          </div>
+
+          <div v-if="i.userGameResult == '1'" class="img_form">
+            <img class="img_view" @error="handleImageError" :src="i.profileImg">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status first">
+              <div class="un-light">1위</div>
             </div>
-            <div v-if="i.userGameResult == '2'" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == '2'" class="user-status second">
+          </div>
+
+          <div v-if="i.userGameResult == '2'" class="img_form">
+            <img class="img_view" @error="handleImageError" :src="i.profileImg">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status second">
               <div class="un-light">2위</div>
             </div>
-            <div v-if="i.userGameResult == '3'" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == '3'" class="user-status third">
+          </div>
+
+          <div v-if="i.userGameResult == '3'" class="img_form">
+            <img class="img_view" @error="handleImageError" :src="i.profileImg">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status third">
               <div class="un-light">3위</div>
             </div>
-            <div v-if="i.userGameResult == '4'" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == '4'" class="user-status fourth">
+          </div>
+
+          <div v-if="i.userGameResult == '4'" class="img_form">
+            <img class="img_view" @error="handleImageError" :src="i.profileImg">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status fourth">
               <div class="un-light">4위</div>
             </div>
-            <div v-if="i.userGameResult == '5'" class="user_content text-nowrap">{{ i.userNickname }}</div>
-            <div v-if="i.userGameResult == '5'" class="user-status">
+          </div>
+
+          <div v-if="i.userGameResult == '5'" class="img_form">
+            <img class="img_view" @error="handleImageError" :src="i.profileImg">
+            <div class="user_content text-nowrap">{{ i.userNickname }}</div>
+            <div class="user-status fifth">
               <div class="un-light"></div>
             </div>
           </div>
@@ -288,9 +321,11 @@ export default {
     },
     refreshUser(payload) {
       let users = JSON.parse(payload.body)
+      console.log(users);
       this.participantList = users;
     },
     onConnected() {
+      console.log("여기서오류남")
       this.stompClient.subscribe('/topic/public/check/failed/' + this.$route.params.gameId + "/" + this.userData.userId, this.wrongConnect);
       this.stompClient.subscribe('/topic/public/refresh/user/' + this.$route.params.gameId, this.refreshUser);
       this.stompClient.subscribe('/topic/public/get/result/' + this.$route.params.gameId + "/" + this.userData.userId, this.getResultData);
@@ -299,6 +334,7 @@ export default {
       this.stompClient.subscribe('/topic/public/disconnect/user/' + this.$route.params.gameId + "/" + this.userData.userId, this.failedUser);
       this.stompClient.subscribe('/topic/public/round1/url/' + this.$route.params.gameId + "/" + this.userData.userId, this.winUser);
       this.stompClient.subscribe('/topic/public/round2/url/' + this.$route.params.gameId + "/" + this.userData.userId, this.endGame);
+      console.log("여ㄱㅇ여여")
     },
     userInfo() {
 
@@ -310,6 +346,7 @@ export default {
     },
     endGame(payload) {
       let data = JSON.parse(payload.body);
+      console.log(data)
 
       alert(data + "등!")
       location.href = "/home";
@@ -344,23 +381,24 @@ export default {
       this.disableBtn = false;
     }
   },
-  created() {
-    this.stompClient = this.$store.getters.getStompClient;
-    if (this.stompClient == null || this.stompClient === '') {
-      this.wrongConnect();
-      return;
-    }
-    this.userData = this.$store.getters.getUser;
-    this.onConnected();
-    this.getQuestion();
-  },
-  mounted() {
-    if (this.stompClient == null || this.stompClient === '') {
-      this.wrongConnect();
-      return;
-    }
-    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-  },
+  // created() {
+  //   this.stompClient = this.$store.getters.getStompClient;
+  //   if (this.stompClient == null || this.stompClient === '') {
+  //     this.wrongConnect();
+  //     return;
+  //   }
+  //   this.userData = this.$store.getters.getUser;
+  //   this.onConnected();
+  //   this.getQuestion();
+  // },
+  // mounted() {
+  //   if (this.stompClient == null || this.stompClient === '') {
+  //     console.log("if문들어옴")
+  //     this.wrongConnect();
+  //     return;
+  //   }
+  //   this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+  // },
 }
 
 

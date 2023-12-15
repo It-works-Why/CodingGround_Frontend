@@ -106,9 +106,9 @@ export default {
       this.$router.push("/home");
       this.$errorAlert(error);
     },
-    onConnected() {
+    onConnected(data) {
       this.$router.push('/battle/ingame/'+this.gameKey);
-      this.$successAlert(data.data.message);
+      this.$successAlert("재접속 성공");
     },
     connect() {
       // eslint-disable-next-line no-undef
@@ -137,7 +137,7 @@ export default {
         if(data.data.connectType == "reConnect"){
           const isReconnect = confirm("진행중인 게임이 있습니다. 재접속 하시겠습니까?");
           if(isReconnect){
-            this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
+            this.$httpUtil('/battle/reconnect/game','POST', null, () => {
               this.connect();
               return;
             })
