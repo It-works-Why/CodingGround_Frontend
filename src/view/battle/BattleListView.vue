@@ -138,9 +138,10 @@ export default {
           if(isReconnect){
             this.$httpUtil('/battle/reconnect/game','POST', null, (data) => {
               this.connect();
-
-              this.$router.push('/battle/ingame/'+this.gameKey);
-              this.$successAlert(data.data.message);
+              setTimeout(() => {
+                this.$router.push('/battle/ingame/'+this.gameKey);
+                this.$successAlert(data.data.message);
+              }, 3000);
               return;
             })
           }else{
