@@ -138,7 +138,7 @@
             <img class="img_view" @error="handleImageError" :src="i.profileImg">
             <div class="user_content text-nowrap">{{ i.userNickname }}</div>
             <div class="user-status first">
-              <div class="light">1위</div>
+              <div class="gold-light">1위</div>
             </div>
           </div>
 
@@ -378,23 +378,23 @@ export default {
       this.disableBtn = false;
     }
   },
-  created() {
-    this.stompClient = this.$store.getters.getStompClient;
-    if (this.stompClient == null || this.stompClient === '') {
-      this.wrongConnect();
-      return;
-    }
-    this.userData = this.$store.getters.getUser;
-    this.onConnected();
-    this.getQuestion();
-  },
-  mounted() {
-    if (this.stompClient == null || this.stompClient === '') {
-      this.wrongConnect();
-      return;
-    }
-    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-  },
+  // created() {
+  //   this.stompClient = this.$store.getters.getStompClient;
+  //   if (this.stompClient == null || this.stompClient === '') {
+  //     this.wrongConnect();
+  //     return;
+  //   }
+  //   this.userData = this.$store.getters.getUser;
+  //   this.onConnected();
+  //   this.getQuestion();
+  // },
+  // mounted() {
+  //   if (this.stompClient == null || this.stompClient === '') {
+  //     this.wrongConnect();
+  //     return;
+  //   }
+  //   this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+  // },
 }
 
 
