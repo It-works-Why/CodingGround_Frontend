@@ -138,7 +138,7 @@
             <img class="img_view" @error="handleImageError" :src="i.profileImg">
             <div class="user_content text-nowrap">{{ i.userNickname }}</div>
             <div class="user-status first">
-              <div class="un-light">1위</div>
+              <div class="light">1위</div>
             </div>
           </div>
 
