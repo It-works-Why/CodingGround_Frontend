@@ -8,7 +8,7 @@
             문제
           </div>
           <GrayBox class="rounded-3 title-box">
-            <input :value="getData.questionTitle" class="input-box input-title" type="text" disabled>
+            <input v-on:copy="preventCopy" :value="getData.questionTitle" class="input-box input-title" type="text" disabled>
             <div>
               <div class="input-box input-time">
                 {{ getData.questionLimitTime }}분 | LEVEL {{ getData.questionDifficult }}
@@ -16,7 +16,7 @@
             </div>
           </GrayBox>
           <GrayBox class="rounded-3 content-box">
-            <textarea :value="getData.questionContent" class="input-box input-content" disabled></textarea>
+            <textarea v-on:copy="preventCopy" :value="getData.questionContent" class="input-box input-content" disabled></textarea>
             <div :key="i" v-for="(i, index) in testCase">
               <div class="fw-bolder fs-4">입력{{ index + 1 }}</div>
               <ConsoleBox class="console">{{ i.input }}</ConsoleBox>
@@ -29,7 +29,7 @@
         <div class="text-white fw-bold fs-3">
           결과
         </div>
-        <div :key="i" v-for="(i, index) in testCase">
+        <div v-on:copy="preventCopy" :key="i" v-for="(i, index) in testCase">
           <p class="text-white">테스트 결과{{ index + 1 }}</p>
           <div>
             <GrayBox class="rounded-3">
@@ -234,6 +234,10 @@ export default {
     };
   },
   methods: {
+    preventCopy(event) {
+      this.$warningAlert("복사가 감지 되었습니다.");
+      event.preventDefault();
+    },
     winUser() {
       this.timer = '';
       this.timeLeft = {minutes: 0, seconds: 0};
@@ -314,7 +318,7 @@ export default {
       }
     },
     handleImageError(e) {
-      e.target.src = require("@/assets/img/DefaultProfile.png");
+      e.target.src = "https://bsdev16-img-bucket.s3.ap-east-1.amazonaws.com/asset/DefaultProfile.png";
     },
     wrongConnect() {
       this.$router.push("/home")
@@ -378,26 +382,66 @@ export default {
       this.disableBtn = false;
     }
   },
-  // created() {
-  //   this.stompClient = this.$store.getters.getStompClient;
-  //   if (this.stompClient == null || this.stompClient === '') {
-  //     this.wrongConnect();
-  //     return;
-  //   }
-  //   this.userData = this.$store.getters.getUser;
-  //   this.onConnected();
-  //   this.getQuestion();
-  // },
-  // mounted() {
-  //   if (this.stompClient == null || this.stompClient === '') {
-  //     this.wrongConnect();
-  //     return;
-  //   }
-  //   this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
-  // },
+  created() {
+    this.stompClient = this.$store.getters.getStompClient;
+    if (this.stompClient == null || this.stompClient === '') {
+      this.wrongConnect();
+      return;
+    }
+    this.userData = this.$store.getters.getUser;
+    this.onConnected();
+    this.getQuestion();
+  },
+  mounted() {
+    if (this.stompClient == null || this.stompClient === '') {
+      this.wrongConnect();
+      return;
+    }
+    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+  },
 }
 
-
+window.addEventListener('keydown', function(e) {
+  if (
+      // CMD + Alt + I (Chrome, Firefox, Safari)
+      e.metaKey == true && e.altKey == true && e.keyCode == 73 ||
+      // CMD + Alt + J (Chrome)
+      e.metaKey == true && e.altKey == true && e.keyCode == 74 ||
+      // CMD + Alt + C (Chrome)
+      e.metaKey == true && e.altKey == true && e.keyCode == 67 ||
+      // CMD + Shift + C (Chrome)
+      e.metaKey == true && e.shiftKey == true && e.keyCode == 67 ||
+      // Ctrl + Shift + I (Chrome, Firefox, Safari, Edge)
+      e.ctrlKey == true && e.shiftKey == true && e.keyCode == 73 ||
+      // Ctrl + Shift + J (Chrome, Edge)
+      e.ctrlKey == true && e.shiftKey == true && e.keyCode == 74 ||
+      // Ctrl + Shift + C (Chrome, Edge)
+      e.ctrlKey == true && e.shiftKey == true && e.keyCode == 67 ||
+      // F12 (Chome, Firefox, Edge)
+      e.keyCode == 123 ||
+      // CMD + Alt + U, Ctrl + U (View source: Chrome, Firefox, Safari, Edge)
+      e.metaKey == true && e.altKey == true && e.keyCode == 85 ||
+      e.ctrlKey == true && e.keyCode == 85
+  ) {
+    e.preventDefault();
+    return false;
+  }})
+console.log(Object.defineProperties(new Error, {
+  toString: {
+    value() {
+      (new Error).stack.includes('toString@') && alert('Safari devtools');
+    }
+  },
+  message: {
+    get() {
+      // 개발자 도구를 감지하면 그냥 홈으로 가버리자.
+      this.$warningAlert("개발자 도구가 감지 되었습니다.");
+      document.location.href = "/home";
+      // 여기서 값을 반환하지 않아서 get 메서드는 undefined를 반환합니다.
+      return undefined; // 또는 원하는 다른 값을 반환할 수 있습니다.
+    }
+  }
+}));
 </script>
 
 <style src="@/assets/css/view/battle.css" scoped/>
