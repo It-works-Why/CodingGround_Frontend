@@ -221,7 +221,7 @@ export default {
         autoCloseTags: true,
       },
       getData: {
-        questionTitle: "치치의 지각 횟수를 맞춰보자!",
+        questionTitle: "치치치의 지각 횟수를 맞춰보자!",
         questionLimitTime: 16,
         questionDifficult: 1,
         questionContent: "콘솔창에 Hello World! 를 출력하는 코드를 작성하세요.",
