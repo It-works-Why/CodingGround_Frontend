@@ -273,10 +273,6 @@ export default {
         this.getQuestionData(data.data);
       });
     },
-    async checkUser() {
-      await this.$httpUtil('/battle/check/' + this.$route.params.gameId, 'GET', null, () => {
-      });
-    },
     send1(type) {
       let data = {};
       data.userId = this.userData.userId;
@@ -286,9 +282,7 @@ export default {
       if (data.code == '' || data.code == null) {
         data.code = 'empty!';
       }
-      this.$httpUtil('/battle/send/1/' + this.$route.params.gameId, 'POST', data, (data) => {
-          this.getResultData(data.data);
-      });
+      this.stompClient.send("/app/send/1/" + this.$route.params.gameId, {}, JSON.stringify(data));
       if (type == 'submit') {
         this.round1Send = true;
       }
@@ -302,9 +296,7 @@ export default {
       if (data.code == '' || data.code == null) {
         data.code = 'empty!';
       }
-      this.$httpUtil('/battle/send/2/' + this.$route.params.gameId, 'POST', data, (data) => {
-        this.getResultData(data.data);
-      });
+      this.stompClient.send("/app/send/2/" + this.$route.params.gameId, {}, JSON.stringify(data));
       if (type == 'submit') {
         this.round1Send = true;
       }
@@ -335,6 +327,7 @@ export default {
     onConnected() {
       this.stompClient.subscribe('/topic/public/check/failed/' + this.$route.params.gameId + "/" + this.userData.userId, this.wrongConnect);
       this.stompClient.subscribe('/topic/public/refresh/user/' + this.$route.params.gameId, this.refreshUser);
+      this.stompClient.subscribe('/topic/public/get/result/' + this.$route.params.gameId + "/" + this.userData.userId, this.getResultData);
       this.stompClient.subscribe('/topic/public/round1/end/front/' + this.$route.params.gameId, this.round1End);
       this.stompClient.subscribe('/topic/public/round2/end/front/' + this.$route.params.gameId, this.round2End);
       this.stompClient.subscribe('/topic/public/disconnect/user/' + this.$route.params.gameId + "/" + this.userData.userId, this.failedUser);
@@ -377,7 +370,8 @@ export default {
         this.calculateTimeLeft();
       }, 1000);
     },
-    getResultData(data) {
+    getResultData(payload) {
+      let data = JSON.parse(payload.body);
       for (let i of data) {
         this.result.push(i.isCorrect);
       }
@@ -399,6 +393,7 @@ export default {
       this.wrongConnect();
       return;
     }
+    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
   },
 }
 
