@@ -91,7 +91,7 @@
           <div class="time-box">
             <p>남은 시간</p>
             <h1>{{ timeLeft.minutes }}분 {{ timeLeft.seconds }}초</h1>
-            <p>정답을 빠르게 제출한 4명만 2라운드 진출!</p>
+            <p>제한 시간 동안 최적의 코딩을 완성해보세요!</p>
           </div>
         </div>
       </BlackBox>
