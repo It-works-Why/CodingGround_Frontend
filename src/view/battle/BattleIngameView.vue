@@ -383,14 +383,14 @@ export default {
     }
   },
   created() {
-    // this.stompClient = this.$store.getters.getStompClient;
-    // if (this.stompClient == null || this.stompClient === '') {
-    //   this.wrongConnect();
-    //   return;
-    // }
-    // this.userData = this.$store.getters.getUser;
-    // this.onConnected();
-    // this.getQuestion();
+    this.stompClient = this.$store.getters.getStompClient;
+    if (this.stompClient == null || this.stompClient === '') {
+      this.wrongConnect();
+      return;
+    }
+    this.userData = this.$store.getters.getUser;
+    this.onConnected();
+    this.getQuestion();
     window.addEventListener('keydown', function(e) {
       if (
           // CMD + Alt + I (Chrome, Firefox, Safari)
@@ -434,11 +434,11 @@ export default {
     }));
   },
   mounted() {
-    // if (this.stompClient == null || this.stompClient === '') {
-    //   this.wrongConnect();
-    //   return;
-    // }
-    // this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+    if (this.stompClient == null || this.stompClient === '') {
+      this.wrongConnect();
+      return;
+    }
+    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
   },
 }
 </script>
