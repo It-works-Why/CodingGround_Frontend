@@ -107,7 +107,7 @@ export default {
       this.$errorAlert(error);
     },
     onConnected() {
-      this.stompClient.send("/app/reconnect/", {}, this.userData.userId);
+      this.stompClient.send("/app/recon/"+this.gameKey, {}, this.userData.userId);
       this.recon();
     },
     recon(){
