@@ -108,6 +108,9 @@ export default {
     },
     onConnected() {
       this.stompClient.send("/app/reconnect/", {}, this.userData.userId);
+      this.recon();
+    },
+    recon(){
       this.$router.push('/battle/ingame/'+this.gameKey);
       this.$successAlert("재접속 성공");
     },
@@ -119,9 +122,9 @@ export default {
       const data = {};
       data.gameId = this.gameKey;
       // eslint-disable-next-line no-undef
-      const stompClient = Stomp.over(socket);
-      stompClient.connect(data, this.onConnected, this.onError);
-      this.$store.commit('setConnection', stompClient);
+      this.stompClient = Stomp.over(socket);
+      this.stompClient.connect(data, this.onConnected, this.onError);
+      this.$store.commit('setConnection', this.stompClient);
       this.stompClient = this.$store.getters.getStompClient;
     },
     gameStart() {

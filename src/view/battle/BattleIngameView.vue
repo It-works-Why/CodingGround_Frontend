@@ -383,65 +383,64 @@ export default {
     }
   },
   created() {
-    this.stompClient = this.$store.getters.getStompClient;
-    if (this.stompClient == null || this.stompClient === '') {
-      this.wrongConnect();
-      return;
-    }
-    this.userData = this.$store.getters.getUser;
-    this.onConnected();
-    this.getQuestion();
+    // this.stompClient = this.$store.getters.getStompClient;
+    // if (this.stompClient == null || this.stompClient === '') {
+    //   this.wrongConnect();
+    //   return;
+    // }
+    // this.userData = this.$store.getters.getUser;
+    // this.onConnected();
+    // this.getQuestion();
+    window.addEventListener('keydown', function(e) {
+      if (
+          // CMD + Alt + I (Chrome, Firefox, Safari)
+          e.metaKey == true && e.altKey == true && e.keyCode == 73 ||
+          // CMD + Alt + J (Chrome)
+          e.metaKey == true && e.altKey == true && e.keyCode == 74 ||
+          // CMD + Alt + C (Chrome)
+          e.metaKey == true && e.altKey == true && e.keyCode == 67 ||
+          // CMD + Shift + C (Chrome)
+          e.metaKey == true && e.shiftKey == true && e.keyCode == 67 ||
+          // Ctrl + Shift + I (Chrome, Firefox, Safari, Edge)
+          e.ctrlKey == true && e.shiftKey == true && e.keyCode == 73 ||
+          // Ctrl + Shift + J (Chrome, Edge)
+          e.ctrlKey == true && e.shiftKey == true && e.keyCode == 74 ||
+          // Ctrl + Shift + C (Chrome, Edge)
+          e.ctrlKey == true && e.shiftKey == true && e.keyCode == 67 ||
+          // F12 (Chome, Firefox, Edge)
+          e.keyCode == 123 ||
+          // CMD + Alt + U, Ctrl + U (View source: Chrome, Firefox, Safari, Edge)
+          e.metaKey == true && e.altKey == true && e.keyCode == 85 ||
+          e.ctrlKey == true && e.keyCode == 85
+      ) {
+        e.preventDefault();
+        return false;
+      }})
+    console.log(Object.defineProperties(new Error, {
+      toString: {
+        value() {
+          (new Error).stack.includes('toString@') && alert('Safari devtools');
+        }
+      },
+      message: {
+        get() {
+          // 개발자 도구를 감지하면 그냥 홈으로 가버리자.
+          alert("개발자 도구가 감지 되었습니다.");
+          document.location.href = "/home";
+          // 여기서 값을 반환하지 않아서 get 메서드는 undefined를 반환합니다.
+          return undefined; // 또는 원하는 다른 값을 반환할 수 있습니다.
+        }
+      }
+    }));
   },
   mounted() {
-    if (this.stompClient == null || this.stompClient === '') {
-      this.wrongConnect();
-      return;
-    }
-    this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
+    // if (this.stompClient == null || this.stompClient === '') {
+    //   this.wrongConnect();
+    //   return;
+    // }
+    // this.stompClient.send("/app/check/" + this.$route.params.gameId, {}, this.userData.userId);
   },
 }
-
-window.addEventListener('keydown', function(e) {
-  if (
-      // CMD + Alt + I (Chrome, Firefox, Safari)
-      e.metaKey == true && e.altKey == true && e.keyCode == 73 ||
-      // CMD + Alt + J (Chrome)
-      e.metaKey == true && e.altKey == true && e.keyCode == 74 ||
-      // CMD + Alt + C (Chrome)
-      e.metaKey == true && e.altKey == true && e.keyCode == 67 ||
-      // CMD + Shift + C (Chrome)
-      e.metaKey == true && e.shiftKey == true && e.keyCode == 67 ||
-      // Ctrl + Shift + I (Chrome, Firefox, Safari, Edge)
-      e.ctrlKey == true && e.shiftKey == true && e.keyCode == 73 ||
-      // Ctrl + Shift + J (Chrome, Edge)
-      e.ctrlKey == true && e.shiftKey == true && e.keyCode == 74 ||
-      // Ctrl + Shift + C (Chrome, Edge)
-      e.ctrlKey == true && e.shiftKey == true && e.keyCode == 67 ||
-      // F12 (Chome, Firefox, Edge)
-      e.keyCode == 123 ||
-      // CMD + Alt + U, Ctrl + U (View source: Chrome, Firefox, Safari, Edge)
-      e.metaKey == true && e.altKey == true && e.keyCode == 85 ||
-      e.ctrlKey == true && e.keyCode == 85
-  ) {
-    e.preventDefault();
-    return false;
-  }})
-console.log(Object.defineProperties(new Error, {
-  toString: {
-    value() {
-      (new Error).stack.includes('toString@') && alert('Safari devtools');
-    }
-  },
-  message: {
-    get() {
-      // 개발자 도구를 감지하면 그냥 홈으로 가버리자.
-      this.$warningAlert("개발자 도구가 감지 되었습니다.");
-      document.location.href = "/home";
-      // 여기서 값을 반환하지 않아서 get 메서드는 undefined를 반환합니다.
-      return undefined; // 또는 원하는 다른 값을 반환할 수 있습니다.
-    }
-  }
-}));
 </script>
 
 <style src="@/assets/css/view/battle.css" scoped/>
